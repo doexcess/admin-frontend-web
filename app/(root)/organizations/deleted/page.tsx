@@ -11,7 +11,7 @@ import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
 import UsersList from '@/components/users/UsersList';
 
-const DeletedUsers = () => {
+const DeletedOrganizations = () => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -19,9 +19,9 @@ const DeletedUsers = () => {
       <header className='section-container'>
         {/* Page heading */}
         <PageHeading
-          title='All Deleted Users'
+          title='All Deleted Organizations'
           enableBreadCrumb={true}
-          layer2='Users'
+          layer2='Organizations'
           layer3='Deleted'
         />
         {/* Filter */}
@@ -80,4 +80,4 @@ const DeletedUsers = () => {
   );
 };
 
-export default DeletedUsers;
+export default DeletedOrganizations;

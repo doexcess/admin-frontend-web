@@ -8,15 +8,15 @@ import { dummyUsers } from '@/constants';
 
 import React from 'react';
 
-const RegisteredUsers = () => {
+const RegisteredOrganizations = () => {
   return (
     <main>
       <header className='section-container'>
         {/* Page heading */}
         <PageHeading
-          title='All Registered Users'
+          title='All Registered Organizations'
           enableBreadCrumb={true}
-          layer2='Users'
+          layer2='Organizations'
           layer3='Registered'
         />
         {/* Filter */}
@@ -37,4 +37,4 @@ const RegisteredUsers = () => {
   );
 };
 
-export default RegisteredUsers;
+export default RegisteredOrganizations;

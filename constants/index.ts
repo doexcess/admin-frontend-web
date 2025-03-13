@@ -23,16 +23,16 @@ export const sidebarLinks = [
   },
   {
     icon: HiUsers,
-    route: '/users',
-    label: 'Users',
+    route: '/organizations',
+    label: 'Organizations',
     group: groups.ONE,
     items: [
       {
-        route: '/users/registered',
+        route: '/organizations/registered',
         label: 'Registered',
       },
       {
-        route: '/users/deleted',
+        route: '/organizations/deleted',
         label: 'Deleted',
       },
     ],
