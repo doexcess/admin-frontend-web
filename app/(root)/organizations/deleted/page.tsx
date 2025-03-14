@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { IoIosFunnel } from 'react-icons/io';
 
 import Input from '@/components/ui/Input';
-import { dummyUsers } from '@/constants';
 import Filter from '@/components/users/Filter';
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';

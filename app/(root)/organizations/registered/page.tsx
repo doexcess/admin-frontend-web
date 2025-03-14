@@ -4,7 +4,6 @@ import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
 import Filter from '@/components/users/Filter';
 import UsersList from '@/components/users/UsersList';
-import { dummyUsers } from '@/constants';
 
 import React from 'react';
 
