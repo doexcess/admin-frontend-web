@@ -448,7 +448,7 @@ export const NotificationStatusTypes = [
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },
 ];
 
-export const notificationTemplates = ['custom', 'waitlist'];
+export const notificationTemplates = ['custom'];
 
 export const badgeColors = [
   {

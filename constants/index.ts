@@ -7,7 +7,7 @@ import {
   HiUsers,
   HiViewBoards,
 } from 'react-icons/hi';
-import { IoIosPower } from 'react-icons/io';
+import { IoIosFilm, IoIosPower } from 'react-icons/io';
 
 export enum groups {
   ONE = 1,
@@ -67,15 +67,17 @@ export const sidebarLinks = [
         route: '/notifications/email',
         label: 'Email',
       },
-      {
-        route: '/notifications/push',
-        label: 'Push',
-      },
-      {
-        route: '/notifications/uploads',
-        label: 'Uploads',
-      },
+      // {
+      //   route: '/notifications/uploads',
+      //   label: 'Uploads',
+      // },
     ],
+  },
+  {
+    icon: IoIosFilm,
+    route: '/media-library',
+    label: 'Media Library',
+    group: groups.TWO,
   },
   {
     icon: IoIosPower,

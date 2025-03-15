@@ -94,6 +94,15 @@ const ComposeEmailFormContent = ({
             onChange={(e: any) => setTemplate(e.target.value)}
           />
         </div>
+        <div>
+          <label
+            htmlFor='organization'
+            className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+          >
+            Organization
+          </label>
+          <Select name='organization' data={[]} required={true} value={''} />
+        </div>
 
         {template === 'custom' && (
           <div>
