@@ -17,7 +17,7 @@ const Home = () => {
           </header>
 
           {/* Stats */}
-          <div className='grid grid-cols-4 gap-4 mt-6'>
+          <div className='grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6'>
             {[
               { label: 'Total Visitors', value: '45,890', change: '-0.5%' },
               { label: 'Revenue', value: '$48,575', change: '+3.84%' },
@@ -46,8 +46,8 @@ const Home = () => {
           </div>
 
           {/* Graph & Map */}
-          <div className='mt-8 grid grid-cols-3 gap-6 '>
-            <div className='bg-white dark:bg-gray-800 p-6 rounded-md shadow-md col-span-2'>
+          <div className='mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 '>
+            <div className='bg-white dark:bg-gray-800 p-6 rounded-md shadow-md lg:col-span-2'>
               <AnalyticsChart />
             </div>
             <div className='bg-white dark:bg-gray-800 p-6 rounded-md shadow-md'>
