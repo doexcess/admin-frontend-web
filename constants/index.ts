@@ -1,13 +1,23 @@
 import {
   HiBell,
+  HiBookOpen,
   HiChartPie,
+  HiCollection,
   HiLogout,
   HiOutlineUpload,
   HiUpload,
   HiUsers,
   HiViewBoards,
 } from 'react-icons/hi';
-import { IoIosFilm, IoIosPower } from 'react-icons/io';
+import {
+  IoIosAdd,
+  IoIosAnalytics,
+  IoIosBriefcase,
+  IoIosCog,
+  IoIosFilm,
+  IoIosPower,
+  IoIosPricetag,
+} from 'react-icons/io';
 
 export enum groups {
   ONE = 1,
@@ -38,30 +48,76 @@ export const sidebarLinks = [
     ],
   },
   {
-    icon: HiViewBoards,
-    route: '/general',
-    label: 'General',
+    icon: HiUsers,
+    route: '/subscription',
+    label: 'Subscription',
     group: groups.ONE,
     items: [
       {
-        route: '/general/ratings',
-        label: 'Ratings',
+        route: '/subscription/plans',
+        label: 'Plans',
       },
       {
-        route: '/general/suggestions',
-        label: 'Suggestions',
-      },
-      {
-        route: '/general/feedbacks',
-        label: 'Feedbacks',
+        route: '/subscription/subscribers',
+        label: 'Subscribers',
       },
     ],
   },
   {
+    icon: IoIosBriefcase,
+    route: '/products',
+    label: 'Products',
+    group: groups.ONE,
+  },
+  {
+    icon: HiBookOpen,
+    route: '/payments',
+    label: 'Payments',
+    group: groups.ONE,
+  },
+  {
+    icon: IoIosPricetag,
+    route: '/coupons',
+    label: 'Coupons',
+    group: groups.ONE,
+  },
+  {
+    icon: HiCollection,
+    route: '/cart',
+    label: 'Cart',
+    group: groups.ONE,
+  },
+  {
+    icon: IoIosAnalytics,
+    route: '/logs',
+    label: 'Logs',
+    group: groups.ONE,
+  },
+  // {
+  //   icon: HiViewBoards,
+  //   route: '/general',
+  //   label: 'General',
+  //   group: groups.ONE,
+  //   items: [
+  //     {
+  //       route: '/general/ratings',
+  //       label: 'Ratings',
+  //     },
+  //     {
+  //       route: '/general/suggestions',
+  //       label: 'Suggestions',
+  //     },
+  //     {
+  //       route: '/general/feedbacks',
+  //       label: 'Feedbacks',
+  //     },
+  //   ],
+  // },
+  {
     icon: HiBell,
     route: '/notifications',
     label: 'Notifications',
-    group: groups.ONE,
+    group: groups.TWO,
     items: [
       {
         route: '/notifications/email',
@@ -77,6 +133,12 @@ export const sidebarLinks = [
     icon: IoIosFilm,
     route: '/media-library',
     label: 'Media Library',
+    group: groups.TWO,
+  },
+  {
+    icon: IoIosCog,
+    route: '/settings',
+    label: 'Settings',
     group: groups.TWO,
   },
   {
@@ -169,4 +231,79 @@ export const filterPeriods = [
   { slug: 'last_week', name: 'Last week' },
   { slug: 'last_month', name: 'Last month' },
   { slug: 'last_year', name: 'Last year' },
+];
+
+export const dummyProducts = [
+  {
+    id: '1a2b3c4d',
+    name: 'Frontend Mastery',
+    price: 15000,
+    currency: 'NGN',
+    organization: 'TechAcademy',
+    type: 'Course',
+    status: 'PUBLISHED',
+  },
+  {
+    id: '2b3c4d5e',
+    name: 'Backend Development Bootcamp',
+    price: 25000,
+    currency: 'NGN',
+    organization: 'CodeHub',
+    type: 'Course',
+    status: 'DRAFT',
+  },
+  {
+    id: '3c4d5e6f',
+    name: 'Digital Marketing Summit',
+    price: 10000,
+    currency: 'NGN',
+    organization: 'MarketPros',
+    type: 'Ticket',
+    status: 'ARCHIVED',
+  },
+  {
+    id: '4d5e6f7g',
+    name: 'Product Design Masterclass',
+    price: 18000,
+    currency: 'NGN',
+    organization: 'DesignPro',
+    type: 'Course',
+    status: 'PUBLISHED',
+  },
+  {
+    id: '5e6f7g8h',
+    name: 'Tech Conference 2025',
+    price: 12000,
+    currency: 'NGN',
+    organization: 'InnovateTech',
+    type: 'Ticket',
+    status: 'DRAFT',
+  },
+  {
+    id: '6f7g8h9i',
+    name: 'Blockchain & Web3 Workshop',
+    price: 20000,
+    currency: 'NGN',
+    organization: 'CryptoLearn',
+    type: 'Course',
+    status: 'ARCHIVED',
+  },
+  {
+    id: '7g8h9i0j',
+    name: 'AI & Machine Learning Summit',
+    price: 15000,
+    currency: 'NGN',
+    organization: 'DataGenius',
+    type: 'Ticket',
+    status: 'PUBLISHED',
+  },
+  {
+    id: '8h9i0j1k',
+    name: 'Cybersecurity Training',
+    price: 22000,
+    currency: 'NGN',
+    organization: 'SecureNet',
+    type: 'Course',
+    status: 'DRAFT',
+  },
 ];

@@ -1,76 +1,94 @@
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
-import { ResponsiveContainer } from 'recharts';
-import ReactTooltip from 'react-tooltip';
-
-// Load react-simple-maps dynamically to prevent SSR issues
-const ComposableMap = dynamic(
-  () => import('react-simple-maps').then((mod) => mod.ComposableMap),
-  { ssr: false }
-);
-const Geographies = dynamic(
-  () => import('react-simple-maps').then((mod) => mod.Geographies),
-  { ssr: false }
-);
-const Geography = dynamic(
-  () => import('react-simple-maps').then((mod) => mod.Geography),
-  { ssr: false }
-);
+import React, { useState, useMemo } from 'react';
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+} from 'react-simple-maps';
 
 const geoUrl =
-  'https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json';
+  'https://raw.githubusercontent.com/deldersveld/topojson/master/continents/south-america.json';
 
-// Sample user data by country
-const userData = {
-  USA: 1200,
-  Nigeria: 800,
-  Germany: 500,
-  India: 1000,
-  Brazil: 700,
-};
+const markers = [
+  { name: 'Buenos Aires', coordinates: [-58.3816, -34.6037] },
+  { name: 'La Paz', coordinates: [-68.1193, -16.4897] },
+  { name: 'Brasilia', coordinates: [-47.8825, -15.7942] },
+  { name: 'Santiago', coordinates: [-70.6693, -33.4489] },
+  { name: 'Bogota', coordinates: [-74.0721, 4.711] },
+  { name: 'Quito', coordinates: [-78.4678, -0.1807] },
+  { name: 'Georgetown', coordinates: [-58.1551, 6.8013] },
+  { name: 'Asuncion', coordinates: [-57.5759, -25.2637] },
+  { name: 'Paramaribo', coordinates: [-55.2038, 5.852] },
+  { name: 'Montevideo', coordinates: [-56.1645, -34.9011] },
+  { name: 'Caracas', coordinates: [-66.9036, 10.4806] },
+  { name: 'Lima', coordinates: [-77.0428, -12.0464] },
+];
 
-const MapChart = () => {
-  const [tooltipContent, setTooltipContent] = useState('');
+const MapChart = ({ customMarkers = markers }) => {
+  const [hoveredMarker, setHoveredMarker] = useState(null);
+
+  const handleMouseEnter = (name: any) => setHoveredMarker(name);
+  const handleMouseLeave = () => setHoveredMarker(null);
+
+  const mapElements = useMemo(
+    () => (
+      <>
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map((geo) => (
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                fill='#EAEAEC'
+                stroke='#D6D6DA'
+                style={{
+                  default: { outline: 'none' },
+                  hover: { fill: '#F53', outline: 'none' },
+                  pressed: { fill: '#E42', outline: 'none' },
+                }}
+              />
+            ))
+          }
+        </Geographies>
+        {customMarkers.map(({ name, coordinates }) => (
+          <Marker
+            key={name}
+            coordinates={coordinates as any}
+            onMouseEnter={() => handleMouseEnter(name)}
+            onMouseLeave={handleMouseLeave}
+          >
+            <circle
+              r={6}
+              fill={hoveredMarker === name ? '#FF5533' : '#F00'}
+              stroke='#fff'
+              strokeWidth={2}
+            />
+            <text
+              textAnchor='middle'
+              y={-10}
+              style={{
+                fontFamily: 'system-ui',
+                fill: '#5D5A6D',
+                fontSize: 18,
+                visibility: hoveredMarker === name ? 'visible' : 'hidden',
+              }}
+            >
+              {name}
+            </text>
+          </Marker>
+        ))}
+      </>
+    ),
+    [customMarkers, hoveredMarker]
+  );
 
   return (
-    <div className='rounded-md'>
-      <h3 className='text-lg font-semibold'>Users by Country</h3>
-      <div className='mt-10 relative'>
-        <ResponsiveContainer width='100%' height='100%'>
-          <ComposableMap projection='geoMercator' data-tip=''>
-            <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                geographies.map((geo) => {
-                  const countryName = geo.properties.name;
-                  const users = (userData as any)[countryName] || 0;
-
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill={users > 0 ? '#4F46E5' : '#D1D5DB'}
-                      stroke='#E5E7EB'
-                      onMouseEnter={() => {
-                        setTooltipContent(`${countryName}: ${users} users`);
-                      }}
-                      onMouseLeave={() => {
-                        setTooltipContent('');
-                      }}
-                      style={{
-                        default: { outline: 'none' },
-                        hover: { fill: '#6366F1' },
-                        pressed: { fill: '#4338CA' },
-                      }}
-                    />
-                  );
-                })
-              }
-            </Geographies>
-          </ComposableMap>
-        </ResponsiveContainer>
-        {/* <ReactTooltip>{tooltipContent}</ReactTooltip> */}
-      </div>
-    </div>
+    <ComposableMap
+      projection='geoAzimuthalEqualArea'
+      projectionConfig={{ rotate: [58, 20, 0], scale: 600 }}
+    >
+      {mapElements}
+    </ComposableMap>
   );
 };
 

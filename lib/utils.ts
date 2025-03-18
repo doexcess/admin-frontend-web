@@ -126,6 +126,11 @@ export const ratingTypes = [
   { type: 'Excellent', count: 3, color: '#f87171' },
 ];
 
+export const productTypes = [
+  { type: 'Courses', count: 80, color: '#f43f5e' },
+  { type: 'Tickets', count: 20, color: '#2265d8' },
+];
+
 export const feedbackTypes = [
   { type: 'Buy', count: 2, color: '#f43f5e' },
   { type: 'Sell', count: 2, color: '#2265d8' },
@@ -489,4 +494,12 @@ export const getColor = (status: string) => {
 
 export const replaceAsterisk = (network: string) => {
   return network === '*' ? 'All' : capitalize(network);
+};
+
+export const formatMoney = (amount: number, currency = 'NGN'): string => {
+  return new Intl.NumberFormat('en-NG', {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: 2,
+  }).format(amount);
 };
