@@ -8,11 +8,12 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Joi from 'joi';
 import { useDispatch } from 'react-redux';
-import { setLoginState } from '@/redux/store/slices/authSlice';
 import { signIn } from '@/lib/actions/auth.action';
 import { useRouter } from 'next/navigation';
 import { LoginFormSchema } from '@/lib/schema/auth.schema';
 import { Loader2 } from 'lucide-react';
+import { login, logout } from '@/redux/slices/authSlice';
+import { AppDispatch } from '@/redux/store';
 
 const defaultValue = {
   email: '',
@@ -22,7 +23,7 @@ const defaultValue = {
 };
 
 const SignInForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -51,11 +52,9 @@ const SignInForm = () => {
 
       const { email, password, environment, timezone } = body;
 
-      const response = await signIn({ email, password, environment, timezone });
+      dispatch(login({ email, password }));
 
-      dispatch(setLoginState(response!));
-
-      router.push('/');
+      // router.push('/');
     } catch (err) {
       console.log(err);
     } finally {

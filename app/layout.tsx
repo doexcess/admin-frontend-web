@@ -4,7 +4,7 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-import ReduxProvider from '@/redux/store/redux-provider';
+import ReduxProvider from '@/redux/redux-provider';
 
 export const metadata: Metadata = {
   title: 'Doexcess Admin',

@@ -1,4 +1,4 @@
-import { AuthStateSchema } from '@/redux/store/slices/authSlice';
+import { AuthStateSchema } from '@/redux/slices/authSlice';
 
 export const useRedirect = (authState: AuthStateSchema) => {
   let isLoggedIn = false;
