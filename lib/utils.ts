@@ -4,6 +4,7 @@ import qs from 'query-string';
 import { twMerge } from 'tailwind-merge';
 import moment from 'moment-timezone';
 import { capitalize } from 'lodash';
+import crypto from 'crypto';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -502,4 +503,45 @@ export const formatMoney = (amount: number, currency = 'NGN'): string => {
     currency: currency,
     minimumFractionDigits: 2,
   }).format(amount);
+};
+
+const algorithm = 'aes-256-cbc';
+const secret = process.env.NEXT_PUBLIC_ENCRYPTION_KEY!; // Ensure this is exactly 32 characters
+const secretKey = crypto.createHash('sha256').update(secret).digest(); // Converts it to a 32-byte key
+const iv = crypto.randomBytes(16); // Initialization vector
+
+// Encrypt Function
+export const encryptInput = (input: string): string => {
+  const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+  let encrypted = cipher.update(input, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return iv.toString('hex') + ':' + encrypted;
+};
+
+// Check if input is an encrypted string
+export const isEncrypted = (input: string) => {
+  if (!input.includes(':')) return false; // Must have IV and encrypted text
+  const [ivHex, encryptedText] = input.split(':');
+  return ivHex.length === 32 && /^[a-f0-9]+$/.test(encryptedText); // IV should be 16 bytes (hex = 32 chars)
+};
+
+// Decrypt Function
+export const decryptInput = (encryptedInput: string): string => {
+  if (!isEncrypted(encryptedInput)) {
+    throw new Error('Invalid encrypted input');
+  }
+
+  try {
+    const [ivHex, encrypted] = encryptedInput.split(':');
+    const decipher = crypto.createDecipheriv(
+      algorithm,
+      secretKey,
+      Buffer.from(ivHex, 'hex')
+    );
+    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+  } catch (error) {
+    throw new Error('Decryption failed. Invalid encrypted input.');
+  }
 };

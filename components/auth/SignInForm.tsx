@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import { environments, timezones } from '@/lib/utils';
+import { encryptInput, environments, timezones } from '@/lib/utils';
 import Checkbox from '../ui/Checkbox';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
@@ -14,15 +14,14 @@ import { LoginFormSchema } from '@/lib/schema/auth.schema';
 import { Loader2 } from 'lucide-react';
 import { login, logout } from '@/redux/slices/authSlice';
 import { AppDispatch } from '@/redux/store';
+import toast from 'react-hot-toast';
 
 const defaultValue = {
   email: '',
   password: '',
-  environment: environments[0],
-  timezone: timezones[0],
 };
 
-const SignInForm = () => {
+const ConfirmSignInForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -50,13 +49,21 @@ const SignInForm = () => {
         return null; // Or throw an error, or return a custom response
       }
 
-      const { email, password, environment, timezone } = body;
+      const { email, password } = body;
 
-      dispatch(login({ email, password }));
+      const response: any = await dispatch(login({ email, password }));
 
-      // router.push('/');
-    } catch (err) {
+      if (response.type === 'auth/request-otp/rejected') {
+        throw new Error(response.payload.message);
+      }
+
+      // Encrypt input
+      const encrypted = encryptInput(email);
+
+      router.push(`/confirm-signin?token=${encrypted}`);
+    } catch (err: any) {
       console.log(err);
+      toast.error(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -132,4 +139,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default ConfirmSignInForm;

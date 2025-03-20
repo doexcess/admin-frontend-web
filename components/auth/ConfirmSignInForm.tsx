@@ -1,0 +1,130 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+
+import {
+  decryptInput,
+  environments,
+  isEncrypted,
+  timezones,
+} from '@/lib/utils';
+import Checkbox from '../ui/Checkbox';
+import Input from '../ui/Input';
+import Select from '../ui/Select';
+import Joi from 'joi';
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn } from '@/lib/actions/auth.action';
+import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  LoginFormSchema,
+  VerifyLoginFormSchema,
+} from '@/lib/schema/auth.schema';
+import { Loader2 } from 'lucide-react';
+import { login, logout, verifyLogin } from '@/redux/slices/authSlice';
+import { AppDispatch } from '@/redux/store';
+import toast from 'react-hot-toast';
+import OTPInput from '../ui/OtpInput';
+
+const defaultValue = {
+  otp: '',
+};
+
+const ConfirmSignInForm = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token')!;
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, error } = useSelector((state: any) => state.auth);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [body, setBody] = useState(defaultValue);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      console.log(body);
+
+      setIsLoading(true);
+
+      const email = decryptInput(token);
+
+      const { error, value } = VerifyLoginFormSchema.validate({
+        ...body,
+        email,
+      });
+
+      // Handle validation results
+      if (error) {
+        console.log(body);
+
+        console.log(error);
+
+        console.error('Validation Error:', error.details);
+
+        throw new Error(error.details[0].message);
+      }
+
+      const { otp } = body;
+
+      const response: any = await dispatch(verifyLogin({ email, otp }));
+
+      if (response.type === 'auth/verify-otp/rejected') {
+        console.log(response);
+
+        throw new Error(response.payload.message);
+      }
+
+      router.push('/');
+    } catch (err: any) {
+      console.log(err);
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOTPComplete = (otp: string) => {
+    setBody({ ...body, otp });
+  };
+
+  useEffect(() => {
+    if (!token || !isEncrypted(token)) {
+      router.push('/sign-in');
+    }
+  }, [token, dispatch, router]);
+
+  return (
+    <>
+      <form className='mt-8' onSubmit={handleSubmit}>
+        <div className='flex flex-col'>
+          <div className='flex mt-5 mb-8'>
+            <OTPInput onComplete={handleOTPComplete} />
+          </div>
+
+          <button
+            type='submit'
+            className='w-full flex justify-center items-center px-5 py-3 text-base font-medium text-white bg-primary-main rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-main dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <div className='flex items-center gap-2'>
+                <Loader2 size={20} className='animate-spin' />
+                <span>Loading...</span>
+              </div>
+            ) : (
+              'Proceed to your account'
+            )}
+          </button>
+
+          <button type='button' className='text-sm mt-3 hover:underline'>
+            Resend code
+          </button>
+        </div>
+      </form>
+    </>
+  );
+};
+
+export default ConfirmSignInForm;

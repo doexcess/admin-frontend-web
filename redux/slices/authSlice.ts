@@ -2,6 +2,7 @@ import api from '@/lib/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import toast from 'react-hot-toast';
 
 interface AuthState {
   user: any;
@@ -27,10 +28,26 @@ export const login = createAsyncThunk(
     try {
       const response = await api.post('/auth/request-otp', credentials);
       const { user, token } = response.data;
-      Cookies.set('token', token, { expires: 7 });
       return { user, token };
     } catch (error: any) {
+      // console.log(error);
       return rejectWithValue(error.response?.data || 'Login failed');
+    }
+  }
+);
+
+// Async Thunk for verify login
+export const verifyLogin = createAsyncThunk(
+  'auth/verify-otp',
+  async (credentials: { email: string; otp: string }, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/auth/verify-otp', credentials);
+      const { accessToken: token } = response.data;
+      Cookies.set('token', token, { expires: 3 });
+      return { token };
+    } catch (error: any) {
+      // console.log(error);
+      return rejectWithValue(error.response?.data || 'OTP verification failed');
     }
   }
 );
@@ -57,6 +74,18 @@ const authSlice = createSlice({
         state.token = action.payload.token;
       })
       .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(verifyLogin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyLogin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.token;
+      })
+      .addCase(verifyLogin.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
