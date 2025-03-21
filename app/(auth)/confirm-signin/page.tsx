@@ -35,7 +35,12 @@ const ConfirmSignIn = () => {
         <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
           Verify your Signin
         </h2>
-        <p>Enter the verification code sent to your email address to login.</p>
+        <p>
+          Enter the verification code sent to your email address to login.
+          <br />
+          <span className='text-sm'>Note: It expires in 5 minutes.</span>
+        </p>
+
         <ConfirmSignInForm />
       </div>
     </section>

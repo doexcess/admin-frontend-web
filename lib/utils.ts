@@ -5,6 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import moment from 'moment-timezone';
 import { capitalize } from 'lodash';
 import crypto from 'crypto';
+import { TicketTier } from '@/types/product';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -449,6 +450,12 @@ export enum NOTIFICATION_STATUS {
   DELIVERED = 'delivered',
 }
 
+export enum ProductStatus {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  ARCHIVED = 'ARCHIVED',
+}
+
 export const NotificationStatusTypes = [
   { slug: 'immediate', name: 'Immediate', template: EmailTemplate.CUSTOM },
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },
@@ -545,3 +552,19 @@ export const decryptInput = (encryptedInput: string): string => {
     throw new Error('Decryption failed. Invalid encrypted input.');
   }
 };
+
+export const getLeastTicketTierPrice = (
+  ticketTiers: TicketTier[]
+): number | 0 => {
+  if (!ticketTiers.length) return 0;
+
+  return Math.min(...ticketTiers.map((tier) => Number(tier.amount)));
+};
+
+export const getISODateString = (date: Date) => date.toISOString().slice(0, 16);
+export const oneMonthAgo = () => {
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+  return oneMonthAgo;
+};
+export const now = new Date();

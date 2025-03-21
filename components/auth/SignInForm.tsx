@@ -32,21 +32,13 @@ const ConfirmSignInForm = () => {
     e.preventDefault();
 
     try {
-      console.log(body);
-
       setIsLoading(true);
 
       const { error, value } = LoginFormSchema.validate(body);
 
       // Handle validation results
       if (error) {
-        console.log(body);
-
-        console.log(error);
-
-        console.error('Validation Error:', error.details);
-
-        return null; // Or throw an error, or return a custom response
+        throw new Error(error.details[0].message);
       }
 
       const { email, password } = body;

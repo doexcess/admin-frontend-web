@@ -1,8 +1,6 @@
 import api from '@/lib/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import Cookies from 'js-cookie';
-import toast from 'react-hot-toast';
 
 interface AuthState {
   user: any;

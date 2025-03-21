@@ -24,6 +24,8 @@ import { login, logout, verifyLogin } from '@/redux/slices/authSlice';
 import { AppDispatch } from '@/redux/store';
 import toast from 'react-hot-toast';
 import OTPInput from '../ui/OtpInput';
+import Link from 'next/link';
+import { IoIosArrowBack } from 'react-icons/io';
 
 const defaultValue = {
   otp: '',
@@ -44,8 +46,6 @@ const ConfirmSignInForm = () => {
     e.preventDefault();
 
     try {
-      console.log(body);
-
       setIsLoading(true);
 
       const email = decryptInput(token);
@@ -57,12 +57,6 @@ const ConfirmSignInForm = () => {
 
       // Handle validation results
       if (error) {
-        console.log(body);
-
-        console.log(error);
-
-        console.error('Validation Error:', error.details);
-
         throw new Error(error.details[0].message);
       }
 
@@ -71,8 +65,6 @@ const ConfirmSignInForm = () => {
       const response: any = await dispatch(verifyLogin({ email, otp }));
 
       if (response.type === 'auth/verify-otp/rejected') {
-        console.log(response);
-
         throw new Error(response.payload.message);
       }
 
@@ -118,9 +110,15 @@ const ConfirmSignInForm = () => {
             )}
           </button>
 
-          <button type='button' className='text-sm mt-3 hover:underline'>
-            Resend code
-          </button>
+          <Link
+            href={'/sign-in'}
+            className='text-sm text-center mt-3 hover:underline'
+          >
+            <div className='flex justify-center items-center gap-1'>
+              <IoIosArrowBack />
+              Back to Signin
+            </div>
+          </Link>
         </div>
       </form>
     </>
