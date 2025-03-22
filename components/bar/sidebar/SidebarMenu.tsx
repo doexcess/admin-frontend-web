@@ -5,11 +5,12 @@ import { groups, sidebarLinks } from '@/constants';
 
 import { Sidebar } from 'flowbite-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 const SidebarMenu = ({ handleClose }: { handleClose?: () => void }) => {
   const router = useRouter();
+  const pathname = usePathname(); // Get current path
 
   const groupOneSidebarLinks = sidebarLinks.filter(
     (sidebarLink) => sidebarLink.group === groups.ONE
@@ -42,7 +43,11 @@ const SidebarMenu = ({ handleClose }: { handleClose?: () => void }) => {
                     <Sidebar.Item
                       key={item.route}
                       onClick={() => handleNavigation(item.route)}
-                      className='cursor-pointer'
+                      className={cn(
+                        'cursor-pointer',
+                        pathname === item.route &&
+                          'bg-gray-200 dark:bg-gray-700' // Active class
+                      )}
                     >
                       {item.label}
                     </Sidebar.Item>
@@ -53,7 +58,11 @@ const SidebarMenu = ({ handleClose }: { handleClose?: () => void }) => {
                   key={sidebarLink.route}
                   onClick={() => handleNavigation(sidebarLink.route)}
                   icon={sidebarLink.icon}
-                  className='cursor-pointer'
+                  className={cn(
+                    'cursor-pointer',
+                    pathname === sidebarLink.route &&
+                      'bg-gray-200 dark:bg-gray-700' // Active class
+                  )}
                 >
                   {sidebarLink.label}
                 </Sidebar.Item>
@@ -72,7 +81,11 @@ const SidebarMenu = ({ handleClose }: { handleClose?: () => void }) => {
                     <Sidebar.Item
                       key={item.route}
                       onClick={() => handleNavigation(item.route)}
-                      className='cursor-pointer'
+                      className={cn(
+                        'cursor-pointer',
+                        pathname === item.route &&
+                          'bg-gray-200 dark:bg-gray-700' // Active class
+                      )}
                     >
                       {item.label}
                     </Sidebar.Item>
@@ -83,7 +96,11 @@ const SidebarMenu = ({ handleClose }: { handleClose?: () => void }) => {
                   key={sidebarLink.route}
                   onClick={() => handleNavigation(sidebarLink.route)}
                   icon={sidebarLink.icon}
-                  className='cursor-pointer'
+                  className={cn(
+                    'cursor-pointer',
+                    pathname === sidebarLink.route &&
+                      'bg-gray-200 dark:bg-gray-700' // Active class
+                  )}
                 >
                   {sidebarLink.label}
                 </Sidebar.Item>

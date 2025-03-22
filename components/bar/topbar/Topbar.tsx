@@ -1,16 +1,9 @@
 'use client';
 
-import Image from 'next/image';
-import { Button, Drawer, Navbar, Sidebar } from 'flowbite-react';
-
 import React, { useState } from 'react';
-import RecentNotification from './RecentNotifications';
 import Apps from './Apps';
 import Profile from './Profile';
-import Search from './Search';
 import Link from 'next/link';
-import { IoIosClose } from 'react-icons/io';
-import { groups, sidebarLinks } from '@/constants';
 import MobileNav from '../sidebar/MobileNav';
 import Logo from '@/components/ui/Logo';
 
