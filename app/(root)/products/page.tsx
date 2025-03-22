@@ -2,7 +2,6 @@
 
 import PageHeading from '@/components/PageHeading';
 import ProductsList from '@/components/products/ProductsList';
-import LoadingSkeleton from '@/components/ui/LoadingSkeleton';
 import Filter from '@/components/users/Filter';
 import { fetchProducts } from '@/redux/slices/productSlice';
 import { AppDispatch, RootState } from '@/redux/store';
@@ -98,7 +97,6 @@ const Products = () => {
       <section className='section-container-padding-0 mt-2'>
         <div className='overflow-x-auto rounded-none'>
           <div className='relative overflow-x-auto'>
-            {/* Users list in a table - registered */}
             <ProductsList
               products={products}
               count={count}

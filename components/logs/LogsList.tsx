@@ -1,29 +1,29 @@
 'use client';
 
 import React from 'react';
-import ProductItem from './ProductItem';
+import LogItem from './LogItem';
 import Pagination from '../Pagination';
 import TableEndRecord from '../ui/TableEndRecord';
-import { ProductDetails } from '@/types/product';
+import { ActivityLog } from '@/types/log';
 import LoadingSkeleton from '../ui/LoadingSkeleton';
 import { useSearchParams } from 'next/navigation';
 
-interface ProductsListProps {
-  products: ProductDetails[];
+interface LogsListProps {
+  logs: ActivityLog[];
   count: number;
   onClickNext: () => Promise<void>;
   onClickPrev: () => Promise<void>;
   currentPage: number;
   loading: boolean;
 }
-const ProductsList = ({
-  products,
+const LogsList = ({
+  logs,
   count,
   onClickNext,
   onClickPrev,
   currentPage,
   loading,
-}: ProductsListProps) => {
+}: LogsListProps) => {
   const searchParams = useSearchParams();
   if (loading) return <LoadingSkeleton />;
 
@@ -35,25 +35,19 @@ const ProductsList = ({
         <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
           <tr>
             <th scope='col' className='px-6 py-3'>
-              Name
+              Action
             </th>
             <th scope='col' className='px-6 py-3'>
-              Price
+              Metadata
             </th>
             <th scope='col' className='px-6 py-3'>
-              Organization
+              Entity
             </th>
             <th scope='col' className='px-6 py-3'>
-              Category
+              User Agent
             </th>
             <th scope='col' className='px-6 py-3'>
-              Type
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Status
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Published Date
+              IP Address
             </th>
             <th scope='col' className='px-6 py-3'>
               Date Created
@@ -61,13 +55,11 @@ const ProductsList = ({
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <ProductItem product={product} />
+          {logs.map((log) => (
+            <LogItem log={log} />
           ))}
 
-          {!products.length && (
-            <TableEndRecord colspan={8} text={noFoundText} />
-          )}
+          {!logs.length && <TableEndRecord colspan={6} text={noFoundText} />}
         </tbody>
       </table>
       {/* Pagination */}
@@ -76,10 +68,10 @@ const ProductsList = ({
         currentPage={currentPage}
         onClickNext={onClickNext}
         onClickPrev={onClickPrev}
-        noMoreNextPage={products.length === 0}
+        noMoreNextPage={logs.length === 0}
       />
     </div>
   );
 };
 
-export default ProductsList;
+export default LogsList;

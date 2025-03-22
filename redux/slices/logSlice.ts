@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { ProductDetails, ProductsResponse } from '@/types/product';
+import { ActivityLog, LogsResponse } from '@/types/log';
 import api from '@/lib/api';
 import Cookies from 'js-cookie';
 
-interface ProductState {
-  products: ProductDetails[];
+interface LogState {
+  logs: ActivityLog[];
   count: number;
   loading: boolean;
   error: string | null;
@@ -12,17 +12,17 @@ interface ProductState {
 }
 
 // Initial state
-const initialState: ProductState = {
-  products: [],
+const initialState: LogState = {
+  logs: [],
   count: 0,
   loading: false,
   error: null,
   currentPage: 1,
 };
 
-// Async thunk to fetch paginated products
-export const fetchProducts = createAsyncThunk(
-  'product-general/fetch',
+// Async thunk to fetch paginated logs
+export const fetchLogs = createAsyncThunk(
+  'log/fetch',
   async ({
     page,
     limit,
@@ -44,7 +44,7 @@ export const fetchProducts = createAsyncThunk(
     if (startDate !== undefined) params['startDate'] = startDate;
     if (endDate !== undefined) params['endDate'] = endDate;
 
-    const { data } = await api.get<ProductsResponse>('/product-general/fetch', {
+    const { data } = await api.get<LogsResponse>('/log/fetch', {
       params,
       headers: {
         Authorization: `Bearer ${Cookies.get('token')}`,
@@ -52,14 +52,14 @@ export const fetchProducts = createAsyncThunk(
     });
 
     return {
-      products: data.data,
+      logs: data.data,
       count: data.count,
     };
   }
 );
 
-const productSlice = createSlice({
-  name: 'products',
+const logSlice = createSlice({
+  name: 'logs',
   initialState,
   reducers: {
     setPage: (state, action: PayloadAction<number>) => {
@@ -71,21 +71,21 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(fetchLogs.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
+      .addCase(fetchLogs.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload.products;
+        state.logs = action.payload.logs;
         state.count = action.payload.count;
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
+      .addCase(fetchLogs.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch products';
+        state.error = action.error.message || 'Failed to fetch logs';
       });
   },
 });
 
-export const { setPage, setPerPage } = productSlice.actions;
-export default productSlice.reducer;
+export const { setPage, setPerPage } = logSlice.actions;
+export default logSlice.reducer;
