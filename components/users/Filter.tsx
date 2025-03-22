@@ -3,8 +3,8 @@
 import { filterPeriods } from '@/constants';
 import { Modal } from 'flowbite-react';
 import React, { useState } from 'react';
-import { HiDotsVertical } from 'react-icons/hi';
-import { IoIosFunnel } from 'react-icons/io';
+import { HiDotsVertical, HiRefresh } from 'react-icons/hi';
+import { IoIosClose, IoIosFunnel } from 'react-icons/io';
 import Input from '../ui/Input';
 import { useRouter } from 'next/navigation';
 import { getISODateString, now, oneMonthAgo } from '@/lib/utils';
@@ -17,6 +17,7 @@ const Filter = ({
   showPeriod = true,
   handleSearchSubmit,
   handleFilterByDateSubmit,
+  handleRefresh,
 }: {
   pageTitle?: string;
   extra?: JSX.Element;
@@ -29,6 +30,7 @@ const Filter = ({
     endDate: string,
     setOpenModal: (value: React.SetStateAction<boolean>) => void
   ) => void;
+  handleRefresh?: () => void;
 }) => {
   const router = useRouter();
 
@@ -50,6 +52,10 @@ const Filter = ({
     e.preventDefault();
 
     handleFilterByDateSubmit!(startDate, endDate, setOpenModal(false)!);
+  };
+
+  const handleRefreshClick = () => {
+    handleRefresh!();
   };
 
   return (
@@ -81,9 +87,17 @@ const Filter = ({
         <div className={`flex flex-row-reverse lg:flex-row gap-2`}>
           <button
             title='Search with date filter'
+            className='text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-2 py-2 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800 flex gap-1 items-center'
             onClick={() => setOpenModal(true)}
           >
             <HiDotsVertical className={'text-2xl'} />
+          </button>
+          <button
+            title='Refresh'
+            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex gap-1 items-center'
+            onClick={handleRefreshClick}
+          >
+            <HiRefresh size={20} className={'text-2xl'} />
           </button>
           {showPeriod && (
             <form className='w-full'>

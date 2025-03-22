@@ -1,13 +1,13 @@
-import { AuthStateSchema } from '@/redux/slices/authSlice';
+// import { AuthStateSchema } from '@/redux/slices/authSlice';
 
-export const useRedirect = (authState: AuthStateSchema) => {
-  let isLoggedIn = false;
-  let redirectUrl = '/sign-in';
+// export const useRedirect = (authState: AuthStateSchema) => {
+//   let isLoggedIn = false;
+//   let redirectUrl = '/sign-in';
 
-  if (authState.access_token) {
-    isLoggedIn = true;
-    redirectUrl = '/';
-  }
+//   if (authState.access_token) {
+//     isLoggedIn = true;
+//     redirectUrl = '/';
+//   }
 
-  return { isLoggedIn, redirectUrl };
-};
+//   return { isLoggedIn, redirectUrl };
+// };

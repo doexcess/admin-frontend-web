@@ -123,10 +123,6 @@ export const sidebarLinks = [
         route: '/notifications/email',
         label: 'Email',
       },
-      // {
-      //   route: '/notifications/uploads',
-      //   label: 'Uploads',
-      // },
     ],
   },
   {

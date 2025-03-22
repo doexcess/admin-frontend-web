@@ -1,10 +1,6 @@
 'use client';
 import Bar from '@/components/bar/Index';
-import SidebarNav from '@/components/bar/sidebar/SidebarNav';
-import Topbar from '@/components/bar/topbar/Topbar';
-import { useRedirect } from '@/hooks/useRedirect';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from '@/redux/slices/authSlice';
 import { RootState, AppDispatch } from '@/redux/store';
 import React from 'react';
 import { useRouter } from 'next/navigation';

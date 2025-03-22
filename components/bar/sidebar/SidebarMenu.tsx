@@ -71,7 +71,7 @@ const SidebarMenu = ({ handleClose }: { handleClose?: () => void }) => {
                   {sidebarLink.items.map((item) => (
                     <Sidebar.Item
                       key={item.route}
-                      onClick={() => handleNavigation(sidebarLink.route)}
+                      onClick={() => handleNavigation(item.route)}
                       className='cursor-pointer'
                     >
                       {item.label}
