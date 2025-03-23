@@ -2,7 +2,7 @@
 
 const nextConfig = {
   images: {
-    domains: ['res.cloudinary.com'], // Allow images from Cloudinary
+    domains: ['res.cloudinary.com', 'www.mxtechsolutions.com'], // Allow images from Cloudinary
   },
 };
 

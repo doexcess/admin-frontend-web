@@ -69,7 +69,7 @@ const useProducts = () => {
     setStartDate(startDate);
     setEndDate(endDate);
 
-    setOpenModal(false);
+    setOpenModal;
   };
 
   // Handle Refresh

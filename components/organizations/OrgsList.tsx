@@ -38,16 +38,19 @@ const OrgsList = ({
         <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
           <tr>
             <th scope='col' className='px-6 py-3'>
+              Organization
+            </th>
+            <th scope='col' className='px-6 py-3'>
               Name
             </th>
             <th scope='col' className='px-6 py-3'>
-              Phone
+              Email
+            </th>
+            <th scope='col' className='px-6 py-3'>
+              Industry
             </th>
             <th scope='col' className='px-6 py-3'>
               Country
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Device
             </th>
             {type === BusinessState.registered && (
               <th scope='col' className='px-6 py-3'>
@@ -66,7 +69,7 @@ const OrgsList = ({
 
           {!organizations.length && (
             <TableEndRecord
-              colspan={type === BusinessState.registered ? 6 : 5}
+              colspan={type === BusinessState.registered ? 8 : 7}
               text={noFoundText}
             />
           )}

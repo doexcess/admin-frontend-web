@@ -32,8 +32,6 @@ const Filter = ({
   ) => void;
   handleRefresh?: () => void;
 }) => {
-  const router = useRouter();
-
   const [openModal, setOpenModal] = useState(false);
 
   const [startDate, setStartDate] = useState(getISODateString(oneMonthAgo()));

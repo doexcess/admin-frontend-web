@@ -48,10 +48,7 @@ const useQueryParams = <T>(items: T[]) => {
   ) => {
     setStartDate(startDate);
     setEndDate(endDate);
-    queryParams.set('startDate', startDate);
-    queryParams.set('endDate', endDate);
-    router.push(`?${queryParams.toString()}`);
-    setOpenModal(false);
+    setOpenModal;
   };
 
   // Refresh handler

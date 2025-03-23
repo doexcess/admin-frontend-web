@@ -1,5 +1,8 @@
 import { BusinessState, emailSplit, maskSensitiveData } from '@/lib/utils';
 import { Business } from '@/types/organization';
+import moment from 'moment-timezone';
+import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 interface OrgItemProps {
@@ -17,80 +20,86 @@ const OrgItem = ({ type, organization }: OrgItemProps) => {
       >
         <th
           scope='row'
-          className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold flex items-center gap-8'
+          // className='px-4 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold flex items-center gap-2'
+          className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold relative group'
         >
-          <div
-            className={`px-4 py-3 rounded-full`}
-            style={{ backgroundColor: 'blue' }}
+          <Link
+            href={`/organizations/${organization.id}/details`}
+            className='hover:text-primary-400'
           >
-            <p className='text-white'>{organization.user.name[0]}</p>
-          </div>
-          <div>
-            {organization.user.name}{' '}
-            <span className='text-gray-400'>@{organization.business_name}</span>
-            <br />
-            <p className='font-normal'>
-              {maskSensitiveData(emailSplit(organization.user.email)[0])}@
-              {emailSplit(organization.user.email)[1]}
-            </p>
-          </div>
+            {organization.business_name}
+          </Link>
+
+          {/* Show Product Image on Hover */}
+          {organization.logo_url && (
+            <div className='absolute left-20 mt-2 w-[50] object-contain bg-white border rounded-lg shadow-lg hidden group-hover:block z-20'>
+              {organization.logo_url ? (
+                <Image
+                  src={organization.logo_url}
+                  width={100}
+                  height={100}
+                  objectFit='cover'
+                  className='rounded-lg'
+                  alt='logo'
+                />
+              ) : (
+                <div
+                  className={`px-4 py-3 rounded-full`}
+                  style={{ backgroundColor: 'blue' }}
+                >
+                  <p className='text-white'>{organization.business_name[0]}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* <Link
+            href={`/organizations/${organization.id}/details`}
+            className='hover:text-primary-400'
+          >
+            {organization.logo_url ? (
+              <Image
+                src={organization.logo_url}
+                width={50}
+                height={50}
+                objectFit='cover'
+                alt='logo'
+              />
+            ) : (
+              <div
+                className={`px-4 py-3 rounded-full`}
+                style={{ backgroundColor: 'blue' }}
+              >
+                <p className='text-white'>{organization.business_name[0]}</p>
+              </div>
+            )}
+          </Link> */}
         </th>
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-          {organization.user.phone &&
-            `${organization.user.phone.slice(0, 3)} ${maskSensitiveData(
-              organization.user.phone.slice(4)
-            )}`}
+          {organization.user.name}
+        </td>
+        <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
+          {organization.user.email}
+        </td>
+
+        <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
+          {organization.industry}
         </td>
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
           {organization.country_code}
         </td>
-        <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-          {''}
-        </td>
         {type === BusinessState.registered && (
           <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-            {/* {user.isActive ? (
-              <span className='bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'>
-                Active
-              </span>
-            ) : (
-              <span className='bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300'>
-                Frozen
-              </span>
-            )} */}
+            <span className='bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'>
+              Active
+            </span>
           </td>
         )}
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-          {type === BusinessState.registered ? (
-            <>
-              {/* {organization.user. && (
-                <ActionConfirmation
-                  action='Freeze'
-                  body='Are you sure you want to freeze this account?'
-                  className='focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
-                />
-              )}
-              {!user.isActive && (
-                <ActionConfirmation
-                  action='Unfreeze'
-                  body='Are you sure you want to unfreeze this account?'
-                  className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
-                />
-              )} */}
-            </>
-          ) : (
-            <>
-              {/* <ActionConfirmation
-                action='Restore'
-                body='Are you sure you want to restore this account?'
-                className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
-              /> */}
-            </>
-          )}
+          {moment(organization.created_at).format('MMM D, YYYY')}
         </td>
       </tr>
     </>
   );
 };
-
 export default OrgItem;
