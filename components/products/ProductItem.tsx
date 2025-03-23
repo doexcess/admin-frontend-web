@@ -10,10 +10,10 @@ import Drawer from '@/components/ui/Drawer'; // Import a drawer component
 import Image from 'next/image';
 import moment from 'moment'; // Import moment.js
 
-interface ProductItemSchema {
+interface ProductItemProps {
   product: ProductDetails;
 }
-const ProductItem = ({ product }: ProductItemSchema) => {
+const ProductItem = ({ product }: ProductItemProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const priceData = product.price ? (
@@ -96,7 +96,6 @@ const ProductItem = ({ product }: ProductItemSchema) => {
       </tr>
 
       {/* Product Details Drawer */}
-
       <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
         <div
           className='space-y-4 text-gray-900

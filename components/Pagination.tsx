@@ -12,8 +12,8 @@ const Pagination = ({
   paddingRequired?: boolean;
   total?: number;
   currentPage?: number;
-  onClickNext?: () => Promise<void>;
-  onClickPrev?: () => Promise<void>;
+  onClickNext?: () => void;
+  onClickPrev?: () => void;
 }) => {
   const results = total > 1 ? `${total} results` : `${total} result`;
   const isZero = currentPage! - 1 === 0;

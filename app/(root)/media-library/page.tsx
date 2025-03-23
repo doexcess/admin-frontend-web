@@ -1,5 +1,5 @@
 import PageHeading from '@/components/PageHeading';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import React from 'react';
 
 const MediaLibrary = () => {

@@ -2,8 +2,8 @@
 
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
-import Filter from '@/components/users/Filter';
-import UsersList from '@/components/users/UsersList';
+import Filter from '@/components/Filter';
+import UsersList from '@/components/organizations/OrgsList';
 
 import React from 'react';
 

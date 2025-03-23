@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import PageHeading from '@/components/PageHeading';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import Pagination from '@/components/Pagination';
 import NotificationStatus from '@/components/notifications/Status';
 import Link from 'next/link';

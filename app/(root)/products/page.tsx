@@ -2,7 +2,7 @@
 
 import PageHeading from '@/components/PageHeading';
 import ProductsList from '@/components/products/ProductsList';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import useProducts from '@/hooks/page/useProducts';
 import React from 'react';
 

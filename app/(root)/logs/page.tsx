@@ -2,7 +2,7 @@
 
 import LogsList from '@/components/logs/LogsList';
 import PageHeading from '@/components/PageHeading';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import useLogs from '@/hooks/page/useLogs';
 import { fetchLogs } from '@/redux/slices/logSlice';
 import { AppDispatch, RootState } from '@/redux/store';

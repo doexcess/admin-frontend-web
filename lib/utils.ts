@@ -456,6 +456,11 @@ export enum ProductStatus {
   ARCHIVED = 'ARCHIVED',
 }
 
+export enum BusinessState {
+  'registered',
+  'deleted',
+}
+
 export const NotificationStatusTypes = [
   { slug: 'immediate', name: 'Immediate', template: EmailTemplate.CUSTOM },
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },

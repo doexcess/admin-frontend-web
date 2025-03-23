@@ -8,7 +8,7 @@ import { dummyUploads } from '@/constants';
 import { HiDuplicate, HiLink, HiOutlineUpload } from 'react-icons/hi';
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import CreateUpload from '@/components/uploads/CreateUpload';
 
 const Uploads = () => {

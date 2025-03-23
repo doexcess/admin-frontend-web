@@ -2,7 +2,7 @@ import ActionConfirmation from '@/components/ActionConfirmation';
 import DoughnutChart from '@/components/DoughnutChart';
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import { allTimeRatings, ratingTypes } from '@/lib/utils';
 import React from 'react';
 import { HiTrash } from 'react-icons/hi';

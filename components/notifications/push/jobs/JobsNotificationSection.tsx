@@ -3,7 +3,7 @@
 import Pagination from '@/components/Pagination';
 import SectionHeading from '@/components/SectionHeading';
 import Badge from '@/components/ui/Badge';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import {
   getColor,
   NotificationType,

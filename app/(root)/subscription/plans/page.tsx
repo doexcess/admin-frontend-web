@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import { IoIosFunnel } from 'react-icons/io';
 
 import Input from '@/components/ui/Input';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
-import UsersList from '@/components/users/UsersList';
+import UsersList from '@/components/organizations/OrgsList';
 
 const SubscriptionPlans = () => {
   const [openModal, setOpenModal] = useState(false);

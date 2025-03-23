@@ -5,7 +5,7 @@ import { Modal } from 'flowbite-react';
 import React, { useState } from 'react';
 import { HiDotsVertical, HiRefresh } from 'react-icons/hi';
 import { IoIosClose, IoIosFunnel } from 'react-icons/io';
-import Input from '../ui/Input';
+import Input from './ui/Input';
 import { useRouter } from 'next/navigation';
 import { getISODateString, now, oneMonthAgo } from '@/lib/utils';
 
@@ -90,7 +90,7 @@ const Filter = ({
             className='text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-2 py-2 me-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800 flex gap-1 items-center'
             onClick={() => setOpenModal(true)}
           >
-            <HiDotsVertical className={'text-2xl'} />
+            <HiDotsVertical size={20} className={'text-2xl'} />
           </button>
           <button
             title='Refresh'

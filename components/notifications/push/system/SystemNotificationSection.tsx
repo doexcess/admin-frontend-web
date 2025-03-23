@@ -2,7 +2,7 @@
 
 import Pagination from '@/components/Pagination';
 import SectionHeading from '@/components/SectionHeading';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import {
   NotificationType,
   NOTIFICATION_STATUS,

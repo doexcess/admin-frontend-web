@@ -1,8 +1,8 @@
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
 import ProductsList from '@/components/products/ProductsList';
-import Filter from '@/components/users/Filter';
-import UsersList from '@/components/users/UsersList';
+import Filter from '@/components/Filter';
+import UsersList from '@/components/organizations/OrgsList';
 import React from 'react';
 
 const Settings = () => {
@@ -22,7 +22,7 @@ const Settings = () => {
         <div className='overflow-x-auto rounded-none'>
           <div className='relative overflow-x-auto'>
             {/* Users list in a table - registered */}
-            <ProductsList />
+            {/* <ProductsList /> */}
 
             {/* Pagination */}
             <Pagination />

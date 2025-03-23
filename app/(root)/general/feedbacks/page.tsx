@@ -4,7 +4,7 @@ import ActionConfirmation from '@/components/ActionConfirmation';
 import DoughnutChart from '@/components/DoughnutChart';
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import { allTimeFeedbacks, feedbackTypes } from '@/lib/utils';
 import { Modal } from 'flowbite-react';
 import React, { useState } from 'react';

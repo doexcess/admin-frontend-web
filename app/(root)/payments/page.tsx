@@ -1,6 +1,6 @@
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
-import Filter from '@/components/users/Filter';
+import Filter from '@/components/Filter';
 import React from 'react';
 
 const Payments = () => {
