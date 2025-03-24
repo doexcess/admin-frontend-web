@@ -20,7 +20,6 @@ const OrgItem = ({ type, organization }: OrgItemProps) => {
       >
         <th
           scope='row'
-          // className='px-4 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold flex items-center gap-2'
           className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold relative group'
         >
           <Link

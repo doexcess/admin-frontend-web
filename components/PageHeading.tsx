@@ -1,6 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import { Button } from './ui/Button';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useRouter } from 'next/navigation';
 
 const PageHeading = ({
   title,
@@ -9,6 +12,8 @@ const PageHeading = ({
   layer2,
   layer3,
   layer4,
+  enableBackButton,
+  ctaButtons,
 }: {
   title?: string | JSX.Element;
   enableBreadCrumb?: boolean;
@@ -16,7 +21,15 @@ const PageHeading = ({
   layer2?: string;
   layer3?: string;
   layer4?: string;
+  enableBackButton?: boolean;
+  ctaButtons?: JSX.Element;
 }) => {
+  const router = useRouter();
+
+  const goBack = () => {
+    router.back();
+  };
+
   return (
     <>
       {enableBreadCrumb && (
@@ -127,11 +140,18 @@ const PageHeading = ({
         </nav>
       )}
 
-      {title && (
-        <div className='my-5'>
-          <h1 className='text-2xl font-bold'>{title}</h1>
+      <div className='space-y-4 gap-4 mt-5'>
+        {enableBackButton && (
+          <Button className='p-2 px-3' onClick={goBack}>
+            <IoIosArrowBack />
+            Go Back
+          </Button>
+        )}
+        <div className='flex justify-between'>
+          {title && <h1 className='text-2xl font-bold'>{title}</h1>}
+          {ctaButtons}
         </div>
-      )}
+      </div>
     </>
   );
 };
