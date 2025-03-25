@@ -1,10 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import api from '@/lib/api';
 import Cookies from 'js-cookie';
-import { Business, BusinessResponse } from '@/types/organization';
+import {
+  Business,
+  BusinessDetails,
+  BusinessDetailsResponse,
+  BusinessResponse,
+} from '@/types/organization';
 
 interface OrganizationState {
   organizations: Business[];
+  organization: BusinessDetails | null;
   count: number;
   loading: boolean;
   error: string | null;
@@ -14,6 +20,7 @@ interface OrganizationState {
 // Initial state
 const initialState: OrganizationState = {
   organizations: [],
+  organization: null,
   count: 0,
   loading: false,
   error: null,
@@ -23,19 +30,22 @@ const initialState: OrganizationState = {
 // Async thunk to fetch paginated organizations/businesses
 export const fetchOrganizations = createAsyncThunk(
   'onboard/fetch-all-businesses',
-  async ({
-    page,
-    limit,
-    q,
-    startDate,
-    endDate,
-  }: {
-    page?: number;
-    limit?: number;
-    q?: string;
-    startDate?: string;
-    endDate?: string;
-  }) => {
+  async (
+    {
+      page,
+      limit,
+      q,
+      startDate,
+      endDate,
+    }: {
+      page?: number;
+      limit?: number;
+      q?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    { rejectWithValue }
+  ) => {
     const params: Record<string, any> = {};
 
     if (page !== undefined) params['pagination[page]'] = page;
@@ -44,20 +54,46 @@ export const fetchOrganizations = createAsyncThunk(
     if (startDate !== undefined) params['startDate'] = startDate;
     if (endDate !== undefined) params['endDate'] = endDate;
 
-    const { data } = await api.get<BusinessResponse>(
-      '/onboard/fetch-all-businesses',
-      {
-        params,
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`,
-        },
-      }
-    );
+    try {
+      const { data } = await api.get<BusinessResponse>(
+        '/onboard/fetch-all-businesses',
+        {
+          params,
+        }
+      );
 
-    return {
-      organizations: data.data,
-      count: data.count,
-    };
+      return {
+        organizations: data.data,
+        count: data.count,
+      };
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to fetch organizations'
+      );
+    }
+  }
+);
+
+// Async thunk to fetch organization/business details
+export const fetchOrganizationDetails = createAsyncThunk(
+  'onboard/fetch-business-details/:id',
+  async (id: string, { rejectWithValue }) => {
+    const params: Record<string, any> = {};
+
+    try {
+      const { data } = await api.get<BusinessDetailsResponse>(
+        `/onboard/fetch-business-details/${id}`,
+        {
+          params,
+        }
+      );
+
+      return data.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to fetch organization details'
+      );
+    }
   }
 );
 
@@ -86,6 +122,18 @@ const organizationSlice = createSlice({
       .addCase(fetchOrganizations.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch products';
+      })
+      .addCase(fetchOrganizationDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchOrganizationDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.organization = action.payload;
+      })
+      .addCase(fetchOrganizationDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

@@ -46,9 +46,6 @@ export const fetchLogs = createAsyncThunk(
 
     const { data } = await api.get<LogsResponse>('/log/fetch', {
       params,
-      headers: {
-        Authorization: `Bearer ${Cookies.get('token')}`,
-      },
     });
 
     return {

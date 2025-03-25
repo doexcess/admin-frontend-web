@@ -46,9 +46,6 @@ export const fetchProducts = createAsyncThunk(
 
     const { data } = await api.get<ProductsResponse>('/product-general/fetch', {
       params,
-      headers: {
-        Authorization: `Bearer ${Cookies.get('token')}`,
-      },
     });
 
     return {

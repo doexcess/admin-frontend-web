@@ -1,7 +1,6 @@
 import { fetchOrganizations } from '@/redux/slices/organizationSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useQueryParams from '../useQueryParams';
 
