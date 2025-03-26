@@ -10,34 +10,24 @@ import useOrg from '@/hooks/page/useOrg';
 import { useParams } from 'next/navigation';
 import { formatMoney } from '@/lib/utils';
 import Image from 'next/image';
+import useContacts from '@/hooks/page/useContact';
+import ContactList from '@/components/organizations/contacts/ContactList';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
   const { organization, loading } = useOrg();
-
-  // const organization = {
-  //   name: 'Weimmersive Ltd.',
-  //   industry: 'Technology & Education',
-  //   location: 'San Francisco, CA',
-  //   founded: 2018,
-  //   employees: 50,
-  //   description:
-  //     'Weimmersive Ltd. is a leading provider of VR and digital art education solutions for institutions and independent creators.',
-  //   contacts: [
-  //     { name: 'John Doe', role: 'CEO', email: 'john.doe@weimmersive.com' },
-  //     { name: 'Jane Smith', role: 'CTO', email: 'jane.smith@weimmersive.com' },
-  //   ],
-  //   walletBalance: 12500.75,
-  //   products: [],
-  //   payments: [],
-  //   coupons: [],
-  //   customers: [],
-  //   subscriptionPlans: [],
-  //   multimedia: [],
-  //   withdrawalAccount: {},
-  //   billingDetails: {},
-  // };
+  const {
+    contacts,
+    loading: contactLoading,
+    count: totalContacts,
+    currentPage,
+    handleSearchSubmit,
+    handleFilterByDateSubmit,
+    handleRefresh,
+    onClickNext,
+    onClickPrev,
+  } = useContacts();
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -82,7 +72,16 @@ const OrganizationDetails = () => {
           </div>
         );
       case 'contacts':
-        return <div className='space-y-4'></div>;
+        return (
+          <ContactList
+            contacts={contacts}
+            count={totalContacts}
+            onClickNext={onClickNext}
+            onClickPrev={onClickPrev}
+            currentPage={currentPage}
+            loading={contactLoading}
+          />
+        );
       case 'products':
         return <p>Products content goes here.</p>;
       case 'payments':
@@ -134,7 +133,7 @@ const OrganizationDetails = () => {
             {[
               {
                 label: 'Contacts & Members',
-                value: '5,000',
+                value: totalContacts.toLocaleString(),
                 change: '',
               },
               { label: 'Revenue', value: 'NGN 48,575', change: '+3.84%' },

@@ -111,3 +111,31 @@ export interface BusinessDetailsResponse {
   message: string;
   data: BusinessDetails;
 }
+
+// Contact
+export interface ContactRole {
+  name: string;
+  role_id: string;
+}
+
+export interface ContactUser {
+  id: string;
+  role: ContactRole;
+}
+
+export interface ContactAccount {
+  id: string;
+  name: string;
+  email: string;
+  is_owner: boolean;
+  user: ContactUser;
+  status: 'active' | 'inactive'; // Adjust based on possible values
+  expires_at: string | null;
+  created_at: string;
+}
+
+export interface ContactResponse {
+  statusCode: number;
+  data: ContactAccount[];
+  count: number;
+}

@@ -10,8 +10,6 @@ interface OrgItemProps {
   organization: Business;
 }
 const OrgItem = ({ type, organization }: OrgItemProps) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
   return (
     <>
       <tr

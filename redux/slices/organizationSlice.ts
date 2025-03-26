@@ -6,11 +6,15 @@ import {
   BusinessDetails,
   BusinessDetailsResponse,
   BusinessResponse,
+  ContactAccount,
+  ContactResponse,
 } from '@/types/organization';
 
 interface OrganizationState {
   organizations: Business[];
   organization: BusinessDetails | null;
+  contacts: ContactAccount[];
+  totalContacts: number;
   count: number;
   loading: boolean;
   error: string | null;
@@ -21,6 +25,8 @@ interface OrganizationState {
 const initialState: OrganizationState = {
   organizations: [],
   organization: null,
+  contacts: [],
+  totalContacts: 0,
   count: 0,
   loading: false,
   error: null,
@@ -97,6 +103,55 @@ export const fetchOrganizationDetails = createAsyncThunk(
   }
 );
 
+// Async thunk to fetch paginated organizations/businesses
+export const fetchContacts = createAsyncThunk(
+  'contact/fetch/:id',
+  async (
+    {
+      businessId,
+      page,
+      limit,
+      q,
+      startDate,
+      endDate,
+    }: {
+      businessId: string;
+      page?: number;
+      limit?: number;
+      q?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    { rejectWithValue }
+  ) => {
+    const params: Record<string, any> = {};
+
+    if (page !== undefined) params['pagination[page]'] = page;
+    if (limit !== undefined) params['pagination[limit]'] = limit;
+    if (q !== undefined) params['q'] = q;
+    if (startDate !== undefined) params['startDate'] = startDate;
+    if (endDate !== undefined) params['endDate'] = endDate;
+
+    try {
+      const { data } = await api.get<ContactResponse>(
+        `/contact/fetch/${businessId}`,
+        {
+          params,
+        }
+      );
+
+      return {
+        contacts: data.data,
+        count: data.count,
+      };
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to fetch contacts'
+      );
+    }
+  }
+);
+
 const organizationSlice = createSlice({
   name: 'organizations',
   initialState,
@@ -132,6 +187,19 @@ const organizationSlice = createSlice({
         state.organization = action.payload;
       })
       .addCase(fetchOrganizationDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchContacts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.contacts = action.payload.contacts;
+        state.totalContacts = action.payload.count;
+      })
+      .addCase(fetchContacts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
