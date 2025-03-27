@@ -461,6 +461,11 @@ export enum BusinessState {
   'deleted',
 }
 
+export enum ContactStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+}
+
 export const NotificationStatusTypes = [
   { slug: 'immediate', name: 'Immediate', template: EmailTemplate.CUSTOM },
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },

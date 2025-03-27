@@ -12,6 +12,8 @@ import { formatMoney } from '@/lib/utils';
 import Image from 'next/image';
 import useContacts from '@/hooks/page/useContact';
 import ContactList from '@/components/organizations/contacts/ContactList';
+import ProductsList from '@/components/products/ProductsList';
+import useProducts from '@/hooks/page/useProducts';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -22,12 +24,18 @@ const OrganizationDetails = () => {
     loading: contactLoading,
     count: totalContacts,
     currentPage,
-    handleSearchSubmit,
-    handleFilterByDateSubmit,
-    handleRefresh,
     onClickNext,
     onClickPrev,
   } = useContacts();
+
+  const {
+    products,
+    loading: productsLoading,
+    count: totalProducts,
+    currentPage: productsCurrentPage,
+    onClickNext: productsOnClickNext,
+    onClickPrev: productsOnClickPrev,
+  } = useProducts();
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -83,7 +91,16 @@ const OrganizationDetails = () => {
           />
         );
       case 'products':
-        return <p>Products content goes here.</p>;
+        return (
+          <ProductsList
+            products={products}
+            count={totalProducts}
+            onClickNext={productsOnClickNext}
+            onClickPrev={productsOnClickPrev}
+            currentPage={productsCurrentPage}
+            loading={productsLoading}
+          />
+        );
       case 'payments':
         return <p>Payments content goes here.</p>;
       case 'coupons':
@@ -111,7 +128,7 @@ const OrganizationDetails = () => {
           title={organization?.business_name}
           enableBreadCrumb={true}
           layer2='Organizations'
-          layer3={`wiewie`}
+          layer3={organization?.business_name}
           enableBackButton={true}
           ctaButtons={
             <div className='flex gap-2'>
@@ -136,8 +153,8 @@ const OrganizationDetails = () => {
                 value: totalContacts.toLocaleString(),
                 change: '',
               },
-              { label: 'Revenue', value: 'NGN 48,575', change: '+3.84%' },
-              { label: 'Orders', value: '4,800+', change: '+1.46%' },
+              { label: 'Revenue', value: 'NGN 48,575', change: '' },
+              { label: 'Orders', value: '4,800+', change: '' },
               {
                 label: 'Wallet Balance',
                 value: formatMoney(

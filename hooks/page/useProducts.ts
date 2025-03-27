@@ -1,11 +1,12 @@
 import { fetchProducts } from '@/redux/slices/productSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const useProducts = () => {
   const searchParams = useSearchParams();
+  const params = useParams();
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const queryParams = new URLSearchParams(searchParams.toString());
@@ -29,6 +30,7 @@ const useProducts = () => {
         ...(q && { q }),
         ...(startDate && { startDate }),
         ...(endDate && { endDate }),
+        ...(params?.id && { business_id: params?.id as string }),
       })
     );
   }, [dispatch, currentPage, perPage, q, startDate, endDate]);

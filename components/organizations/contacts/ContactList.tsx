@@ -25,51 +25,56 @@ const ContactList = ({
   const searchParams = useSearchParams();
   if (loading) return <LoadingSkeleton />;
 
-  const noFoundText = searchParams.has('q') ? 'No record found.' : undefined;
+  const noFoundText =
+    !searchParams.has('page') || searchParams.has('q')
+      ? 'No record found.'
+      : undefined;
 
   return (
-    <div>
-      <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-          <tr>
-            <th scope='col' className='px-6 py-3'>
-              Name
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Email
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Role
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Status
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Invitation Expiry
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Date Created
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {contacts.map((contact) => (
-            <ContactItem contact={contact} />
-          ))}
+    <div className='overflow-x-auto rounded-none'>
+      <div className='relative overflow-x-auto'>
+        <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope='col' className='px-6 py-3'>
+                Name
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Email
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Role
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Status
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Invitation Expiry
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Date Created
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.map((contact) => (
+              <ContactItem contact={contact} />
+            ))}
 
-          {!contacts.length && (
-            <TableEndRecord colspan={6} text={noFoundText} />
-          )}
-        </tbody>
-      </table>
-      {/* Pagination */}
-      <Pagination
-        total={count}
-        currentPage={currentPage}
-        onClickNext={onClickNext}
-        onClickPrev={onClickPrev}
-        noMoreNextPage={contacts.length === 0}
-      />
+            {!contacts.length && (
+              <TableEndRecord colspan={6} text={noFoundText} />
+            )}
+          </tbody>
+        </table>
+        {/* Pagination */}
+        <Pagination
+          total={count}
+          currentPage={currentPage}
+          onClickNext={onClickNext}
+          onClickPrev={onClickPrev}
+          noMoreNextPage={contacts.length === 0}
+        />
+      </div>
     </div>
   );
 };

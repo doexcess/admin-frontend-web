@@ -27,57 +27,62 @@ const ProductsList = ({
   const searchParams = useSearchParams();
   if (loading) return <LoadingSkeleton />;
 
-  const noFoundText = searchParams.has('q') ? 'No record found.' : undefined;
+  const noFoundText =
+    !searchParams.has('page') || searchParams.has('q')
+      ? 'No record found.'
+      : undefined;
 
   return (
-    <div>
-      <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-          <tr>
-            <th scope='col' className='px-6 py-3'>
-              Name
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Price
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Organization
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Category
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Type
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Status
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Published Date
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Date Created
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <ProductItem product={product} />
-          ))}
+    <div className='overflow-x-auto rounded-none'>
+      <div className='relative overflow-x-auto'>
+        <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope='col' className='px-6 py-3'>
+                Name
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Price
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Organization
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Category
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Type
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Status
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Published Date
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Date Created
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <ProductItem product={product} />
+            ))}
 
-          {!products.length && (
-            <TableEndRecord colspan={8} text={noFoundText} />
-          )}
-        </tbody>
-      </table>
-      {/* Pagination */}
-      <Pagination
-        total={count}
-        currentPage={currentPage}
-        onClickNext={onClickNext}
-        onClickPrev={onClickPrev}
-        noMoreNextPage={products.length === 0}
-      />
+            {!products.length && (
+              <TableEndRecord colspan={8} text={noFoundText} />
+            )}
+          </tbody>
+        </table>
+        {/* Pagination */}
+        <Pagination
+          total={count}
+          currentPage={currentPage}
+          onClickNext={onClickNext}
+          onClickPrev={onClickPrev}
+          noMoreNextPage={products.length === 0}
+        />
+      </div>
     </div>
   );
 };

@@ -29,12 +29,14 @@ export const fetchProducts = createAsyncThunk(
     q,
     startDate,
     endDate,
+    business_id,
   }: {
     page?: number;
     limit?: number;
     q?: string;
     startDate?: string;
     endDate?: string;
+    business_id?: string;
   }) => {
     const params: Record<string, any> = {};
 
@@ -43,6 +45,7 @@ export const fetchProducts = createAsyncThunk(
     if (q !== undefined) params['q'] = q;
     if (startDate !== undefined) params['startDate'] = startDate;
     if (endDate !== undefined) params['endDate'] = endDate;
+    if (business_id !== undefined) params['business_id'] = business_id;
 
     const { data } = await api.get<ProductsResponse>('/product-general/fetch', {
       params,

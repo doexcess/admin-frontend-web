@@ -1,3 +1,5 @@
+import { ContactStatus } from '@/lib/utils';
+
 // Business details
 export interface Role {
   id: string;
@@ -129,7 +131,7 @@ export interface ContactAccount {
   email: string;
   is_owner: boolean;
   user: ContactUser;
-  status: 'active' | 'inactive'; // Adjust based on possible values
+  status: ContactStatus; // Adjust based on possible values
   expires_at: string | null;
   created_at: string;
 }

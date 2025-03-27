@@ -38,18 +38,14 @@ const Products = () => {
         />
       </header>
       <section className='section-container-padding-0 mt-2'>
-        <div className='overflow-x-auto rounded-none'>
-          <div className='relative overflow-x-auto'>
-            <ProductsList
-              products={products}
-              count={count}
-              onClickNext={onClickNext}
-              onClickPrev={onClickPrev}
-              currentPage={currentPage}
-              loading={loading}
-            />
-          </div>
-        </div>
+        <ProductsList
+          products={products}
+          count={count}
+          onClickNext={onClickNext}
+          onClickPrev={onClickPrev}
+          currentPage={currentPage}
+          loading={loading}
+        />
       </section>
     </main>
   );

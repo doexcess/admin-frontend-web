@@ -1,4 +1,6 @@
+import { ContactStatus } from '@/lib/utils';
 import { ContactAccount } from '@/types/organization';
+import { capitalize } from 'lodash';
 import moment from 'moment-timezone';
 import Link from 'next/link';
 import React from 'react';
@@ -26,12 +28,21 @@ const ContactItem = ({ contact }: ContactItemProps) => {
           {contact.is_owner ? 'Owner' : 'Member'}
         </td>
 
-        <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-          {contact.status}
+        <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white '>
+          <span
+            className={`px-2 py-1 rounded-md text-sm ${
+              contact.status === ContactStatus.ACTIVE
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
+            }`}
+          >
+            {capitalize(contact.status)}
+          </span>
         </td>
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-          {contact.expires_at &&
-            moment(contact.expires_at).format('MMM D, YYYY')}
+          {contact.expires_at
+            ? moment(contact.expires_at).format('MMM D, YYYY')
+            : 'N/A'}
         </td>
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
           {moment(contact.created_at).format('MMM D, YYYY')}
