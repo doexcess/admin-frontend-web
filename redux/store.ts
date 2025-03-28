@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
 import productReducer from './slices/productSlice';
+import paymentReducer from './slices/paymentSlice';
 import logReducer from './slices/logSlice';
 import organizationReducer from './slices/organizationSlice';
 import storage from 'redux-persist/lib/storage'; // Uses localStorage
@@ -17,6 +18,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(persistConfig, authReducer),
   product: productReducer, // Not persisted
+  payment: paymentReducer, // Not persisted
   log: logReducer, // Not persisted
   organization: organizationReducer, // Not persisted
 });

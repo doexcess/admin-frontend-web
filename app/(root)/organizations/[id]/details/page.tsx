@@ -5,15 +5,16 @@ import SectionContent from '@/components/SectionContent';
 import { Button } from '@/components/ui/Button';
 import React, { useState } from 'react';
 import { IoIosAdd } from 'react-icons/io';
-import { FaPauseCircle, FaBan } from 'react-icons/fa';
+import { FaBan } from 'react-icons/fa';
 import useOrg from '@/hooks/page/useOrg';
-import { useParams } from 'next/navigation';
 import { formatMoney } from '@/lib/utils';
 import Image from 'next/image';
 import useContacts from '@/hooks/page/useContact';
 import ContactList from '@/components/organizations/contacts/ContactList';
 import ProductsList from '@/components/products/ProductsList';
 import useProducts from '@/hooks/page/useProducts';
+import usePayments from '@/hooks/page/usePayments';
+import PaymentsList from '@/components/payments/PaymentsList';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -36,6 +37,15 @@ const OrganizationDetails = () => {
     onClickNext: productsOnClickNext,
     onClickPrev: productsOnClickPrev,
   } = useProducts();
+
+  const {
+    payments,
+    loading: paymentsLoading,
+    count: totalPayments,
+    currentPage: paymentsCurrentPage,
+    onClickNext: paymentsOnClickNext,
+    onClickPrev: paymentsOnClickPrev,
+  } = usePayments();
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -102,7 +112,16 @@ const OrganizationDetails = () => {
           />
         );
       case 'payments':
-        return <p>Payments content goes here.</p>;
+        return (
+          <PaymentsList
+            payments={payments}
+            count={totalPayments}
+            onClickNext={paymentsOnClickNext}
+            onClickPrev={paymentsOnClickPrev}
+            currentPage={paymentsCurrentPage}
+            loading={paymentsLoading}
+          />
+        );
       case 'coupons':
         return <p>Coupons content goes here.</p>;
       case 'customers':

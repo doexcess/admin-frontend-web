@@ -466,6 +466,21 @@ export enum ContactStatus {
   INACTIVE = 'inactive',
 }
 
+export enum PaymentStatus {
+  SUCCESS = 'SUCCESS',
+  PENDING = 'PENDING',
+  FAILED = 'FAILED',
+}
+
+export enum PaymentMethod {
+  PAYSTACK = 'PAYSTACK',
+}
+
+export enum PurchaseItemType {
+  COURSE = 'COURSE',
+  TICKET = 'TICKET',
+}
+
 export const NotificationStatusTypes = [
   { slug: 'immediate', name: 'Immediate', template: EmailTemplate.CUSTOM },
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },
@@ -578,3 +593,7 @@ export const oneMonthAgo = () => {
   return oneMonthAgo;
 };
 export const now = new Date();
+
+export const shortenId = (id: string) => {
+  return id.split('-')[0];
+};
