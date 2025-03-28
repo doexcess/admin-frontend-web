@@ -481,6 +481,11 @@ export enum PurchaseItemType {
   TICKET = 'TICKET',
 }
 
+export enum CouponType {
+  PERCENTAGE = 'PERCENTAGE',
+  FLAT = 'FLAT',
+}
+
 export const NotificationStatusTypes = [
   { slug: 'immediate', name: 'Immediate', template: EmailTemplate.CUSTOM },
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },
