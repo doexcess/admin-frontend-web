@@ -62,7 +62,7 @@ const OrganizationDetails = () => {
     switch (activeTab) {
       case 'overview':
         return (
-          <div className='rounded-xl shadow-lg p-6 text-white'>
+          <div className='rounded-xl shadow-lg p-6'>
             <h2 className='text-3xl font-bold mb-4'>Organization Overview</h2>
             <div className='mb-3'>
               <Image
