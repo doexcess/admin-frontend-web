@@ -481,9 +481,25 @@ export enum PurchaseItemType {
   TICKET = 'TICKET',
 }
 
+export enum ProductType {
+  COURSE = 'COURSE',
+  TICKET = 'TICKET',
+}
+
 export enum CouponType {
   PERCENTAGE = 'PERCENTAGE',
   FLAT = 'FLAT',
+}
+
+export enum CartType {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+  SOLD_OUT = 'SOLD_OUT',
+}
+
+export enum EventType {
+  ONLINE = 'ONLINE',
+  IN_PERSON = 'IN_PERSON',
 }
 
 export const NotificationStatusTypes = [

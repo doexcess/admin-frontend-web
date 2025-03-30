@@ -54,10 +54,22 @@ export interface Transaction {
   updated_at: string;
   deleted_at: string | null;
   user: User;
-  subscription_plan: string | null;
+  subscription_plan: SubscriptionPlan;
   billing_info: string | null;
   refunds: any[];
   payment_gateway_logs: any[];
+}
+
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  description: string | null;
+  cover_image: string | null;
+  business_id: string;
+  creator_id: string;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  deleted_at: string | null;
 }
 
 export interface PaymentResponse {
