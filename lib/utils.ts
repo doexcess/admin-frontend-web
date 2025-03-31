@@ -502,6 +502,16 @@ export enum EventType {
   IN_PERSON = 'IN_PERSON',
 }
 
+export enum MultimediaType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  AUDIO = 'AUDIO',
+}
+
+export enum MultimediaProvider {
+  CLOUDINARY = 'CLOUDINARY',
+}
+
 export const NotificationStatusTypes = [
   { slug: 'immediate', name: 'Immediate', template: EmailTemplate.CUSTOM },
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },

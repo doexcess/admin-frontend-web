@@ -17,6 +17,8 @@ import usePayments from '@/hooks/page/usePayments';
 import PaymentsList from '@/components/payments/PaymentsList';
 import CouponsList from '@/components/coupons/CouponsList';
 import useCoupons from '@/hooks/page/useCoupons';
+import CartList from '@/components/cart/CartList';
+import useCart from '@/hooks/page/useCart';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -57,6 +59,15 @@ const OrganizationDetails = () => {
     onClickNext: couponsOnClickNext,
     onClickPrev: couponsOnClickPrev,
   } = useCoupons();
+
+  const {
+    carts,
+    loading: cartsLoading,
+    count: totalCarts,
+    currentPage: cartsCurrentPage,
+    onClickNext: cartsOnClickNext,
+    onClickPrev: cartsOnClickPrev,
+  } = useCart();
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -142,6 +153,17 @@ const OrganizationDetails = () => {
             onClickPrev={couponsOnClickPrev}
             currentPage={couponsCurrentPage}
             loading={couponsLoading}
+          />
+        );
+      case 'carts':
+        return (
+          <CartList
+            carts={carts}
+            count={totalCarts}
+            onClickNext={cartsOnClickNext}
+            onClickPrev={cartsOnClickPrev}
+            currentPage={cartsCurrentPage}
+            loading={cartsLoading}
           />
         );
       case 'subscriptionPlans':
@@ -237,6 +259,7 @@ const OrganizationDetails = () => {
               'products',
               'payments',
               'coupons',
+              'carts',
               'customers',
               'subscription Plans',
               'multimedia',

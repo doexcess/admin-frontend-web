@@ -1,4 +1,7 @@
 import { CartType, EventType, ProductStatus, ProductType } from '@/lib/utils';
+import { BusinessInfo } from './product';
+import { Media } from './mulltimedia';
+import { User } from './organization';
 
 export interface Product {
   id: string;
@@ -17,6 +20,8 @@ export interface Product {
   currency: string;
   original_price: string | null;
   multimedia_id: string;
+  business_info: BusinessInfo;
+  multimedia: Media;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
@@ -72,6 +77,8 @@ export interface Course {
   currency: string;
   original_price: string | null;
   multimedia_id: string;
+  business_info: BusinessInfo;
+  multimedia: Media;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
@@ -97,11 +104,12 @@ export interface Cart {
   id: string;
   created_at: string;
   updated_at: string;
+  user: User;
   items: CartItem[];
 }
 
 export interface CartResponse {
   statusCode: number;
-  data: Cart;
+  data: Cart[];
   count: number;
 }

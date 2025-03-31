@@ -1,11 +1,14 @@
+'use client';
+
 import PageHeading from '@/components/PageHeading';
-import Pagination from '@/components/Pagination';
-import ProductsList from '@/components/products/ProductsList';
 import Filter from '@/components/Filter';
-import UsersList from '@/components/organizations/OrgsList';
 import React from 'react';
+import CartList from '@/components/cart/CartList';
+import useCart from '@/hooks/page/useCart';
 
 const Cart = () => {
+  const { carts, count, onClickNext, onClickPrev, currentPage, loading } =
+    useCart();
   return (
     <main>
       <header className='section-container'>
@@ -17,11 +20,14 @@ const Cart = () => {
       <section className='section-container-padding-0 mt-2'>
         <div className='overflow-x-auto rounded-none'>
           <div className='relative overflow-x-auto'>
-            {/* Users list in a table - registered */}
-            {/* <ProductsList /> */}
-
-            {/* Pagination */}
-            <Pagination />
+            <CartList
+              carts={carts}
+              count={count}
+              onClickNext={onClickNext}
+              onClickPrev={onClickPrev}
+              currentPage={currentPage}
+              loading={loading}
+            />
           </div>
         </div>
       </section>

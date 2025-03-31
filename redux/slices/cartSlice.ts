@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { ProductDetails, ProductsResponse } from '@/types/product';
 import api from '@/lib/api';
+import { Cart, CartResponse } from '@/types/cart';
 
-interface ProductState {
-  products: ProductDetails[];
+interface CartState {
+  carts: Cart[];
   count: number;
   loading: boolean;
   error: string | null;
@@ -11,17 +12,17 @@ interface ProductState {
 }
 
 // Initial state
-const initialState: ProductState = {
-  products: [],
+const initialState: CartState = {
+  carts: [],
   count: 0,
   loading: false,
   error: null,
   currentPage: 1,
 };
 
-// Async thunk to fetch paginated products
-export const fetchProducts = createAsyncThunk(
-  'product-general/fetch',
+// Async thunk to fetch paginated carts
+export const fetchCarts = createAsyncThunk(
+  '/cart/fetch-all',
   async ({
     page,
     limit,
@@ -46,19 +47,19 @@ export const fetchProducts = createAsyncThunk(
     if (endDate !== undefined) params['endDate'] = endDate;
     if (business_id !== undefined) params['business_id'] = business_id;
 
-    const { data } = await api.get<ProductsResponse>('/product-general/fetch', {
+    const { data } = await api.get<CartResponse>('/cart/fetch-all', {
       params,
     });
 
     return {
-      products: data.data,
+      carts: data.data,
       count: data.count,
     };
   }
 );
 
-const productSlice = createSlice({
-  name: 'products',
+const cartSlice = createSlice({
+  name: 'carts',
   initialState,
   reducers: {
     setPage: (state, action: PayloadAction<number>) => {
@@ -70,21 +71,21 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(fetchCarts.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
+      .addCase(fetchCarts.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload.products;
+        state.carts = action.payload.carts;
         state.count = action.payload.count;
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
+      .addCase(fetchCarts.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch products';
+        state.error = action.error.message || 'Failed to fetch carts';
       });
   },
 });
 
-export const { setPage, setPerPage } = productSlice.actions;
-export default productSlice.reducer;
+export const { setPage, setPerPage } = cartSlice.actions;
+export default cartSlice.reducer;

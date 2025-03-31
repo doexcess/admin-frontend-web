@@ -1,30 +1,30 @@
 'use client';
 
 import React from 'react';
-import ProductItem from './PaymentItem';
+import CartItem from './CartItem';
 import Pagination from '../Pagination';
 import TableEndRecord from '../ui/TableEndRecord';
+import { ProductDetails } from '@/types/product';
 import LoadingSkeleton from '../ui/LoadingSkeleton';
 import { useSearchParams } from 'next/navigation';
-import { Transaction } from '@/types/payment';
-import PaymentItem from './PaymentItem';
+import { Cart } from '@/types/cart';
 
-interface PaymentListProps {
-  payments: Transaction[];
+interface CartListProps {
+  carts: Cart[];
   count: number;
   onClickNext: () => Promise<void>;
   onClickPrev: () => Promise<void>;
   currentPage: number;
   loading: boolean;
 }
-const PaymentsList = ({
-  payments,
+const CartList = ({
+  carts,
   count,
   onClickNext,
   onClickPrev,
   currentPage,
   loading,
-}: PaymentListProps) => {
+}: CartListProps) => {
   const searchParams = useSearchParams();
   if (loading) return <LoadingSkeleton />;
 
@@ -40,36 +40,31 @@ const PaymentsList = ({
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
-                Payment ID
+                ID
               </th>
               <th scope='col' className='px-6 py-3'>
-                Purchased by
+                Items
               </th>
               <th scope='col' className='px-6 py-3'>
-                Item(s) purchased
+                User
               </th>
               <th scope='col' className='px-6 py-3'>
-                Amount
+                Total
               </th>
               <th scope='col' className='px-6 py-3'>
-                Payment Method
+                Organization
               </th>
               <th scope='col' className='px-6 py-3'>
-                Status
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Date Created
+                Date Added
               </th>
             </tr>
           </thead>
           <tbody>
-            {payments.map((payment) => (
-              <PaymentItem payment={payment} />
+            {carts.map((cart) => (
+              <CartItem cart_item={cart} />
             ))}
 
-            {!payments.length && (
-              <TableEndRecord colspan={8} text={noFoundText} />
-            )}
+            {!carts.length && <TableEndRecord colspan={8} text={noFoundText} />}
           </tbody>
         </table>
         {/* Pagination */}
@@ -78,11 +73,11 @@ const PaymentsList = ({
           currentPage={currentPage}
           onClickNext={onClickNext}
           onClickPrev={onClickPrev}
-          noMoreNextPage={payments.length === 0}
+          noMoreNextPage={carts.length === 0}
         />
       </div>
     </div>
   );
 };
 
-export default PaymentsList;
+export default CartList;
