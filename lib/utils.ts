@@ -512,6 +512,11 @@ export enum MultimediaProvider {
   CLOUDINARY = 'CLOUDINARY',
 }
 
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
 export const NotificationStatusTypes = [
   { slug: 'immediate', name: 'Immediate', template: EmailTemplate.CUSTOM },
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },

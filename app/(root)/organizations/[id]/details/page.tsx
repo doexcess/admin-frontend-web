@@ -9,7 +9,7 @@ import { FaBan } from 'react-icons/fa';
 import useOrg from '@/hooks/page/useOrg';
 import { formatMoney } from '@/lib/utils';
 import Image from 'next/image';
-import useContacts from '@/hooks/page/useContact';
+import useContacts from '@/hooks/page/useContacts';
 import ContactList from '@/components/organizations/contacts/ContactList';
 import ProductsList from '@/components/products/ProductsList';
 import useProducts from '@/hooks/page/useProducts';
@@ -19,11 +19,23 @@ import CouponsList from '@/components/coupons/CouponsList';
 import useCoupons from '@/hooks/page/useCoupons';
 import CartList from '@/components/cart/CartList';
 import useCart from '@/hooks/page/useCart';
+import CustomersList from '@/components/organizations/customers/CustomersList';
+import useCustomers from '@/hooks/page/useCustomers';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
   const { organization, loading } = useOrg();
+
+  const {
+    customers,
+    loading: customerLoading,
+    count: totalCustomers,
+    currentPage: customerCurrentPage,
+    onClickNext: customerOnClickNext,
+    onClickPrev: customerOnClickPrev,
+  } = useCustomers();
+
   const {
     contacts,
     loading: contactLoading,
@@ -164,6 +176,17 @@ const OrganizationDetails = () => {
             onClickPrev={cartsOnClickPrev}
             currentPage={cartsCurrentPage}
             loading={cartsLoading}
+          />
+        );
+      case 'customers':
+        return (
+          <CustomersList
+            customers={customers}
+            count={totalCustomers}
+            onClickNext={customerOnClickNext}
+            onClickPrev={customerOnClickPrev}
+            currentPage={customerCurrentPage}
+            loading={customerLoading}
           />
         );
       case 'subscriptionPlans':

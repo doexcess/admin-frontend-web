@@ -4,11 +4,14 @@ import React, { useState } from 'react';
 import Drawer from '@/components/ui/Drawer'; // Import a drawer component
 
 import moment from 'moment'; // Import moment.js
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 interface CartItemProps {
   cart_item: Cart;
 }
 const CartItem = ({ cart_item }: CartItemProps) => {
+  const params = useParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const latest_cart_item = cart_item.items[0];
@@ -28,6 +31,11 @@ const CartItem = ({ cart_item }: CartItemProps) => {
       ? latest_cart_item.course?.business_info.business_name
       : latest_cart_item.ticket_tier?.ticket.product.business_info
           .business_name;
+
+  let business_id =
+    latest_cart_item.product_type === ProductType.COURSE
+      ? latest_cart_item.course?.business_id
+      : latest_cart_item.ticket_tier?.ticket.product.business_id;
 
   let items = cart_item.items.map((item) =>
     item.product_type === ProductType.COURSE ? (
@@ -105,6 +113,16 @@ dark:text-white'
               {moment(cart_item.updated_at).format('MMMM D, YYYY')}
             </p>
           </div>
+          {!params.id && (
+            <div className='mt-3'>
+              <Link
+                href={`/organizations/${business_id}/details`}
+                className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+              >
+                View business
+              </Link>
+            </div>
+          )}
         </div>
       </Drawer>
     </>

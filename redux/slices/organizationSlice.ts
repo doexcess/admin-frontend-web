@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import api from '@/lib/api';
-import Cookies from 'js-cookie';
 import {
   Business,
   BusinessDetails,
@@ -8,12 +7,16 @@ import {
   BusinessResponse,
   ContactAccount,
   ContactResponse,
+  Customer,
+  CustomersResponse,
 } from '@/types/organization';
 
 interface OrganizationState {
   organizations: Business[];
   organization: BusinessDetails | null;
   contacts: ContactAccount[];
+  customers: Customer[];
+  totalCustomers: number;
   totalContacts: number;
   count: number;
   loading: boolean;
@@ -26,6 +29,8 @@ const initialState: OrganizationState = {
   organizations: [],
   organization: null,
   contacts: [],
+  customers: [],
+  totalCustomers: 0,
   totalContacts: 0,
   count: 0,
   loading: false,
@@ -152,6 +157,56 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+// Async thunk to fetch paginated business customers
+export const fetchCustomers = createAsyncThunk(
+  'contact/fetch-customers',
+  async (
+    {
+      business_id,
+      page,
+      limit,
+      q,
+      startDate,
+      endDate,
+    }: {
+      business_id?: string;
+      page?: number;
+      limit?: number;
+      q?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    { rejectWithValue }
+  ) => {
+    const params: Record<string, any> = {};
+
+    if (page !== undefined) params['pagination[page]'] = page;
+    if (limit !== undefined) params['pagination[limit]'] = limit;
+    if (q !== undefined) params['q'] = q;
+    if (business_id !== undefined) params['business_id'] = business_id;
+    if (startDate !== undefined) params['startDate'] = startDate;
+    if (endDate !== undefined) params['endDate'] = endDate;
+
+    try {
+      const { data } = await api.get<CustomersResponse>(
+        `/contact/fetch-customers`,
+        {
+          params,
+        }
+      );
+
+      return {
+        customers: data.data,
+        count: data.count,
+      };
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch business's customers"
+      );
+    }
+  }
+);
+
 const organizationSlice = createSlice({
   name: 'organizations',
   initialState,
@@ -200,6 +255,19 @@ const organizationSlice = createSlice({
         state.totalContacts = action.payload.count;
       })
       .addCase(fetchContacts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchCustomers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCustomers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.customers = action.payload.customers;
+        state.totalCustomers = action.payload.count;
+      })
+      .addCase(fetchCustomers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

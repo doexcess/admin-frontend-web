@@ -1,4 +1,5 @@
 import { ContactStatus } from '@/lib/utils';
+import { Multimedia } from './product';
 
 // Business details
 export interface Role {
@@ -139,5 +140,41 @@ export interface ContactAccount {
 export interface ContactResponse {
   statusCode: number;
   data: ContactAccount[];
+  count: number;
+}
+
+export interface Profile {
+  id: string;
+  user_id: string;
+  profile_picture?: string | null;
+  address?: string | null;
+  state?: string | null;
+  country?: string; // Defaults to "Nigeria"
+  country_code?: string; // Defaults to "NG"
+  bio?: string | null;
+  date_of_birth?: string | null; // Consider using `Date` if parsing is needed
+  gender?: Gender | null;
+  created_at: string; // ISO string
+  updated_at: string; // ISO string
+  deleted_at?: string | null;
+}
+
+export interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  is_email_verified: boolean;
+  is_phone_verified: boolean;
+  payments: Payment[];
+  created_at: string; // ISO string
+  updated_at: string; // ISO string
+  role: Role;
+  profile: Profile | null;
+}
+
+export interface CustomersResponse {
+  statusCode: number;
+  data: Customer[];
   count: number;
 }
