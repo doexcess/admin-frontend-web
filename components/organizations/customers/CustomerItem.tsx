@@ -2,6 +2,7 @@ import Drawer from '@/components/ui/Drawer';
 import {
   BusinessState,
   emailSplit,
+  formatMoney,
   maskSensitiveData,
   shortenId,
 } from '@/lib/utils';
@@ -16,6 +17,52 @@ interface CustomerItemProps {
 }
 const CustomerItem = ({ customer }: CustomerItemProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  let purchases = customer.payments.length
+    ? customer.payments.map((payment) => (
+        <div className='my-6 space-y-2'>
+          <p className='font-bold'>Purchase ID: {shortenId(payment.id)}</p>
+          {payment.purchase?.items.map((item, index) => (
+            <ul key={index} className='mb-1'>
+              <li>
+                <span>Name: {item.name}</span>
+              </li>
+              <li>
+                <span>
+                  Price: {formatMoney(item.price, payment.currency)} (
+                  {item.quantity})
+                </span>
+              </li>
+              <li>
+                <span>Type: {item.purchase_type}</span>
+              </li>
+              <li>
+                <span>
+                  Date Purchased:{' '}
+                  {moment(payment.created_at).format('MMM D, YYYY')}
+                </span>
+              </li>
+            </ul>
+          ))}
+          {payment.subscription_plan && (
+            <ul>
+              <li>Name: {payment.subscription_plan.name}</li>
+              <li>Type: {payment.purchase_type}</li>
+              <li>Interval: {payment.interval}</li>
+              <li>
+                Auto Renewal: {payment.auto_renew ? 'Activated' : 'Disabled'}
+              </li>
+              <li>Date: {moment(payment.created_at).format('MMM D, YYYY')}</li>
+            </ul>
+          )}
+          <p>
+            Discount Applied:{' '}
+            {formatMoney(+payment.discount_applied, payment.currency)}{' '}
+          </p>
+          <p>Total: {formatMoney(+payment.amount, payment.currency)} </p>
+        </div>
+      ))
+    : null;
 
   return (
     <>
@@ -59,7 +106,7 @@ const CustomerItem = ({ customer }: CustomerItemProps) => {
           {customer.name}
         </td>
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-          {customer.email}
+          {customer.email} {customer.is_email_verified && '✅'}
         </td>
 
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
@@ -98,34 +145,30 @@ dark:text-white'
           )}
 
           {/* Customer Details */}
-          {/* <div className='mt-4 space-y-2 text-sm'>
+          <div className='mt-4 space-y-2 text-sm'>
             <p>
-              <strong>Price:</strong> {priceData}
+              <strong>Name:</strong> {customer.name}
             </p>
             <p>
-              <strong>Category:</strong> {product.category?.name || 'N/A'}
+              <strong>Email:</strong> {customer.email}{' '}
+              {customer.is_email_verified && '✅'}
             </p>
             <p>
-              <strong>Type:</strong> {product.type}
+              <strong>Phone:</strong> {customer?.phone || 'N/A'}
             </p>
             <p>
-              <strong>Business:</strong> {product.business_info.business_name}
+              <strong>Role:</strong> {customer.role.name || 'N/A'}
             </p>
             <p>
-              <strong>Creator:</strong> {product.creator.name}
-            </p>
-            <p>
-              <strong>Status:</strong> {product.status}
-            </p>
-            <p>
-              <strong>Published At:</strong>{' '}
-              {moment(product.published_at).format('MMMM D, YYYY')}
+              <strong>Country:</strong>{' '}
+              {customer.profile?.country_code || 'N/A'}
             </p>
             <p>
               <strong>Created At:</strong>{' '}
-              {moment(product.created_at).format('MMMM D, YYYY')}
+              {moment(customer.created_at).format('MMMM D, YYYY')}
             </p>
-          </div> */}
+            <div>{purchases}</div>
+          </div>
         </div>
       </Drawer>
     </>

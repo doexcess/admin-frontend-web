@@ -1,5 +1,11 @@
-import { ContactStatus } from '@/lib/utils';
+import {
+  ContactStatus,
+  PaymentStatus,
+  PurchaseItemType,
+  SubscriptionPeriod,
+} from '@/lib/utils';
 import { Multimedia } from './product';
+import { Purchase, SubscriptionPlan } from './payment';
 
 // Business details
 export interface Role {
@@ -171,6 +177,22 @@ export interface Customer {
   updated_at: string; // ISO string
   role: Role;
   profile: Profile | null;
+}
+
+export interface Payment {
+  id: string;
+  purchase: Purchase;
+  subscription_plan: SubscriptionPlan;
+  created_at: string;
+  currency: string;
+  amount: string;
+  discount_applied: string;
+  payment_status: PaymentStatus;
+  purchase_type: PurchaseItemType;
+  interval: SubscriptionPeriod;
+  auto_renew: boolean;
+  is_renewal: boolean;
+  is_upgrade: boolean;
 }
 
 export interface CustomersResponse {

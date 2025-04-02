@@ -479,6 +479,7 @@ export enum PaymentMethod {
 export enum PurchaseItemType {
   COURSE = 'COURSE',
   TICKET = 'TICKET',
+  SUBSCRIPTION = 'SUBSCRIPTION',
 }
 
 export enum ProductType {
@@ -515,6 +516,14 @@ export enum MultimediaProvider {
 export enum Gender {
   MALE = 'male',
   FEMALE = 'female',
+}
+
+export enum SubscriptionPeriod {
+  FREE = 'free',
+  MONTHLY = 'monthly',
+  QUARTERLY = 'quarterly',
+  SEMI_ANNUALLY = 'semi_annually',
+  YEARLY = 'yearly',
 }
 
 export const NotificationStatusTypes = [
