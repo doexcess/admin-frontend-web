@@ -1,6 +1,6 @@
 import { CartType, EventType, ProductStatus, ProductType } from '@/lib/utils';
 import { BusinessInfo } from './product';
-import { Media } from './mulltimedia';
+import { Media } from './multimedia';
 import { User } from './organization';
 
 export interface Product {

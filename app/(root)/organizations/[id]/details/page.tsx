@@ -21,6 +21,8 @@ import CartList from '@/components/cart/CartList';
 import useCart from '@/hooks/page/useCart';
 import CustomersList from '@/components/organizations/customers/CustomersList';
 import useCustomers from '@/hooks/page/useCustomers';
+import useSubscriptionPlans from '@/hooks/page/useSubscriptionPlans';
+import SubscriptionPlansList from '@/components/subscriptions/SubscriptionPlansList';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -80,6 +82,15 @@ const OrganizationDetails = () => {
     onClickNext: cartsOnClickNext,
     onClickPrev: cartsOnClickPrev,
   } = useCart();
+
+  const {
+    subscription_plans,
+    loading: subscriptionPlansLoading,
+    count: totalSubscriptionPlans,
+    currentPage: subscriptionPlansCurrentPage,
+    onClickNext: subscriptionPlansOnClickNext,
+    onClickPrev: subscriptionPlansOnClickPrev,
+  } = useSubscriptionPlans();
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -189,8 +200,17 @@ const OrganizationDetails = () => {
             loading={customerLoading}
           />
         );
-      case 'subscriptionPlans':
-        return <p>Subscription Plans content goes here.</p>;
+      case 'subscription Plans':
+        return (
+          <SubscriptionPlansList
+            subscription_plans={subscription_plans}
+            count={totalSubscriptionPlans}
+            onClickNext={subscriptionPlansOnClickNext}
+            onClickPrev={subscriptionPlansOnClickPrev}
+            currentPage={subscriptionPlansCurrentPage}
+            loading={subscriptionPlansLoading}
+          />
+        );
       case 'multimedia':
         return <p>Multimedia content goes here.</p>;
       case 'withdrawalAccount':
