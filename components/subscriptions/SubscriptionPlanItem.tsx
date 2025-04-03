@@ -35,25 +35,6 @@ const SubscriptionPlanItem = ({
       ))
     : 'N/A';
 
-  // let items = (in_table: boolean) => {
-  //   let details = payment.purchase
-  //     ? payment.purchase?.items.map((item) => (
-  //         <li title={item.purchase_type}>
-  //           {item.name} x {item.quantity}
-  //           {!in_table && (
-  //             <div className='ml-5 mt-2'>
-  //               Type: {item.purchase_type}
-  //               <br />
-  //               Currency: {formatMoney(item.price, payment.currency)}
-  //             </div>
-  //           )}
-  //         </li>
-  //       ))
-  //     : payment.subscription_plan.name;
-
-  //   return details;
-  // };
-
   return (
     <>
       <tr

@@ -23,6 +23,8 @@ import CustomersList from '@/components/organizations/customers/CustomersList';
 import useCustomers from '@/hooks/page/useCustomers';
 import useSubscriptionPlans from '@/hooks/page/useSubscriptionPlans';
 import SubscriptionPlansList from '@/components/subscriptions/SubscriptionPlansList';
+import useMultimedia from '@/hooks/page/useMultimedia';
+import MultimediaList from '@/components/multimedia/MultimediaList';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -91,6 +93,15 @@ const OrganizationDetails = () => {
     onClickNext: subscriptionPlansOnClickNext,
     onClickPrev: subscriptionPlansOnClickPrev,
   } = useSubscriptionPlans();
+
+  const {
+    multimedia,
+    loading: multimediaLoading,
+    count: totalMultimedia,
+    currentPage: multimediaCurrentPage,
+    onClickNext: multimediaOnClickNext,
+    onClickPrev: multimediaOnClickPrev,
+  } = useMultimedia();
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -212,7 +223,16 @@ const OrganizationDetails = () => {
           />
         );
       case 'multimedia':
-        return <p>Multimedia content goes here.</p>;
+        return (
+          <MultimediaList
+            multimedia={multimedia}
+            count={totalMultimedia}
+            onClickNext={multimediaOnClickNext}
+            onClickPrev={multimediaOnClickPrev}
+            currentPage={multimediaCurrentPage}
+            loading={multimediaLoading}
+          />
+        );
       case 'withdrawalAccount':
         return <p>Withdrawal Account content goes here.</p>;
       case 'billingDetails':

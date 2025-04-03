@@ -7,6 +7,7 @@ import organizationReducer from './slices/organizationSlice';
 import couponReducer from './slices/couponSlice';
 import cartReducer from './slices/cartSlice';
 import subscriptionPlanReducer from './slices/subscriptionPlanSlice';
+import multimediaReducer from './slices/multimediaSlice';
 import storage from 'redux-persist/lib/storage'; // Uses localStorage
 import { persistReducer } from 'redux-persist';
 
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   coupon: couponReducer, // Not persisted
   cart: cartReducer, // Not persisted
   subscriptionPlan: subscriptionPlanReducer, // Not persisted
+  multimedia: multimediaReducer, // Not persisted
 });
 
 export const store = configureStore({
