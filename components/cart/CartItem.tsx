@@ -17,9 +17,9 @@ const CartItem = ({ cart_item }: CartItemProps) => {
   const latest_cart_item = cart_item.items[0];
 
   const currency =
-    latest_cart_item.product_type === ProductType.COURSE
-      ? latest_cart_item.course?.currency
-      : latest_cart_item.ticket_tier?.currency;
+    latest_cart_item?.product_type === ProductType.COURSE
+      ? latest_cart_item?.course?.currency
+      : latest_cart_item?.ticket_tier?.currency;
 
   let priceData = 0;
   cart_item.items.forEach((item) => {
@@ -27,31 +27,33 @@ const CartItem = ({ cart_item }: CartItemProps) => {
   });
 
   let business_name =
-    latest_cart_item.product_type === ProductType.COURSE
-      ? latest_cart_item.course?.business_info.business_name
-      : latest_cart_item.ticket_tier?.ticket.product.business_info
+    latest_cart_item?.product_type === ProductType.COURSE
+      ? latest_cart_item?.course?.business_info.business_name
+      : latest_cart_item?.ticket_tier?.ticket.product.business_info
           .business_name;
 
   let business_id =
-    latest_cart_item.product_type === ProductType.COURSE
-      ? latest_cart_item.course?.business_id
-      : latest_cart_item.ticket_tier?.ticket.product.business_id;
+    latest_cart_item?.product_type === ProductType.COURSE
+      ? latest_cart_item?.course?.business_id
+      : latest_cart_item?.ticket_tier?.ticket.product.business_id;
 
-  let items = cart_item.items.map((item) =>
-    item.product_type === ProductType.COURSE ? (
-      <li>
-        {item.course?.title} -{' '}
-        {formatMoney(+item.price_at_time, item.course?.currency)} (
-        {item.quantity})
-      </li>
-    ) : (
-      <li>
-        {item.ticket_tier?.name} -{' '}
-        {formatMoney(+item.price_at_time, item.ticket_tier?.currency)} (
-        {item.quantity})
-      </li>
-    )
-  );
+  let items = cart_item.items.length
+    ? cart_item.items.map((item) =>
+        item.product_type === ProductType.COURSE ? (
+          <li>
+            {item.course?.title} -{' '}
+            {formatMoney(+item.price_at_time, item.course?.currency)} (
+            {item.quantity})
+          </li>
+        ) : (
+          <li>
+            {item.ticket_tier?.name} -{' '}
+            {formatMoney(+item.price_at_time, item.ticket_tier?.currency)} (
+            {item.quantity})
+          </li>
+        )
+      )
+    : 'N/A';
 
   return (
     <>
@@ -80,7 +82,7 @@ const CartItem = ({ cart_item }: CartItemProps) => {
           {formatMoney(priceData, currency)}
         </td>
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-          {business_name}
+          {business_name || 'N/A'}
         </td>
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white'>
           {moment(cart_item.updated_at).format('MMM D, YYYY')}

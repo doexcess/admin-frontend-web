@@ -15,8 +15,6 @@ const Payments = () => {
     currentPage: paymentsCurrentPage,
     onClickNext: paymentsOnClickNext,
     onClickPrev: paymentsOnClickPrev,
-    onClickNext,
-    onClickPrev,
     handleSearchSubmit,
     handleFilterByDateSubmit,
     handleRefresh,

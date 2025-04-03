@@ -22,7 +22,7 @@ const SubscriptionPlanItem = ({
     ? subscription_plan.subscription_plan_prices.map((plan_price) => (
         <li>
           {capitalize(plan_price.period)} -{' '}
-          {formatMoney(+plan_price.price, 'NGN')}
+          {formatMoney(+plan_price.price, plan_price.currency)}
         </li>
       ))
     : 'N/A';
@@ -109,24 +109,32 @@ dark:text-white'
           <p className='text-lg font-bold'>Pricing</p>
           {pricing}
 
-          {/* <p className='text-lg font-bold'>Total</p>
-          <span className='text-lg'>{priceData}</span> */}
+          <p className='text-lg font-bold'>Role(s)</p>
+          {roles}
 
-          {/* Buyer's Details */}
-          {/* <div className='space-y-2'>
+          <div className='space-y-2'>
             <p>
-              <strong>Name:</strong> {payment.user.name}
+              <strong>ID:</strong> {subscription_plan.id}
             </p>
             <p>
-              <strong>Email Address:</strong> {payment.user.email}
-              {payment.user.is_email_verified && '✅'}
+              <strong>Name:</strong> {subscription_plan.name}
             </p>
-
             <p>
-              <strong>Account Creation Date:</strong>{' '}
-              {moment(payment.created_at).format('MMMM D, YYYY')}
+              <strong>Creator:</strong> {subscription_plan.creator.name}
             </p>
-          </div> */}
+            <p>
+              <strong>Organization:</strong>{' '}
+              {subscription_plan.business.business_name}
+            </p>
+            <p>
+              <strong>Date Created:</strong>{' '}
+              {moment(subscription_plan.created_at).format('MMMM D, YYYY')}
+            </p>
+            <p>
+              <strong>Date Updated:</strong>{' '}
+              {moment(subscription_plan.updated_at).format('MMMM D, YYYY')}
+            </p>
+          </div>
 
           <div>
             <Link

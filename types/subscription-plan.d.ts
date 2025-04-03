@@ -36,6 +36,7 @@ export interface SubscriptionPricing {
   id: string;
   subscription_plan_id: string;
   price: string;
+  currency: string;
   creator_id: string;
   period: string;
   created_at: string;
