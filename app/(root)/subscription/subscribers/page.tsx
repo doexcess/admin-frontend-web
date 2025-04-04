@@ -19,16 +19,12 @@ const SubscriptionSubscribers = () => {
           layer3='Subscribers'
         />
         {/* Filter */}
-        <Filter searchPlaceholder='Search for subscribers' />
+        <Filter searchPlaceholder='Search for subscribers' showPeriod={false} />
       </header>
       <section className='section-container-padding-0 mt-2'>
         <div className='overflow-x-auto rounded-none'>
           <div className='relative overflow-x-auto'>
             {/* Users list in a table - registered */}
-            <UsersList type='registered' />
-
-            {/* Pagination */}
-            <Pagination />
           </div>
         </div>
       </section>
