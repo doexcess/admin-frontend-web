@@ -4,8 +4,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useQueryParams from '../useQueryParams';
 import { useParams } from 'next/navigation';
+import { SystemRole } from '@/lib/utils';
 
-const useCustomers = () => {
+interface UseCustomersProps {
+  role?: SystemRole;
+}
+const useCustomers = ({ role }: UseCustomersProps = {}) => {
   const dispatch = useDispatch<AppDispatch>();
   const params = useParams();
 
@@ -32,12 +36,13 @@ const useCustomers = () => {
         page: currentPage,
         limit: perPage,
         ...(q && { q }),
+        ...(role && { role }),
         ...(startDate && { startDate }),
         ...(endDate && { endDate }),
         ...(params?.id && { business_id: params?.id as string }),
       })
     );
-  }, [dispatch, currentPage, perPage, q, startDate, endDate]);
+  }, [dispatch, currentPage, perPage, q, role, startDate, endDate]);
 
   return {
     customers,

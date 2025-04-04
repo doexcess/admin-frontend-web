@@ -10,6 +10,7 @@ import {
   Customer,
   CustomersResponse,
 } from '@/types/organization';
+import { SystemRole } from '@/lib/utils';
 
 interface OrganizationState {
   organizations: Business[];
@@ -166,6 +167,7 @@ export const fetchCustomers = createAsyncThunk(
       page,
       limit,
       q,
+      role,
       startDate,
       endDate,
     }: {
@@ -173,6 +175,7 @@ export const fetchCustomers = createAsyncThunk(
       page?: number;
       limit?: number;
       q?: string;
+      role?: SystemRole;
       startDate?: string;
       endDate?: string;
     },
@@ -183,6 +186,7 @@ export const fetchCustomers = createAsyncThunk(
     if (page !== undefined) params['pagination[page]'] = page;
     if (limit !== undefined) params['pagination[limit]'] = limit;
     if (q !== undefined) params['q'] = q;
+    if (role !== undefined) params['role'] = role;
     if (business_id !== undefined) params['business_id'] = business_id;
     if (startDate !== undefined) params['startDate'] = startDate;
     if (endDate !== undefined) params['endDate'] = endDate;

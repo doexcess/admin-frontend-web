@@ -64,6 +64,12 @@ export const sidebarLinks = [
     ],
   },
   {
+    icon: HiUsers,
+    route: '/users',
+    label: 'Users',
+    group: groups.ONE,
+  },
+  {
     icon: IoIosBriefcase,
     route: '/products',
     label: 'Products',

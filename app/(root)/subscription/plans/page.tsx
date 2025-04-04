@@ -1,20 +1,13 @@
 'use client';
 
-import { Modal } from 'flowbite-react';
-import React, { useState } from 'react';
-import { IoIosFunnel } from 'react-icons/io';
+import React from 'react';
 
-import Input from '@/components/ui/Input';
 import Filter from '@/components/Filter';
 import PageHeading from '@/components/PageHeading';
-import Pagination from '@/components/Pagination';
-import UsersList from '@/components/organizations/OrgsList';
 import useSubscriptionPlans from '@/hooks/page/useSubscriptionPlans';
 import SubscriptionPlansList from '@/components/subscriptions/SubscriptionPlansList';
 
 const SubscriptionPlans = () => {
-  const [openModal, setOpenModal] = useState(false);
-
   const {
     subscription_plans,
     loading: subscriptionPlansLoading,

@@ -5,12 +5,14 @@ import Drawer from '@/components/ui/Drawer'; // Import a drawer component
 import moment from 'moment'; // Import moment.js
 import { Transaction } from '@/types/payment';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 interface PaymentItemProps {
   payment: Transaction;
 }
 const PaymentItem = ({ payment }: PaymentItemProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const params = useParams();
 
   const priceData = formatMoney(+payment.amount, payment.currency);
 
@@ -119,14 +121,16 @@ dark:text-white'
             </p>
           </div>
 
-          <div>
-            <Link
-              href={`/organizations/${payment.purchase?.business_id}/details`}
-              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
-            >
-              View business
-            </Link>
-          </div>
+          {!params.id && (
+            <div>
+              <Link
+                href={`/organizations/${payment.purchase?.business_id}/details`}
+                className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+              >
+                View business
+              </Link>
+            </div>
+          )}
         </section>
       </Drawer>
     </>

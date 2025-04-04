@@ -526,6 +526,12 @@ export enum SubscriptionPeriod {
   YEARLY = 'yearly',
 }
 
+export enum SystemRole {
+  USER = 'user',
+  BUSINESS_SUPER_ADMIN = 'business-super-administrator',
+  BUSINESS_ADMIN = 'business-administrator',
+}
+
 export const NotificationStatusTypes = [
   { slug: 'immediate', name: 'Immediate', template: EmailTemplate.CUSTOM },
   { slug: 'scheduled', name: 'Scheduled', template: EmailTemplate.WAITLIST },

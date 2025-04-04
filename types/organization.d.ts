@@ -94,6 +94,21 @@ export interface OnboardingStatus {
   deleted_at: string | null;
 }
 
+export interface WithdrawalAccount {
+  id: string;
+  business_id: string;
+  account_number: string;
+  account_type: string;
+  bank_name: string;
+  country: string;
+  country_code: string;
+  currency: string;
+  routing_number: string | null;
+  created_at: string; // ISO timestamp
+  updated_at: string; // ISO timestamp
+  deleted_at: string | null;
+}
+
 export interface BusinessDetails {
   id: string;
   user_id: string;
@@ -110,9 +125,9 @@ export interface BusinessDetails {
   created_at: string;
   updated_at: string;
   user: User;
-  withdrawal_account: string | null;
   business_wallet: BusinessWallet;
-  onboarding_status: OnboardingStatus;
+  withdrawal_account: WithdrawalAccount;
+  onboarding_status: OnboardingStatus | null;
 }
 
 export interface BusinessDetailsResponse {

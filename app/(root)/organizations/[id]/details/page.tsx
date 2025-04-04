@@ -25,6 +25,7 @@ import useSubscriptionPlans from '@/hooks/page/useSubscriptionPlans';
 import SubscriptionPlansList from '@/components/subscriptions/SubscriptionPlansList';
 import useMultimedia from '@/hooks/page/useMultimedia';
 import MultimediaList from '@/components/multimedia/MultimediaList';
+import OrgOverview from '@/components/organizations/OrgOverview';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -106,45 +107,7 @@ const OrganizationDetails = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'overview':
-        return (
-          <div className='rounded-xl shadow-lg p-6'>
-            <h2 className='text-3xl font-bold mb-4'>Organization Overview</h2>
-            <div className='mb-3'>
-              <Image
-                src={organization?.logo_url!}
-                width={200}
-                height={200}
-                objectFit={'cover'}
-                alt='logo'
-                className='rounded-lg border border-gray-400'
-              />
-            </div>
-            <p className='mb-3'>
-              <strong>Business name:</strong> {organization?.business_name}
-            </p>
-            <p className='mb-3'>
-              <strong>Industry:</strong> {organization?.industry}
-            </p>
-            <p className='mb-3'>
-              <strong>Location:</strong> {organization?.location}
-            </p>
-            <p className='mb-3'>
-              <strong>Working hours:</strong> {organization?.working_hours}
-            </p>
-            <p className='mb-3'>
-              <strong>Business size:</strong> {organization?.business_size}
-            </p>
-            <p className='mb-3'>
-              <strong>Business size:</strong> {organization?.business_size}
-            </p>
-            <p className='mb-3'>
-              <strong>State:</strong> {organization?.state}
-            </p>
-            <p>
-              <strong>Country:</strong> {organization?.country_code}
-            </p>
-          </div>
-        );
+        return <OrgOverview organization={organization} />;
       case 'contacts':
         return (
           <ContactList
@@ -222,6 +185,8 @@ const OrganizationDetails = () => {
             loading={subscriptionPlansLoading}
           />
         );
+      case 'subscribers':
+        return <p>Subscribers</p>;
       case 'multimedia':
         return (
           <MultimediaList
@@ -233,10 +198,6 @@ const OrganizationDetails = () => {
             loading={multimediaLoading}
           />
         );
-      case 'withdrawalAccount':
-        return <p>Withdrawal Account content goes here.</p>;
-      case 'billingDetails':
-        return <p>Billing Details content goes here.</p>;
       default:
         return null;
     }
@@ -325,9 +286,8 @@ const OrganizationDetails = () => {
               'carts',
               'customers',
               'subscription Plans',
+              'subscribers',
               'multimedia',
-              'withdrawal Account',
-              'billing Details',
             ].map((tab) => (
               <button
                 key={tab}

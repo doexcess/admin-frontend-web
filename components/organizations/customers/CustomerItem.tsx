@@ -93,10 +93,7 @@ const CustomerItem = ({ customer }: CustomerItemProps) => {
                 alt='logo'
               />
             ) : (
-              <div
-                className={`px-4 py-3 rounded-full`}
-                style={{ backgroundColor: 'blue' }}
-              >
+              <div className={`px-4 py-3 rounded-full bg-primary-main`}>
                 <p className='text-white'>{customer.name[0]}</p>
               </div>
             )}
