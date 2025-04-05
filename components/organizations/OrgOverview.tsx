@@ -8,7 +8,7 @@ interface OrgOverviewProps {
 }
 const OrgOverview = ({ organization }: OrgOverviewProps) => {
   return (
-    <div className=' rounded-xl shadow-lg p-6 max-w-7xl mx-auto'>
+    <div className='rounded-xl shadow-lg mx-auto'>
       <h2 className='text-3xl font-bold mb-8 border-b pb-2'>
         Organization Overview
       </h2>

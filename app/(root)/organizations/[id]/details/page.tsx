@@ -7,8 +7,7 @@ import React, { useState } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { FaBan } from 'react-icons/fa';
 import useOrg from '@/hooks/page/useOrg';
-import { formatMoney } from '@/lib/utils';
-import Image from 'next/image';
+import { formatMoney, PurchaseItemType } from '@/lib/utils';
 import useContacts from '@/hooks/page/useContacts';
 import ContactList from '@/components/organizations/contacts/ContactList';
 import ProductsList from '@/components/products/ProductsList';
@@ -26,6 +25,7 @@ import SubscriptionPlansList from '@/components/subscriptions/SubscriptionPlansL
 import useMultimedia from '@/hooks/page/useMultimedia';
 import MultimediaList from '@/components/multimedia/MultimediaList';
 import OrgOverview from '@/components/organizations/OrgOverview';
+import useDistinctPayments from '@/hooks/page/useDistinctPayments';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -67,6 +67,15 @@ const OrganizationDetails = () => {
     onClickNext: paymentsOnClickNext,
     onClickPrev: paymentsOnClickPrev,
   } = usePayments();
+
+  const {
+    distinctPayments,
+    distinctLoading: distinctPaymentsLoading,
+    countDistinct: totalDistinctPayments,
+    currentPage: distinctPaymentsCurrentPage,
+    onClickNext: distinctPaymentsOnClickNext,
+    onClickPrev: distinctPaymentsOnClickPrev,
+  } = useDistinctPayments({ purchase_type: PurchaseItemType.SUBSCRIPTION });
 
   const {
     coupons,
@@ -186,7 +195,16 @@ const OrganizationDetails = () => {
           />
         );
       case 'subscribers':
-        return <p>Subscribers</p>;
+        return (
+          <PaymentsList
+            payments={distinctPayments}
+            count={totalDistinctPayments}
+            onClickNext={distinctPaymentsOnClickNext}
+            onClickPrev={distinctPaymentsOnClickPrev}
+            currentPage={distinctPaymentsCurrentPage}
+            loading={distinctPaymentsLoading}
+          />
+        );
       case 'multimedia':
         return (
           <MultimediaList
