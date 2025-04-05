@@ -109,6 +109,11 @@ export interface WithdrawalAccount {
   deleted_at: string | null;
 }
 
+export interface BusinessStat {
+  total_revenue: string | null;
+  payments_count: number;
+}
+
 export interface BusinessDetails {
   id: string;
   user_id: string;
@@ -128,6 +133,7 @@ export interface BusinessDetails {
   business_wallet: BusinessWallet;
   withdrawal_account: WithdrawalAccount;
   onboarding_status: OnboardingStatus | null;
+  stat: BusinessStat;
 }
 
 export interface BusinessDetailsResponse {

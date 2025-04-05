@@ -254,8 +254,19 @@ const OrganizationDetails = () => {
                 value: totalContacts.toLocaleString(),
                 change: '',
               },
-              { label: 'Revenue', value: 'NGN 48,575', change: '' },
-              { label: 'Orders', value: '4,800+', change: '' },
+              {
+                label: 'Revenue',
+                value: formatMoney(
+                  +organization?.stat.total_revenue!,
+                  organization?.business_wallet.currency
+                ),
+                change: '',
+              },
+              {
+                label: 'Orders',
+                value: organization?.stat.payments_count,
+                change: '',
+              },
               {
                 label: 'Wallet Balance',
                 value: formatMoney(
