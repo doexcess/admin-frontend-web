@@ -1,9 +1,7 @@
 'use client';
 
 import PageHeading from '@/components/PageHeading';
-import Pagination from '@/components/Pagination';
 import Filter from '@/components/Filter';
-import UsersList from '@/components/organizations/OrgsList';
 
 import React from 'react';
 import useOrgs from '@/hooks/page/useOrgs';

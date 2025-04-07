@@ -17,6 +17,7 @@ interface OrgsListProps {
   onClickPrev: () => void;
   currentPage: number;
   loading: boolean;
+  isDeleted?: boolean;
 }
 const OrgsList = ({
   type,
@@ -26,11 +27,12 @@ const OrgsList = ({
   onClickPrev,
   currentPage,
   loading,
+  isDeleted,
 }: OrgsListProps) => {
   const searchParams = useSearchParams();
   if (loading) return <LoadingSkeleton />;
 
-  const noFoundText = searchParams.has('q') ? 'No record found.' : undefined;
+  const noFoundText = !count ? 'No record found.' : undefined;
 
   return (
     <div>
@@ -64,7 +66,11 @@ const OrgsList = ({
         </thead>
         <tbody>
           {organizations.map((organization) => (
-            <OrgItem type={type} organization={organization} />
+            <OrgItem
+              type={type}
+              organization={organization}
+              isDeleted={isDeleted}
+            />
           ))}
 
           {!organizations.length && (

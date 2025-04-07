@@ -3,7 +3,7 @@
 import PageHeading from '@/components/PageHeading';
 import SectionContent from '@/components/SectionContent';
 import { Button } from '@/components/ui/Button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoIosAdd } from 'react-icons/io';
 import { FaBan } from 'react-icons/fa';
 import useOrg from '@/hooks/page/useOrg';
@@ -26,6 +26,8 @@ import useMultimedia from '@/hooks/page/useMultimedia';
 import MultimediaList from '@/components/multimedia/MultimediaList';
 import OrgOverview from '@/components/organizations/OrgOverview';
 import useDistinctPayments from '@/hooks/page/useDistinctPayments';
+import ActionConfirmation from '@/components/ActionConfirmation';
+import ActionConfirmationModal from '@/components/ActionConfirmationModal';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -221,6 +223,27 @@ const OrganizationDetails = () => {
     }
   };
 
+  const [openModal, setOpenModal] = useState(false);
+  const [allowDelete, setAllowDelete] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      alert('Hello there.');
+      // const res = await axios.post('/api/organization/suspend', {
+      //   orgId: organization?.id,
+      // });
+      // console.log('Organization suspended:', res.data);
+    } catch (error) {
+      console.error('Suspension failed:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (allowDelete) {
+      handleDelete();
+    }
+  }, [allowDelete]);
+
   return (
     <main>
       <header className='section-container'>
@@ -236,9 +259,20 @@ const OrganizationDetails = () => {
               <Button className='p-2 px-3 space-x-1'>
                 <IoIosAdd /> <span>Compose</span>
               </Button>
-              <Button className='p-2 px-3 space-x-1' variant='red'>
+
+              <Button
+                className='p-2 px-3 space-x-1'
+                variant='red'
+                onClick={() => setOpenModal(true)}
+              >
                 <FaBan /> <span>Suspend</span>
               </Button>
+              <ActionConfirmationModal
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+                allowDelete={allowDelete}
+                setAllowDelete={setAllowDelete}
+              />
             </div>
           }
         />

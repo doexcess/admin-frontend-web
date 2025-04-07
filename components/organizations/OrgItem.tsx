@@ -8,8 +8,9 @@ import React, { useState } from 'react';
 interface OrgItemProps {
   type: BusinessState;
   organization: Business;
+  isDeleted?: boolean;
 }
-const OrgItem = ({ type, organization }: OrgItemProps) => {
+const OrgItem = ({ type, organization, isDeleted }: OrgItemProps) => {
   return (
     <>
       <tr
@@ -20,12 +21,18 @@ const OrgItem = ({ type, organization }: OrgItemProps) => {
           scope='row'
           className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold relative group'
         >
-          <Link
-            href={`/organizations/${organization.id}/details`}
-            className='hover:text-primary-400'
-          >
-            {organization.business_name}
-          </Link>
+          {isDeleted ? (
+            <span className='hover:text-primary-400'>
+              {organization.business_name}
+            </span>
+          ) : (
+            <Link
+              href={`/organizations/${organization.id}/details`}
+              className='hover:text-primary-400'
+            >
+              {organization.business_name}
+            </Link>
+          )}
 
           {/* Show Product Image on Hover */}
           {organization.logo_url && (
@@ -49,28 +56,6 @@ const OrgItem = ({ type, organization }: OrgItemProps) => {
               )}
             </div>
           )}
-
-          {/* <Link
-            href={`/organizations/${organization.id}/details`}
-            className='hover:text-primary-400'
-          >
-            {organization.logo_url ? (
-              <Image
-                src={organization.logo_url}
-                width={50}
-                height={50}
-                objectFit='cover'
-                alt='logo'
-              />
-            ) : (
-              <div
-                className={`px-4 py-3 rounded-full`}
-                style={{ backgroundColor: 'blue' }}
-              >
-                <p className='text-white'>{organization.business_name[0]}</p>
-              </div>
-            )}
-          </Link> */}
         </th>
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
           {organization.user.name}

@@ -28,10 +28,7 @@ const CustomersList = ({
   const searchParams = useSearchParams();
   if (loading) return <LoadingSkeleton />;
 
-  const noFoundText =
-    !searchParams.has('page') || searchParams.has('q')
-      ? 'No record found.'
-      : undefined;
+  const noFoundText = !count ? 'No record found.' : undefined;
 
   return (
     <div className='overflow-x-auto rounded-none'>

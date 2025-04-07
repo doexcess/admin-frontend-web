@@ -4,7 +4,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useQueryParams from '../useQueryParams';
 
-const useOrgs = () => {
+interface UseOrgsProps {
+  deleted?: boolean;
+}
+const useOrgs = ({ deleted }: UseOrgsProps = {}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   let { organizations, loading, count } = useSelector(
@@ -32,6 +35,7 @@ const useOrgs = () => {
         ...(q && { q }),
         ...(startDate && { startDate }),
         ...(endDate && { endDate }),
+        ...(deleted && { deleted }),
       })
     );
   }, [dispatch, currentPage, perPage, q, startDate, endDate]);

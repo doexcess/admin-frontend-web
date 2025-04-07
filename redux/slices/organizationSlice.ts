@@ -49,12 +49,14 @@ export const fetchOrganizations = createAsyncThunk(
       q,
       startDate,
       endDate,
+      deleted,
     }: {
       page?: number;
       limit?: number;
       q?: string;
       startDate?: string;
       endDate?: string;
+      deleted?: boolean;
     },
     { rejectWithValue }
   ) => {
@@ -65,6 +67,7 @@ export const fetchOrganizations = createAsyncThunk(
     if (q !== undefined) params['q'] = q;
     if (startDate !== undefined) params['startDate'] = startDate;
     if (endDate !== undefined) params['endDate'] = endDate;
+    if (deleted !== undefined) params['deleted'] = deleted;
 
     try {
       const { data } = await api.get<BusinessResponse>(

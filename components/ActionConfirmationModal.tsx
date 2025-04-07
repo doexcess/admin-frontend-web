@@ -7,11 +7,21 @@ const ActionConfirmationModal = ({
   body = 'Are you sure you want to proceed with this action?',
   openModal,
   setOpenModal,
+  allowDelete,
+  setAllowDelete,
 }: {
   body?: string;
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  allowDelete?: boolean;
+  setAllowDelete?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const handleSuspend = (allow: boolean) => {
+    setAllowDelete?.(allow);
+
+    setOpenModal?.(false);
+  };
+
   return (
     <>
       <Modal
@@ -28,10 +38,10 @@ const ActionConfirmationModal = ({
               {body}
             </h3>
             <div className='flex justify-center gap-4'>
-              <Button color='failure' onClick={() => setOpenModal(false)}>
+              <Button color='failure' onClick={() => handleSuspend(true)}>
                 {"Yes, I'm sure"}
               </Button>
-              <Button color='gray' onClick={() => setOpenModal(false)}>
+              <Button color='gray' onClick={() => handleSuspend(false)}>
                 No, cancel
               </Button>
             </div>
