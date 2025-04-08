@@ -28,6 +28,7 @@ import OrgOverview from '@/components/organizations/OrgOverview';
 import useDistinctPayments from '@/hooks/page/useDistinctPayments';
 import ActionConfirmation from '@/components/ActionConfirmation';
 import ActionConfirmationModal from '@/components/ActionConfirmationModal';
+import SuspendUnsuspendOrgAccount from '@/components/organizations/organization/SuspendUnsuspendOrgAccount';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -223,27 +224,6 @@ const OrganizationDetails = () => {
     }
   };
 
-  const [openModal, setOpenModal] = useState(false);
-  const [allowDelete, setAllowDelete] = useState(false);
-
-  const handleDelete = async () => {
-    try {
-      alert('Hello there.');
-      // const res = await axios.post('/api/organization/suspend', {
-      //   orgId: organization?.id,
-      // });
-      // console.log('Organization suspended:', res.data);
-    } catch (error) {
-      console.error('Suspension failed:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (allowDelete) {
-      handleDelete();
-    }
-  }, [allowDelete]);
-
   return (
     <main>
       <header className='section-container'>
@@ -251,7 +231,7 @@ const OrganizationDetails = () => {
         <PageHeading
           title={organization?.business_name}
           enableBreadCrumb={true}
-          layer2='Organizations'
+          layer2={'Organizations'}
           layer3={organization?.business_name}
           enableBackButton={true}
           ctaButtons={
@@ -260,18 +240,9 @@ const OrganizationDetails = () => {
                 <IoIosAdd /> <span>Compose</span>
               </Button>
 
-              <Button
-                className='p-2 px-3 space-x-1'
-                variant='red'
-                onClick={() => setOpenModal(true)}
-              >
-                <FaBan /> <span>Suspend</span>
-              </Button>
-              <ActionConfirmationModal
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-                allowDelete={allowDelete}
-                setAllowDelete={setAllowDelete}
+              <SuspendUnsuspendOrgAccount
+                userId={organization?.user_id!}
+                isSuspended={organization?.user?.is_suspended!}
               />
             </div>
           }

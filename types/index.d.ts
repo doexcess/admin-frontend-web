@@ -36,3 +36,8 @@ declare interface signInProps {
   environment: string;
   timezone: string;
 }
+
+declare interface GenericResponse {
+  statusCode: number;
+  message: string;
+}

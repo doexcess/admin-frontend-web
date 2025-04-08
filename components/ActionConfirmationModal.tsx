@@ -2,22 +2,27 @@
 
 import { Button, Modal } from 'flowbite-react';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import Input from './ui/Input';
 
 const ActionConfirmationModal = ({
   body = 'Are you sure you want to proceed with this action?',
   openModal,
   setOpenModal,
-  allowDelete,
-  setAllowDelete,
+  allowAction,
+  setAllowAction,
+  reason,
+  setReason,
 }: {
   body?: string;
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  allowDelete?: boolean;
-  setAllowDelete?: React.Dispatch<React.SetStateAction<boolean>>;
+  allowAction?: boolean;
+  setAllowAction?: React.Dispatch<React.SetStateAction<boolean>>;
+  reason?: string;
+  setReason?: any;
 }) => {
   const handleSuspend = (allow: boolean) => {
-    setAllowDelete?.(allow);
+    setAllowAction?.(allow);
 
     setOpenModal?.(false);
   };
@@ -37,7 +42,19 @@ const ActionConfirmationModal = ({
             <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
               {body}
             </h3>
-            <div className='flex justify-center gap-4'>
+            {reason && (
+              <div className=''>
+                <textarea
+                  id='message'
+                  rows={4}
+                  className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  placeholder='Write a reason'
+                  onChange={(e: any) => setReason(e.target.value)}
+                  value={reason}
+                ></textarea>
+              </div>
+            )}
+            <div className='flex justify-center gap-4 mt-4'>
               <Button color='failure' onClick={() => handleSuspend(true)}>
                 {"Yes, I'm sure"}
               </Button>

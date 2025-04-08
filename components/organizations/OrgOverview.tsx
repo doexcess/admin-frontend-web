@@ -17,14 +17,16 @@ const OrgOverview = ({ organization }: OrgOverviewProps) => {
         {/* Overview */}
         <div>
           <div className='flex flex-col mb-6'>
-            <Image
-              src={organization?.logo_url!}
-              width={150}
-              height={150}
-              objectFit='cover'
-              alt='Organization Logo'
-              className='rounded-lg border border-gray-300'
-            />
+            {organization?.logo_url && (
+              <Image
+                src={organization?.logo_url!}
+                width={150}
+                height={150}
+                objectFit='cover'
+                alt='Organization Logo'
+                className='rounded-lg border border-gray-300'
+              />
+            )}
           </div>
 
           <div className='grid grid-cols-1 gap-3'>

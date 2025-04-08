@@ -214,6 +214,71 @@ export const fetchCustomers = createAsyncThunk(
   }
 );
 
+// Async thunk to suspend organization account
+export const suspendOrgAccount = createAsyncThunk(
+  `onboard/suspend-business-owner/:id`,
+  async (
+    {
+      user_id,
+      suspension_reason,
+    }: {
+      user_id: string;
+      suspension_reason: string;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await api.post<GenericResponse>(
+        `/onboard/suspend-business-owner/${user_id}`,
+        {
+          suspension_reason,
+        }
+      );
+
+      return {
+        message: data.message,
+      };
+    } catch (error: any) {
+      console.log(error);
+
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to suspend business owner's account"
+      );
+    }
+  }
+);
+
+// Async thunk to unsuspend organization account
+export const unsuspendOrgAccount = createAsyncThunk(
+  `onboard/unsuspend-business-owner/:id`,
+  async (
+    {
+      user_id,
+    }: {
+      user_id: string;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await api.put<GenericResponse>(
+        `/onboard/unsuspend-business-owner/${user_id}`
+      );
+
+      return {
+        message: data.message,
+      };
+    } catch (error: any) {
+      console.log(error);
+
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to unsuspend business owner's account"
+      );
+    }
+  }
+);
+
 const organizationSlice = createSlice({
   name: 'organizations',
   initialState,
@@ -275,6 +340,26 @@ const organizationSlice = createSlice({
         state.totalCustomers = action.payload.count;
       })
       .addCase(fetchCustomers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(suspendOrgAccount.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(suspendOrgAccount.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(suspendOrgAccount.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(unsuspendOrgAccount.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(unsuspendOrgAccount.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(unsuspendOrgAccount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

@@ -21,6 +21,7 @@ export interface User {
   phone: string | null;
   is_email_verified: boolean;
   is_phone_verified: boolean;
+  is_suspended: true;
   created_at: string;
   updated_at: string;
   role: Role;
