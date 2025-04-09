@@ -26,8 +26,11 @@ import MultimediaList from '@/components/multimedia/MultimediaList';
 import OrgOverview from '@/components/organizations/OrgOverview';
 import useDistinctPayments from '@/hooks/page/useDistinctPayments';
 import SuspendUnsuspendOrgAccount from '@/components/organizations/organization/SuspendUnsuspendOrgAccount';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const OrganizationDetails = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('overview');
 
   const { organization } = useOrg();
@@ -221,6 +224,10 @@ const OrganizationDetails = () => {
     }
   };
 
+  const navigateTocomposeEmailPage = () => {
+    router.push(`/notifications/email/compose?orgId=${organization?.id}`);
+  };
+
   return (
     <main>
       <header className='section-container'>
@@ -233,7 +240,10 @@ const OrganizationDetails = () => {
           enableBackButton={true}
           ctaButtons={
             <div className='flex gap-2'>
-              <Button className='p-2 px-3 space-x-1'>
+              <Button
+                onClick={navigateTocomposeEmailPage}
+                className='p-2 px-3 space-x-1'
+              >
                 <IoIosAdd /> <span>Compose</span>
               </Button>
 

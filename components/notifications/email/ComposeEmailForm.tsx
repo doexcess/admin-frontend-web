@@ -7,6 +7,7 @@ import { notificationTemplates } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import useOrg from '@/hooks/page/useOrg';
 
 // Dynamically load the CKEditor component
 const CkEditor = dynamic(() => import('@/components/CkEditor'), { ssr: false });
@@ -43,6 +44,8 @@ const ComposeEmailFormContent = ({
   handleComposeForm,
 }: any) => {
   const searchParams = useSearchParams();
+
+  const { organization } = useOrg();
 
   return (
     <>
@@ -94,15 +97,22 @@ const ComposeEmailFormContent = ({
             onChange={(e: any) => setTemplate(e.target.value)}
           />
         </div>
-        <div>
-          <label
-            htmlFor='organization'
-            className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
-          >
-            Organization
-          </label>
-          <Select name='organization' data={[]} required={true} value={''} />
-        </div>
+        {searchParams.has('orgId') && (
+          <div>
+            <label
+              htmlFor='organization'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+            >
+              Organization
+            </label>
+            <Select
+              name='organization'
+              data={[organization?.business_name!]}
+              required={true}
+              value={organization?.id!}
+            />
+          </div>
+        )}
 
         {template === 'custom' && (
           <div>
