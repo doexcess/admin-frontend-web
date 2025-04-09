@@ -3,9 +3,8 @@
 import PageHeading from '@/components/PageHeading';
 import SectionContent from '@/components/SectionContent';
 import { Button } from '@/components/ui/Button';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IoIosAdd } from 'react-icons/io';
-import { FaBan } from 'react-icons/fa';
 import useOrg from '@/hooks/page/useOrg';
 import { formatMoney, PurchaseItemType } from '@/lib/utils';
 import useContacts from '@/hooks/page/useContacts';
@@ -26,14 +25,12 @@ import useMultimedia from '@/hooks/page/useMultimedia';
 import MultimediaList from '@/components/multimedia/MultimediaList';
 import OrgOverview from '@/components/organizations/OrgOverview';
 import useDistinctPayments from '@/hooks/page/useDistinctPayments';
-import ActionConfirmation from '@/components/ActionConfirmation';
-import ActionConfirmationModal from '@/components/ActionConfirmationModal';
 import SuspendUnsuspendOrgAccount from '@/components/organizations/organization/SuspendUnsuspendOrgAccount';
 
 const OrganizationDetails = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
-  const { organization, loading } = useOrg();
+  const { organization } = useOrg();
 
   const {
     customers,
@@ -243,6 +240,7 @@ const OrganizationDetails = () => {
               <SuspendUnsuspendOrgAccount
                 userId={organization?.user_id!}
                 isSuspended={organization?.user?.is_suspended!}
+                organization={organization!}
               />
             </div>
           }

@@ -72,9 +72,15 @@ const OrgItem = ({ type, organization, isDeleted }: OrgItemProps) => {
         </td>
         {type === BusinessState.registered && (
           <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-            <span className='bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'>
-              Active
-            </span>
+            {organization.user.is_suspended ? (
+              <span className='bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300'>
+                Suspended
+              </span>
+            ) : (
+              <span className='bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'>
+                Active
+              </span>
+            )}
           </td>
         )}
         <td className='px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>

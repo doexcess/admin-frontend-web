@@ -3,9 +3,11 @@
 import { Button, Modal } from 'flowbite-react';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import Input from './ui/Input';
+import { ActionKind } from '@/lib/utils';
 
 const ActionConfirmationModal = ({
   body = 'Are you sure you want to proceed with this action?',
+  action,
   openModal,
   setOpenModal,
   allowAction,
@@ -14,6 +16,7 @@ const ActionConfirmationModal = ({
   setReason,
 }: {
   body?: string;
+  action?: ActionKind;
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   allowAction?: boolean;
@@ -42,7 +45,7 @@ const ActionConfirmationModal = ({
             <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
               {body}
             </h3>
-            {reason && (
+            {action === ActionKind.CRITICAL && (
               <div className=''>
                 <textarea
                   id='message'

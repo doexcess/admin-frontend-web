@@ -289,6 +289,17 @@ const organizationSlice = createSlice({
     setPerPage: (state, action: PayloadAction<number>) => {
       // state.perPage = action.payload;
     },
+    updateOrganization: (
+      state,
+      action: PayloadAction<Partial<BusinessDetails>>
+    ) => {
+      if (state.organization) {
+        state.organization = {
+          ...state.organization,
+          ...action.payload,
+        };
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -366,5 +377,6 @@ const organizationSlice = createSlice({
   },
 });
 
-export const { setPage, setPerPage } = organizationSlice.actions;
+export const { setPage, setPerPage, updateOrganization } =
+  organizationSlice.actions;
 export default organizationSlice.reducer;

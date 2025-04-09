@@ -648,3 +648,8 @@ export const now = new Date();
 export const shortenId = (id: string) => {
   return id.split('-')[0];
 };
+
+export enum ActionKind {
+  CRITICAL = 'unsuspend',
+  FAVORABLE = 'favorable',
+}

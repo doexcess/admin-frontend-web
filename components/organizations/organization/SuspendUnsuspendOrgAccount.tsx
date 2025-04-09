@@ -2,11 +2,14 @@
 
 import ActionConfirmationModal from '@/components/ActionConfirmationModal';
 import { Button } from '@/components/ui/Button';
+import { ActionKind } from '@/lib/utils';
 import {
   suspendOrgAccount,
   unsuspendOrgAccount,
+  updateOrganization,
 } from '@/redux/slices/organizationSlice';
 import { AppDispatch } from '@/redux/store';
+import { BusinessDetails } from '@/types/organization';
 import { Loader2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -17,25 +20,35 @@ import { useDispatch } from 'react-redux';
 interface SuspendUnsuspendOrgAccountProps {
   userId: string;
   isSuspended: boolean;
+  organization: BusinessDetails;
 }
 
 const SuspendUnsuspendOrgAccount = ({
   userId,
   isSuspended,
+  organization,
 }: SuspendUnsuspendOrgAccountProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [openModal, setOpenModal] = useState(false);
   const [allowAction, setAllowAction] = useState(false);
   const [reason, setReason] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [action, setAction] = useState(
+    // Action should be opposite of what the isSupended status is
+    organization?.user?.is_suspended
+      ? ActionKind.FAVORABLE
+      : ActionKind.CRITICAL
+  );
 
   useEffect(() => {
     if (allowAction) {
-      if (reason) {
+      if (action === ActionKind.CRITICAL) {
         handleSuspend();
       } else {
         handleUnsuspend();
       }
+
+      setAllowAction(false);
     }
   }, [allowAction]);
 
@@ -50,16 +63,23 @@ const SuspendUnsuspendOrgAccount = ({
         })
       );
 
-      if (response.type === 'onboard/suspend-business-owner/:id/rejected') {
+      if (response.requestStatus === 'rejected') {
         throw new Error(response.payload);
       }
 
       setReason('');
+      setAction(ActionKind.FAVORABLE);
 
-      toast.success(response.data.message);
+      dispatch(
+        updateOrganization({
+          user: { ...organization.user, is_suspended: true },
+        })
+      );
+
+      toast.success(response?.payload?.message);
     } catch (error: any) {
       console.error('Suspension failed:', error);
-      toast.error(error.message);
+      toast.error(error?.message);
     } finally {
       setIsLoading(false);
     }
@@ -75,14 +95,22 @@ const SuspendUnsuspendOrgAccount = ({
         })
       );
 
-      if (response.type === 'onboard/unsuspend-business-owner/:id/rejected') {
+      if (response.requestStatus === 'rejected') {
         throw new Error(response.payload);
       }
 
-      toast.success(response.data.message);
+      setAction(ActionKind.CRITICAL);
+
+      dispatch(
+        updateOrganization({
+          user: { ...organization.user, is_suspended: false },
+        })
+      );
+
+      toast.success(response?.payload?.message);
     } catch (error: any) {
       console.error('Unsuspension failed:', error);
-      toast.error(error.message);
+      toast.error(error?.message);
     } finally {
       setIsLoading(false);
     }
@@ -90,7 +118,7 @@ const SuspendUnsuspendOrgAccount = ({
 
   return (
     <>
-      {isSuspended ? (
+      {organization?.user?.is_suspended ? (
         <>
           <Button
             className='p-2 px-3 space-x-1'
@@ -113,6 +141,7 @@ const SuspendUnsuspendOrgAccount = ({
             setOpenModal={setOpenModal}
             allowAction={allowAction}
             setAllowAction={setAllowAction}
+            action={ActionKind.FAVORABLE}
           />
         </>
       ) : (
@@ -140,6 +169,7 @@ const SuspendUnsuspendOrgAccount = ({
             setAllowAction={setAllowAction}
             reason={reason}
             setReason={setReason}
+            action={ActionKind.CRITICAL}
           />
         </>
       )}

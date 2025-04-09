@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Business } from '@/types/organization';
-import { useSearchParams } from 'next/navigation';
 import LoadingSkeleton from '../ui/LoadingSkeleton';
 import OrgItem from './OrgItem';
 import TableEndRecord from '../ui/TableEndRecord';
@@ -29,7 +28,6 @@ const OrgsList = ({
   loading,
   isDeleted,
 }: OrgsListProps) => {
-  const searchParams = useSearchParams();
   if (loading) return <LoadingSkeleton />;
 
   const noFoundText = !count ? 'No record found.' : undefined;
