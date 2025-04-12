@@ -21,6 +21,7 @@ import { MultiSelect } from '@/components/ui/MultiSelect';
 import Image from 'next/image';
 import ActionConfirmation from '@/components/ActionConfirmation';
 import { Loader2 } from 'lucide-react';
+import useOrgOwners from '@/hooks/page/useOrgOwners';
 
 // Dynamically load the CKEditor component
 const CkEditor = dynamic(() => import('@/components/CkEditor'), { ssr: false });
@@ -76,20 +77,29 @@ const ComposeEmailFormContent = ({
 
   const { organization, loading } = useOrg();
 
+  const { organizationOwners, loading: orgOwnersLoading } = useOrgOwners();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [body, setBody] = useState(defaultValue);
 
   const [editorData, setEditorData] = useState('');
 
-  const organizationList = [
-    {
-      value: loading ? '' : organization?.user_id!,
-      label: loading
-        ? ''
-        : `${organization?.business_name!} - (${organization?.user.email})`,
-    },
-  ];
+  const organizationList = searchParams.has('orgId')
+    ? [
+        {
+          value: loading ? '' : organization?.user_id!,
+          label: loading
+            ? ''
+            : `${organization?.business_name!} - (${organization?.user.email})`,
+        },
+      ]
+    : organizationOwners.map((orgOwner) => ({
+        value: orgOwnersLoading ? '' : orgOwner?.id!,
+        label: orgOwnersLoading
+          ? ''
+          : `${orgOwner?.name!} - (${orgOwner?.email})`,
+      }));
 
   const [selectedOrgUser, setSelectedOrgUser] = useState<string[]>([]);
 
@@ -205,7 +215,7 @@ const ComposeEmailFormContent = ({
                 onChange={(e: any) => setTemplate(e.target.value)}
               />
             </div>
-            {searchParams.has('orgId') && (
+            {searchParams.has('orgId') ? (
               <div>
                 <label
                   htmlFor='organization'
@@ -213,22 +223,26 @@ const ComposeEmailFormContent = ({
                 >
                   Organization
                 </label>
-                {/* <Select
-              name='organization'
-              data={[
-                loading
-                  ? 'loading'
-                  : `${organization?.business_name!} (${
-                      organization?.user.email
-                    })`,
-              ]}
-              required={true}
-              value={body.recipients!}
-              onChange={(e: any) =>
-                setBody({ ...body, recipients: [e.target.value] })
-              }
-              multiple={true}
-            /> */}
+
+                <MultiSelect
+                  options={organizationList}
+                  onValueChange={setSelectedOrgUser}
+                  defaultValue={selectedOrgUser}
+                  placeholder='Select organization'
+                  variant='inverted'
+                  animation={2}
+                  maxCount={3}
+                />
+              </div>
+            ) : (
+              <div>
+                <label
+                  htmlFor='organization'
+                  className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                >
+                  Organization
+                </label>
+
                 <MultiSelect
                   options={organizationList}
                   onValueChange={setSelectedOrgUser}
@@ -314,11 +328,6 @@ const ComposeEmailFormContent = ({
           </div>
         </div>
       </div>
-      {/* <ActionConfirmationModal
-        body='Are you sure you want to continue'
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-      /> */}
     </>
   );
 };

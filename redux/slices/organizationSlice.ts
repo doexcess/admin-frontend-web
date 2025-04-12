@@ -4,6 +4,8 @@ import {
   Business,
   BusinessDetails,
   BusinessDetailsResponse,
+  BusinessOwner,
+  BusinessOwnerResponse,
   BusinessResponse,
   ContactAccount,
   ContactResponse,
@@ -19,6 +21,8 @@ interface OrganizationState {
   customers: Customer[];
   totalCustomers: number;
   totalContacts: number;
+  organizationOwners: BusinessOwner[];
+  totalOrgOwners: number;
   count: number;
   loading: boolean;
   error: string | null;
@@ -33,6 +37,8 @@ const initialState: OrganizationState = {
   customers: [],
   totalCustomers: 0,
   totalContacts: 0,
+  organizationOwners: [],
+  totalOrgOwners: 0,
   count: 0,
   loading: false,
   error: null,
@@ -279,6 +285,53 @@ export const unsuspendOrgAccount = createAsyncThunk(
   }
 );
 
+// Async thunk to fetch paginated organization owners
+export const fetchOrgOwners = createAsyncThunk(
+  'onboard/fetch-business-owners',
+  async (
+    {
+      page,
+      limit,
+      q,
+      startDate,
+      endDate,
+    }: {
+      page?: number;
+      limit?: number;
+      q?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    { rejectWithValue }
+  ) => {
+    const params: Record<string, any> = {};
+
+    if (page !== undefined) params['pagination[page]'] = page;
+    if (limit !== undefined) params['pagination[limit]'] = limit;
+    if (q !== undefined) params['q'] = q;
+    if (startDate !== undefined) params['startDate'] = startDate;
+    if (endDate !== undefined) params['endDate'] = endDate;
+
+    try {
+      const { data } = await api.get<BusinessOwnerResponse>(
+        '/onboard/fetch-business-owners',
+        {
+          params,
+        }
+      );
+
+      return {
+        organization_owners: data.data,
+        count: data.count,
+      };
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to fetch business owners'
+      );
+    }
+  }
+);
+
 const organizationSlice = createSlice({
   name: 'organizations',
   initialState,
@@ -373,6 +426,20 @@ const organizationSlice = createSlice({
       .addCase(unsuspendOrgAccount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(fetchOrgOwners.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchOrgOwners.fulfilled, (state, action) => {
+        state.loading = false;
+        state.organizationOwners = action.payload.organization_owners;
+        state.totalOrgOwners = action.payload.count;
+      })
+      .addCase(fetchOrgOwners.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || 'Failed to fetch organization owners';
       });
   },
 });

@@ -222,3 +222,22 @@ export interface CustomersResponse {
   data: Customer[];
   count: number;
 }
+
+export interface BusinessOwner {
+  id: string;
+  name: string;
+  email: string;
+  profile: {
+    profile_picture: string;
+    gender: 'male' | 'female' | string;
+    bio: string;
+    state: string | null;
+    country: string;
+  } | null;
+}
+
+export interface BusinessOwnerResponse {
+  statusCode: number;
+  data: BusinessOwner[];
+  count: number;
+}
