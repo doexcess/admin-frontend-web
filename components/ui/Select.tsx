@@ -8,6 +8,7 @@ const Select = ({
   required,
   value,
   onChange,
+  multiple,
 }: SelectProps) => {
   return (
     <>
@@ -18,6 +19,7 @@ const Select = ({
         value={value}
         onChange={onChange}
         required={required}
+        multiple={multiple}
       >
         {data.map((value) => (
           <option key={value} value={value}>

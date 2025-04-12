@@ -34,18 +34,23 @@ import {
   Undo,
   Font,
   List,
-  Image, 
+  Image,
   ImageInsert,
   ImageInline,
-  ImageResizeEditing, 
+  ImageResizeEditing,
   ImageResizeHandles,
-  ImageToolbar
+  ImageToolbar,
 } from 'ckeditor5';
 
 import 'ckeditor5/ckeditor5.css';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-function CkEditor() {
+interface CkEditorProps {
+  editorData: string;
+  setEditorData: Dispatch<SetStateAction<string>>;
+}
+
+const CkEditor = ({ editorData, setEditorData }: CkEditorProps) => {
   const [loading, setLoading] = useState(true);
 
   return (
@@ -53,8 +58,15 @@ function CkEditor() {
       {loading && <div>Loading...</div>}
       <CKEditor
         editor={ClassicEditor}
+        data={editorData} // Optional: initializes content
         onReady={(editor) => {
           setLoading(false); // Hide loading indicator
+        }}
+        onChange={(event, editor) => {
+          const data = editor.getData(); // ✅ Correct way to get content
+          console.log(data);
+
+          setEditorData(data); // ✅ Store in state
         }}
         config={{
           toolbar: {
@@ -67,7 +79,7 @@ function CkEditor() {
               '|',
               'heading',
               '|',
-              'fontColor', 
+              'fontColor',
               'fontBackgroundColor',
               'bold',
               'italic',
@@ -79,7 +91,7 @@ function CkEditor() {
               'blockQuote',
               'htmlEmbed',
               '|',
-              'bulletedList', 
+              'bulletedList',
               'numberedList',
               'outdent',
               'indent',
@@ -118,10 +130,10 @@ function CkEditor() {
             List,
             Image,
             ImageInsert,
-            ImageInline, 
-            ImageResizeEditing, 
+            ImageInline,
+            ImageResizeEditing,
             ImageResizeHandles,
-            ImageToolbar
+            ImageToolbar,
           ],
           heading: {
             options: [
@@ -240,8 +252,8 @@ function CkEditor() {
               },
             ],
             colorPicker: {
-              format: "hex" 
-            }
+              format: 'hex',
+            },
           },
           fontBackgroundColor: {
             colors: [
@@ -282,18 +294,18 @@ function CkEditor() {
               },
             ],
             colorPicker: {
-              format: 'hex'
-            }
-          },
-          image: { 
-            insert: { 
-              type: 'inline'
+              format: 'hex',
             },
-          }
+          },
+          image: {
+            insert: {
+              type: 'inline',
+            },
+          },
         }}
       />
     </>
   );
-}
+};
 
 export default CkEditor;

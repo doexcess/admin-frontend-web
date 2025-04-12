@@ -17,8 +17,9 @@ declare type SelectProps = {
   className?: string;
   data: string[];
   required?: boolean;
-  value?: string;
+  value?: string | string[];
   onChange?: any;
+  multiple?: boolean;
 };
 
 declare interface DoughnutChartProps {

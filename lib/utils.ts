@@ -437,10 +437,10 @@ export enum EmailTemplate {
   CUSTOM = 'custom',
 }
 
-export enum NotificationType {
-  IMMEDIATE = 'immediate',
-  SCHEDULED = 'scheduled',
-}
+// export enum NotificationType {
+//   IMMEDIATE = 'immediate',
+//   SCHEDULED = 'scheduled',
+// }
 
 export enum NOTIFICATION_STATUS {
   NONE = 'none',
@@ -652,4 +652,8 @@ export const shortenId = (id: string) => {
 export enum ActionKind {
   CRITICAL = 'unsuspend',
   FAVORABLE = 'favorable',
+}
+
+export enum NotificationType {
+  EMAIL = 'EMAIL',
 }

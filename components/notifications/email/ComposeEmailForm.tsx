@@ -3,11 +3,17 @@
 import ActionConfirmationModal from '@/components/ActionConfirmationModal';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
-import { notificationTemplates } from '@/lib/utils';
+import { notificationTemplates, NotificationType } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import useOrg from '@/hooks/page/useOrg';
+import { ComposeEmailSchema } from '@/lib/schema/notification.schema';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/redux/store';
+import { composeEmail } from '@/redux/slices/notificationSlice';
+import toast from 'react-hot-toast';
+import { MultiSelect } from '@/components/ui/MultiSelect';
 
 // Dynamically load the CKEditor component
 const CkEditor = dynamic(() => import('@/components/CkEditor'), { ssr: false });
@@ -36,6 +42,20 @@ const ComposeEmailForm = () => {
   );
 };
 
+const defaultValue: {
+  title: string;
+  message: string;
+  type: NotificationType;
+  is_scheduled: boolean;
+  recipients: string[];
+} = {
+  title: '',
+  message: '',
+  type: NotificationType.EMAIL,
+  is_scheduled: false,
+  recipients: [],
+};
+
 const ComposeEmailFormContent = ({
   template,
   setTemplate,
@@ -45,11 +65,74 @@ const ComposeEmailFormContent = ({
 }: any) => {
   const searchParams = useSearchParams();
 
-  const { organization } = useOrg();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { organization, loading } = useOrg();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [body, setBody] = useState(defaultValue);
+
+  const [editorData, setEditorData] = useState('');
+
+  const organizationList = [
+    {
+      value: loading ? '' : organization?.user_id!,
+      label: loading
+        ? ''
+        : `${organization?.business_name!} - (${organization?.user.email})`,
+    },
+  ];
+
+  const [selectedOrgUser, setSelectedOrgUser] = useState<string[]>([
+    loading ? '' : organization?.user_id!,
+  ]);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+
+      setBody({ ...body, message: editorData, recipients: selectedOrgUser });
+
+      console.log(body);
+
+      const { error, value } = ComposeEmailSchema.validate({
+        ...body,
+      });
+
+      // Handle validation results
+      if (error) {
+        throw new Error(error.details[0].message);
+      }
+
+      const response: any = await dispatch(composeEmail(body));
+
+      if (response.requestStatus === 'rejected') {
+        throw new Error(response.payload);
+      }
+
+      // Clear form
+      setBody({
+        ...body,
+        title: '',
+        message: '',
+      });
+
+      toast.success(response?.payload?.message);
+    } catch (err: any) {
+      console.log(err);
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+      handleComposeForm(e);
+    }
+  };
 
   return (
     <>
-      <form className='space-y-6' onSubmit={handleComposeForm}>
+      <form className='space-y-6' onSubmit={handleSubmit}>
         <h1 className='text-xl font-bold text-gray-900 dark:text-white'>
           Compose email
         </h1>
@@ -60,7 +143,13 @@ const ComposeEmailFormContent = ({
           >
             Subject
           </label>
-          <Input type='text' name='subject' required={true} />
+          <Input
+            type='text'
+            name='subject'
+            required={true}
+            onChange={(e: any) => setBody({ ...body, title: e.target.value })}
+            value={body.title}
+          />
         </div>
         <div>
           <label
@@ -69,7 +158,7 @@ const ComposeEmailFormContent = ({
           >
             Preheader
           </label>
-          <Input type='text' name='preheader' required={true} />
+          <Input type='text' name='preheader' />
         </div>
         {searchParams.get('type') === 'scheduled' && (
           <div>
@@ -79,7 +168,7 @@ const ComposeEmailFormContent = ({
             >
               Schedule
             </label>
-            <Input type='datetime-local' name='schedule' required={true} />
+            <Input type='datetime-local' name='schedule' />
           </div>
         )}
         <div>
@@ -99,7 +188,7 @@ const ComposeEmailFormContent = ({
         </div>
         {searchParams.has('orgId') && (
           <div>
-            <label
+            {/* <label
               htmlFor='organization'
               className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
             >
@@ -107,9 +196,28 @@ const ComposeEmailFormContent = ({
             </label>
             <Select
               name='organization'
-              data={[organization?.business_name!]}
+              data={[
+                loading
+                  ? 'loading'
+                  : `${organization?.business_name!} (${
+                      organization?.user.email
+                    })`,
+              ]}
               required={true}
-              value={organization?.id!}
+              value={body.recipients!}
+              onChange={(e: any) =>
+                setBody({ ...body, recipients: [e.target.value] })
+              }
+              multiple={true}
+            /> */}
+            <MultiSelect
+              options={organizationList}
+              onValueChange={setSelectedOrgUser}
+              defaultValue={selectedOrgUser}
+              placeholder='Select organization'
+              variant='inverted'
+              animation={2}
+              maxCount={3}
             />
           </div>
         )}
@@ -125,7 +233,7 @@ const ComposeEmailFormContent = ({
 
             {/* Suspense with fallback for CKEditor */}
             <Suspense fallback={<div>Loading editor...</div>}>
-              <CkEditor />
+              <CkEditor editorData={editorData} setEditorData={setEditorData} />
             </Suspense>
           </div>
         )}

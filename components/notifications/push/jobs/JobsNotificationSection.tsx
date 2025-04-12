@@ -2,7 +2,7 @@
 
 import Pagination from '@/components/Pagination';
 import SectionHeading from '@/components/SectionHeading';
-import Badge from '@/components/ui/Badge';
+import Badge from '@/components/ui/SystemBadge';
 import Filter from '@/components/Filter';
 import {
   getColor,

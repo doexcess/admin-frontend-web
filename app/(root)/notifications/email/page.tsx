@@ -13,7 +13,7 @@ import {
   getColor,
   NOTIFICATION_STATUS,
 } from '@/lib/utils';
-import Badge from '@/components/ui/Badge';
+import Badge from '@/components/ui/SystemBadge';
 import { capitalize } from 'lodash';
 import ActionDropdown from '@/components/notifications/ActionDropdown';
 
