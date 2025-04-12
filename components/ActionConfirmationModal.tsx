@@ -24,7 +24,7 @@ const ActionConfirmationModal = ({
   reason?: string;
   setReason?: any;
 }) => {
-  const handleSuspend = (allow: boolean) => {
+  const handleAction = (allow: boolean) => {
     setAllowAction?.(allow);
 
     setOpenModal?.(false);
@@ -58,10 +58,10 @@ const ActionConfirmationModal = ({
               </div>
             )}
             <div className='flex justify-center gap-4 mt-4'>
-              <Button color='failure' onClick={() => handleSuspend(true)}>
+              <Button color='failure' onClick={() => handleAction(true)}>
                 {"Yes, I'm sure"}
               </Button>
-              <Button color='gray' onClick={() => handleSuspend(false)}>
+              <Button color='gray' onClick={() => handleAction(false)}>
                 No, cancel
               </Button>
             </div>

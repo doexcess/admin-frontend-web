@@ -201,13 +201,14 @@ export const MultiSelect = React.forwardRef<
             ref={ref}
             {...props}
             onClick={handleTogglePopover}
+            variant={'outline'}
             className={cn(
-              'flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto',
+              'w-full min-h-10 h-auto items-center justify-between [&_svg]:pointer-events-auto bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500',
               className
             )}
           >
             {selectedValues.length > 0 ? (
-              <div className='flex justify-between items-center w-full'>
+              <div className='flex justify-between items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 z-20'>
                 <div className='flex flex-wrap items-center'>
                   {selectedValues.slice(0, maxCount).map((value) => {
                     const option = options.find((o) => o.value === value);
@@ -281,14 +282,15 @@ export const MultiSelect = React.forwardRef<
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className='w-auto p-0'
+          className='w-auto p-0 bg-black-2'
           align='start'
           onEscapeKeyDown={() => setIsPopoverOpen(false)}
         >
-          <Command>
+          <Command className=''>
             <CommandInput
               placeholder='Search...'
               onKeyDown={handleInputKeyDown}
+              className='my-2'
             />
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
@@ -364,15 +366,6 @@ export const MultiSelect = React.forwardRef<
             </CommandList>
           </Command>
         </PopoverContent>
-        {animation > 0 && selectedValues.length > 0 && (
-          <WandSparkles
-            className={cn(
-              'cursor-pointer my-2 text-foreground bg-background w-3 h-3',
-              isAnimating ? '' : 'text-muted-foreground'
-            )}
-            onClick={() => setIsAnimating(!isAnimating)}
-          />
-        )}
       </Popover>
     );
   }

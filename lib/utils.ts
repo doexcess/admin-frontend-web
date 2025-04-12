@@ -13,36 +13,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export const timezones = moment.tz.names();
 
-export const environments = ['mainnet', 'testnet'];
-
-export const networks = [
-  'arbitrum',
-  'avalanche',
-  'base',
-  'ethereum',
-  'fantom',
-  'optimism',
-  'polygon',
-  'smartchain',
-  '*',
-];
-
-export const allTimeRatings = [
-  { id: 1, rating: 'Excellent', date: '10/20/2024' },
-  { id: 2, rating: 'Bad', date: '10/20/2024' },
-  { id: 3, rating: 'Good', date: '10/20/2024' },
-  { id: 4, rating: 'Very good', date: '10/20/2024' },
-  { id: 5, rating: 'Average', date: '10/20/2024' },
-  { id: 6, rating: 'Excellent', date: '10/20/2024' },
-  { id: 7, rating: 'Good', date: '10/20/2024' },
-  { id: 8, rating: 'Bad', date: '10/20/2024' },
-  { id: 9, rating: 'Very good', date: '10/20/2024' },
-  { id: 10, rating: 'Average', date: '10/20/2024' },
-  { id: 11, rating: 'Excellent', date: '10/20/2024' },
-  { id: 12, rating: 'Good', date: '10/20/2024' },
-  { id: 13, rating: 'Bad', date: '10/20/2024' },
-];
-
 export const allTimeFeedbacks = [
   {
     id: 1,
