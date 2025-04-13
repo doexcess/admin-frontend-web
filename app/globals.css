@@ -17,6 +17,7 @@ body {
   --foreground-rgb: 17 24 39;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --active-tab-border: 2px solid hsl(var(--primary));
 }
 
 .ck-editor__editable,
@@ -113,6 +114,10 @@ body {
     @apply p-4 md:ml-64 h-auto pt-20;
   }
 
+  .section-container-pt-0 {
+    @apply p-4 md:ml-64 h-auto;
+  }
+
   .multiple-section-container {
     @apply p-4 md:ml-64 h-auto pt-2;
   }
@@ -137,4 +142,18 @@ body {
 .blurred {
   filter: blur(4px);
   pointer-events: none; /* Prevents interactions while blurred */
+}
+
+/* // Custom active tab style */
+[data-state='active'] {
+  position: relative;
+  border-bottom: var(--active-tab-border);
+  color: hsl(var(--primary));
+  font-weight: 500;
+}
+
+/* // Optional: Add smooth transition */
+.TabsTrigger {
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
 }

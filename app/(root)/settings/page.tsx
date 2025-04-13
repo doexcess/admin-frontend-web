@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/Button';
 import { Separator } from '@/components/ui/separator';
+import { FiShield, FiSettings } from 'react-icons/fi';
 
 const Settings = () => {
   return (
@@ -18,7 +19,7 @@ const Settings = () => {
         />
       </header>
 
-      <section className='section-container-padding-0'>
+      <section className='section-container-pt-0'>
         <Tabs defaultValue='general' className='w-full'>
           <div className='flex flex-col md:flex-row gap-6'>
             {/* Sidebar Navigation */}
@@ -26,38 +27,17 @@ const Settings = () => {
               <TabsList className='flex flex-col h-auto p-2 bg-background'>
                 <TabsTrigger
                   value='general'
-                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-muted'
+                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-primary-main'
                 >
-                  <i className='ri-settings-2-line mr-3'></i>
-                  General
+                  <FiSettings className='w-4 h-4' />
+                  &nbsp; General
                 </TabsTrigger>
                 <TabsTrigger
                   value='security'
-                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-muted'
+                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-primary-main'
                 >
-                  <i className='ri-shield-keyhole-line mr-3'></i>
-                  Security
-                </TabsTrigger>
-                <TabsTrigger
-                  value='notifications'
-                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-muted'
-                >
-                  <i className='ri-notification-3-line mr-3'></i>
-                  Notifications
-                </TabsTrigger>
-                <TabsTrigger
-                  value='team'
-                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-muted'
-                >
-                  <i className='ri-team-line mr-3'></i>
-                  Team
-                </TabsTrigger>
-                <TabsTrigger
-                  value='billing'
-                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-muted'
-                >
-                  <i className='ri-bank-card-line mr-3'></i>
-                  Billing
+                  <FiShield className='w-4 h-4' />
+                  &nbsp; Security
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -69,13 +49,6 @@ const Settings = () => {
               </TabsContent>
               <TabsContent value='security'>
                 <SecuritySettings />
-              </TabsContent>
-              <TabsContent value='notifications'>
-                {/* <NotificationSettings /> */}
-              </TabsContent>
-              <TabsContent value='team'>{/* <TeamSettings /> */}</TabsContent>
-              <TabsContent value='billing'>
-                {/* <BillingSettings /> */}
               </TabsContent>
             </div>
           </div>
