@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 declare type InputProps = {
+  id?: string;
   type: string;
   name: string;
   placeholder?: string;

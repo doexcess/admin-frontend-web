@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Input = ({
+  id,
   type,
   name,
   placeholder = '',
@@ -15,7 +16,7 @@ const Input = ({
       <input
         type={type}
         name={name}
-        id={name}
+        id={id}
         className={className}
         placeholder={placeholder}
         defaultValue={defaultValue}
