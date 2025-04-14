@@ -10,6 +10,7 @@ declare type InputProps = {
   required?: boolean;
   value?: string;
   onChange?: any;
+  readonly?: boolean;
 };
 
 declare type SelectProps = {

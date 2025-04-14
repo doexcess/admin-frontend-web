@@ -7,6 +7,8 @@ import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/Button';
 import { Separator } from '@/components/ui/separator';
 import { FiShield, FiSettings } from 'react-icons/fi';
+import GeneralSettings from '@/components/settings/GeneralSettings';
+import SecuritySettings from '@/components/settings/SecuritySettings';
 
 const Settings = () => {
   return (
@@ -57,133 +59,5 @@ const Settings = () => {
     </main>
   );
 };
-
-// Modular Components for each settings section
-const GeneralSettings = () => (
-  <div className='space-y-6'>
-    <Card>
-      <CardHeader>
-        <CardTitle>Profile Information</CardTitle>
-      </CardHeader>
-      <CardContent className='space-y-4'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          <div>
-            <Label htmlFor='name'>Full Name</Label>
-            <Input type='text' id='name' name='name' placeholder='Your name' />
-          </div>
-          <div>
-            <Label htmlFor='email'>Email</Label>
-            <Input
-              id='email'
-              type='email'
-              name='email'
-              placeholder='your@email.com'
-            />
-          </div>
-        </div>
-        <div>
-          <Label htmlFor='bio'>Bio</Label>
-          <Input
-            type='text'
-            name='bio'
-            id='bio'
-            placeholder='Tell us about yourself'
-          />
-        </div>
-      </CardContent>
-    </Card>
-
-    <Card>
-      <CardHeader>
-        <CardTitle>Preferences</CardTitle>
-      </CardHeader>
-      <CardContent className='space-y-4'>
-        <div className='flex items-center justify-between'>
-          <div>
-            <Label>Dark Mode</Label>
-            <p className='text-sm text-muted-foreground'>
-              Switch between light and dark theme
-            </p>
-          </div>
-          <Switch />
-        </div>
-        <Separator />
-        <div className='flex items-center justify-between'>
-          <div>
-            <Label>Language</Label>
-            <p className='text-sm text-muted-foreground'>
-              Set your preferred language
-            </p>
-          </div>
-          <div className='w-48'>
-            <Input type='text' name='lang' placeholder='Select language' />
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-
-    <div className='flex justify-end'>
-      <Button>Save Changes</Button>
-    </div>
-  </div>
-);
-
-const SecuritySettings = () => (
-  <div className='space-y-6'>
-    <Card>
-      <CardHeader>
-        <CardTitle>Password</CardTitle>
-      </CardHeader>
-      <CardContent className='space-y-4'>
-        <div className='grid gap-4'>
-          <div>
-            <Label htmlFor='current-password'>Current Password</Label>
-            <Input
-              id='current-password'
-              type='password'
-              name='current-password'
-            />
-          </div>
-          <div>
-            <Label htmlFor='new-password'>New Password</Label>
-            <Input id='new-password' type='password' name='new-password' />
-          </div>
-          <div>
-            <Label htmlFor='confirm-password'>Confirm Password</Label>
-            <Input
-              id='confirm-password'
-              type='password'
-              name='confirm-password'
-            />
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-
-    <Card>
-      <CardHeader>
-        <CardTitle>Two-Factor Authentication</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className='flex items-center justify-between'>
-          <div>
-            <Label>Enable 2FA</Label>
-            <p className='text-sm text-muted-foreground'>
-              Add an extra layer of security to your account
-            </p>
-          </div>
-          <Switch />
-        </div>
-      </CardContent>
-    </Card>
-
-    <div className='flex justify-end'>
-      <Button>Update Security</Button>
-    </div>
-  </div>
-);
-
-// Add similar components for NotificationSettings, TeamSettings, BillingSettings
-// ...
 
 export default Settings;

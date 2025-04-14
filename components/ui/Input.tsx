@@ -10,6 +10,7 @@ const Input = ({
   value,
   defaultValue,
   required,
+  readonly = false,
 }: InputProps) => {
   return (
     <>
@@ -23,6 +24,7 @@ const Input = ({
         onChange={onChange}
         value={value}
         required={required}
+        {...(readonly ? { readOnly: true } : {})}
       />
     </>
   );
