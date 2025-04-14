@@ -7,8 +7,11 @@ import Input from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+import { useTheme } from 'next-themes';
 
 const GeneralSettings = () => {
+  const { setTheme, theme } = useTheme();
+
   return (
     <div className='space-y-6'>
       <Card>
@@ -60,7 +63,9 @@ const GeneralSettings = () => {
                 Switch between light and dark theme
               </p>
             </div>
-            <Switch onClick={() => alert(123)} />
+            <Switch
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            />
           </div>
           <Separator />
           <div className='flex items-center justify-between'>

@@ -7,6 +7,7 @@ import { ConfettiProvider } from '@/components/providers/confetti-provider';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 import ReduxProvider from '@/redux/redux-provider';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
   title: 'Doexcess Admin',
@@ -26,7 +27,14 @@ export default function RootLayout({
       <html lang='en'>
         <ConfettiProvider />
         <ToastProvider />
-        <body className={inter.className}>{children}</body>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          <body className={inter.className}>{children}</body>
+        </ThemeProvider>
       </html>
     </ReduxProvider>
   );

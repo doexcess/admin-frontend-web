@@ -148,7 +148,14 @@ const PageHeading = ({
           </Button>
         )}
         <div className='flex justify-between'>
-          {title && <h1 className='text-2xl font-bold'>{title}</h1>}
+          {title && (
+            <h1
+              className='text-2xl font-bold text-gray-700
+dark:text-white'
+            >
+              {title}
+            </h1>
+          )}
           {ctaButtons}
         </div>
       </div>
