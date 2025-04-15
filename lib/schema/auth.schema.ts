@@ -40,7 +40,6 @@ export const UserProfileSchema = Joi.object({
       'any.only': 'Gender must be ' + Object.values(Gender).join(', '),
     }),
 });
-
 export interface UserProfileProps {
   name?: string;
   profile_picture?: string;
@@ -48,6 +47,32 @@ export interface UserProfileProps {
   bio?: string;
   date_of_birth?: Date | string | null;
   gender?: Gender | null;
+}
+
+export const UpdatePasswordSchema = Joi.object({
+  current_password: Joi.string().required().label('Current Password'),
+  new_password: Joi.string()
+    .min(8)
+    .max(32)
+    .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\\d).+$'))
+    .required()
+    .label('New Password')
+    .messages({
+      'string.pattern.base':
+        'New Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+    }),
+  confirm_password: Joi.string()
+    .valid(Joi.ref('new_password'))
+    .required()
+    .label('Confirm Password')
+    .messages({
+      'any.only': 'Confirm Password must match New Password',
+    }),
+});
+export interface UpdatePasswordProps {
+  current_password: string;
+  new_password: string;
+  confirm_password: string;
 }
 
 export type LoginFormProps = InferType<typeof LoginFormSchema>;

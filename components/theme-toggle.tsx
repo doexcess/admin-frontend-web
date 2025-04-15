@@ -11,7 +11,12 @@ export function ThemeToggle() {
   // Prevent rendering until mounted on client
   if (!isMounted) {
     return (
-      <Button variant='ghost' size='icon' aria-label='Loading theme'>
+      <Button
+        type='button'
+        variant='ghost'
+        size='icon'
+        aria-label='Loading theme'
+      >
         <div className='h-[1.2rem] w-[1.2rem]' />
       </Button>
     );
@@ -19,6 +24,7 @@ export function ThemeToggle() {
 
   return (
     <Button
+      type='button'
       variant='ghost'
       size='icon'
       onClick={toggleTheme}

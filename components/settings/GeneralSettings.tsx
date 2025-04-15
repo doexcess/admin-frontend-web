@@ -12,10 +12,15 @@ import { AppDispatch } from '@/redux/store';
 import { useDispatch } from 'react-redux';
 import { UserProfileProps } from '@/lib/schema/auth.schema';
 import useProfile from '@/hooks/page/useProfile';
+import { saveProfile } from '@/redux/slices/authSlice';
+import toast from 'react-hot-toast';
+import { Loader2 } from 'lucide-react';
 
 const GeneralSettings = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { profile } = useProfile();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState<UserProfileProps>({
     name: profile?.name || '',
@@ -36,8 +41,24 @@ const GeneralSettings = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Dispatch your update action here
+
+    try {
+      setIsLoading(true);
+
+      // Dispatch your update action here
+      const response: any = await dispatch(saveProfile(formData));
+
+      if (response.requestStatus === 'rejected') {
+        throw new Error(response.payload);
+      }
+
+      toast.success(response?.payload?.message);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,7 +77,7 @@ const GeneralSettings = () => {
                   id='name'
                   name='name'
                   placeholder='Your name'
-                  value={formData.name}
+                  value={formData.name || profile?.name}
                   onChange={handleChange}
                 />
               </div>
@@ -79,7 +100,7 @@ const GeneralSettings = () => {
                 name='bio'
                 id='bio'
                 placeholder='Tell us about yourself'
-                value={formData.bio}
+                value={formData.bio || profile?.profile.bio}
                 onChange={handleChange}
               />
             </div>
@@ -122,8 +143,14 @@ const GeneralSettings = () => {
         </Card>
 
         <div className='flex justify-end'>
-          <Button size='sm' type='submit'>
-            Save Changes
+          <Button size='sm' type='submit' disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <Loader2 size={20} className='animate-spin' /> &nbsp; Loading...
+              </>
+            ) : (
+              'Save Changes'
+            )}
           </Button>
         </div>
       </form>

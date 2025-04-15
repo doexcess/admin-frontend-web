@@ -2,13 +2,10 @@
 
 import React, { useState } from 'react';
 
-import { encryptInput, environments, timezones } from '@/lib/utils';
+import { encryptInput } from '@/lib/utils';
 import Checkbox from '../ui/Checkbox';
 import Input from '../ui/Input';
-import Select from '../ui/Select';
-import Joi from 'joi';
 import { useDispatch } from 'react-redux';
-import { signIn } from '@/lib/actions/auth.action';
 import { useRouter } from 'next/navigation';
 import { LoginFormSchema } from '@/lib/schema/auth.schema';
 import { Loader2 } from 'lucide-react';

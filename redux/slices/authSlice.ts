@@ -1,5 +1,6 @@
 import api from '@/lib/api';
 import {
+  UpdatePasswordProps,
   UserProfileProps,
   UserProfileSchemaProps,
 } from '@/lib/schema/auth.schema';
@@ -89,6 +90,25 @@ export const viewProfile = createAsyncThunk('auth/view-profile', async () => {
   }
 });
 
+// Async Thunk to update password information
+export const updatePassword = createAsyncThunk(
+  'auth/update-password',
+  async (credentials: UpdatePasswordProps, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post('/auth/update-password', credentials);
+
+      return {
+        message: data.message,
+      };
+    } catch (error: any) {
+      // console.log(error);
+      return rejectWithValue(
+        error.response?.data || 'Failed to update password'
+      );
+    }
+  }
+);
+
 // Async Thunk for logout
 export const logout = createAsyncThunk('auth/logout', async () => {
   Cookies.remove('token');
@@ -148,6 +168,16 @@ const authSlice = createSlice({
         state.profile = action.payload?.profile!;
       })
       .addCase(viewProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updatePassword.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updatePassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
