@@ -1,4 +1,9 @@
 import api from '@/lib/api';
+import {
+  UserProfileProps,
+  UserProfileSchemaProps,
+} from '@/lib/schema/auth.schema';
+import { Profile, ProfileResponse } from '@/types/account';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
@@ -6,11 +11,13 @@ interface AuthState {
   user: any;
   token: string | null;
   loading: boolean;
+  profile: Profile | null;
   error: string | null;
 }
 
 const initialState: AuthState = {
   user: null,
+  profile: null,
   token: Cookies.get('token') || null,
   loading: false,
   error: null,
@@ -49,6 +56,38 @@ export const verifyLogin = createAsyncThunk(
     }
   }
 );
+
+// Async Thunk to save profile information
+export const saveProfile = createAsyncThunk(
+  'auth/save-profile-info',
+  async (credentials: UserProfileProps, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post('/auth/save-profile-info', credentials);
+
+      return {
+        message: data.message,
+      };
+    } catch (error: any) {
+      // console.log(error);
+      return rejectWithValue(
+        error.response?.data || 'Failed to save profile info'
+      );
+    }
+  }
+);
+
+// Async Thunk to view profile information
+export const viewProfile = createAsyncThunk('auth/view-profile', async () => {
+  try {
+    const { data } = await api.get<ProfileResponse>('/auth/view-profile');
+
+    return {
+      profile: data.data,
+    };
+  } catch (error: any) {
+    console.log(error);
+  }
+});
 
 // Async Thunk for logout
 export const logout = createAsyncThunk('auth/logout', async () => {
@@ -90,6 +129,27 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.token = null;
+      })
+      .addCase(saveProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(saveProfile.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(saveProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(viewProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(viewProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload?.profile!;
+      })
+      .addCase(viewProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

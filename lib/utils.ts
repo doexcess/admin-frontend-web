@@ -6,6 +6,7 @@ import moment from 'moment-timezone';
 import { capitalize } from 'lodash';
 import crypto from 'crypto';
 import { TicketTier } from '@/types/product';
+import Joi from 'joi';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

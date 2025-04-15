@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch';
 
 const SecuritySettings = () => {
   return (
-    <div className='space-y-6'>
+    <div className='space-y-6 text-black-1 dark:text-white'>
       <Card>
         <CardHeader>
           <CardTitle>Password</CardTitle>

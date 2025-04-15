@@ -21,7 +21,7 @@ const Settings = () => {
         />
       </header>
 
-      <section className='section-container-pt-0'>
+      <section className='section-container-pt-0 '>
         <Tabs defaultValue='general' className='w-full'>
           <div className='flex flex-col md:flex-row gap-6'>
             {/* Sidebar Navigation */}
@@ -29,14 +29,14 @@ const Settings = () => {
               <TabsList className='flex flex-col h-auto p-2 bg-background'>
                 <TabsTrigger
                   value='general'
-                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-primary-main'
+                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-primary-main text-black-1 dark:text-white'
                 >
                   <FiSettings className='w-4 h-4' />
                   &nbsp; General
                 </TabsTrigger>
                 <TabsTrigger
                   value='security'
-                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-primary-main'
+                  className='w-full justify-start px-4 py-3 data-[state=active]:bg-primary-main text-black-1 dark:text-white'
                 >
                   <FiShield className='w-4 h-4' />
                   &nbsp; Security

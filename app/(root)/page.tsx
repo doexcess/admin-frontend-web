@@ -10,9 +10,9 @@ const Home = () => {
     <main className='section-container'>
       <div className='flex h-screen'>
         {/* Main Content */}
-        <main className='flex-1 p-6'>
+        <main className='flex-1 p-6 text-black-1 dark:text-white'>
           <header className='flex justify-between items-center'>
-            <h2 className='text-2xl font-semibold'>Hello, Admin 👋🏼</h2>
+            <h2 className='text-2xl font-semibold '>Hello, Admin 👋🏼</h2>
             {/* <button className='bg-primary-main text-white px-4 py-2 rounded-md'>
               Export
             </button> */}
