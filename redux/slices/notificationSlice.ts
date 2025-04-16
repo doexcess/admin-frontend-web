@@ -1,5 +1,6 @@
 import api from '@/lib/api';
 import { NotificationType } from '@/lib/utils';
+import { NotificationResponse } from '@/types/notification';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
@@ -36,6 +37,53 @@ export const composeEmail = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data || 'Notification dispatch failed'
+      );
+    }
+  }
+);
+
+// Async Thunk for fetching all instant notifications
+export const fetchInstant = createAsyncThunk(
+  'notification-dispatch/fetch-instant',
+  async (
+    {
+      page,
+      limit,
+      q,
+      startDate,
+      endDate,
+    }: {
+      page?: number;
+      limit?: number;
+      q?: string;
+      startDate?: string;
+      endDate?: string;
+    },
+    { rejectWithValue }
+  ) => {
+    const params: Record<string, any> = {};
+
+    if (page !== undefined) params['pagination[page]'] = page;
+    if (limit !== undefined) params['pagination[limit]'] = limit;
+    if (q !== undefined) params['q'] = q;
+    if (startDate !== undefined) params['startDate'] = startDate;
+    if (endDate !== undefined) params['endDate'] = endDate;
+
+    try {
+      const { data } = await api.get<NotificationResponse>(
+        `/notification-track/fetch-instant`,
+        {
+          params,
+        }
+      );
+
+      return {
+        instant_notifications: data.data,
+        count: data.count,
+      };
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to fetch instant notifications'
       );
     }
   }
