@@ -408,10 +408,10 @@ export enum EmailTemplate {
   CUSTOM = 'custom',
 }
 
-// export enum NotificationType {
-//   IMMEDIATE = 'immediate',
-//   SCHEDULED = 'scheduled',
-// }
+export enum NotificationKind {
+  IMMEDIATE = 'immediate',
+  SCHEDULED = 'scheduled',
+}
 
 export enum NOTIFICATION_STATUS {
   NONE = 'none',
@@ -419,6 +419,7 @@ export enum NOTIFICATION_STATUS {
   CANCELED = 'canceled',
   SCHEDULED = 'scheduled',
   DELIVERED = 'delivered',
+  FAILED = 'failed',
 }
 
 export enum ProductStatus {
@@ -515,7 +516,13 @@ export const badgeColors = [
     color: 'blue',
     for: [NOTIFICATION_STATUS.PENDING, EmailTemplate.WAITLIST] as Array<string>,
   },
-  { color: 'red', for: [NOTIFICATION_STATUS.CANCELED] as Array<string> },
+  {
+    color: 'red',
+    for: [
+      NOTIFICATION_STATUS.CANCELED,
+      NOTIFICATION_STATUS.FAILED,
+    ] as Array<string>,
+  },
   { color: 'indigo', for: [NOTIFICATION_STATUS.SCHEDULED] as Array<string> },
   { color: 'green', for: [NOTIFICATION_STATUS.DELIVERED] as Array<string> },
   { color: 'pink', for: [EmailTemplate.CUSTOM] as Array<string> },

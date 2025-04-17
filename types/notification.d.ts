@@ -6,6 +6,8 @@ export interface Business {
   user: { id: true; name: true };
 }
 
+export interface ScheduleInfo {}
+
 export interface Notification {
   id: string;
   title: string;
@@ -16,6 +18,7 @@ export interface Notification {
   business_id: string | null;
   created_at: string;
   business: Business | null; // adjust if business structure is known
+  schedule_info: ScheduleInfo | null;
   owner: {
     id: string;
     name: string;

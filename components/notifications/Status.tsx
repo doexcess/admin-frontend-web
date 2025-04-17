@@ -1,12 +1,16 @@
-import { NotificationType, NotificationStatusTypes } from '@/lib/utils';
+import {
+  NotificationType,
+  NotificationStatusTypes,
+  NotificationKind,
+} from '@/lib/utils';
 import React from 'react';
 
 const NotificationStatus = ({
   setNotificationType,
   notificationType,
 }: {
-  setNotificationType: React.Dispatch<React.SetStateAction<NotificationType>>;
-  notificationType: NotificationType;
+  setNotificationType: React.Dispatch<React.SetStateAction<NotificationKind>>;
+  notificationType: NotificationKind;
 }) => {
   return (
     <>

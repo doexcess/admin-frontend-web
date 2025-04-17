@@ -59,7 +59,7 @@ const Filter = ({
   return (
     <div>
       <div
-        className={`flex ${showPeriod && 'flex-col'} ${
+        className={`flex ${showPeriod ? 'flex-col' : 'flex-col md:flex-row'} ${
           !showSearch ? 'justify-end mt-5' : 'mt-3'
         } lg:flex-row gap-3 lg:gap-0`}
       >

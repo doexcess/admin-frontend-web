@@ -18,7 +18,7 @@ const ActionDropdown = ({
   notificationType,
   table = 'email',
 }: {
-  id: number;
+  id: string;
   status: NOTIFICATION_STATUS;
   notificationType: NotificationType;
   table?: string;

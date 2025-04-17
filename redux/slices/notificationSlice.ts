@@ -1,17 +1,23 @@
 import api from '@/lib/api';
 import { NotificationType } from '@/lib/utils';
-import { NotificationResponse } from '@/types/notification';
+import { Notification, NotificationResponse } from '@/types/notification';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
 interface EmailNotificationState {
   loading: boolean;
   error: string | null;
+  notifications: Notification[];
+  notificationLoading: boolean;
+  countNotifications: number;
 }
 
 const initialState: EmailNotificationState = {
   loading: false,
   error: null,
+  notifications: [],
+  notificationLoading: false,
+  countNotifications: 0,
 };
 
 // Async Thunk for a single email notification dispatch
@@ -42,9 +48,9 @@ export const composeEmail = createAsyncThunk(
   }
 );
 
-// Async Thunk for fetching all instant notifications
-export const fetchInstant = createAsyncThunk(
-  'notification-dispatch/fetch-instant',
+// Async Thunk for fetching all notifications
+export const fetch = createAsyncThunk(
+  'notification-dispatch/fetch',
   async (
     {
       page,
@@ -71,19 +77,19 @@ export const fetchInstant = createAsyncThunk(
 
     try {
       const { data } = await api.get<NotificationResponse>(
-        `/notification-track/fetch-instant`,
+        `/notification-track/fetch`,
         {
           params,
         }
       );
 
       return {
-        instant_notifications: data.data,
+        notifications: data.data,
         count: data.count,
       };
     } catch (error: any) {
       return rejectWithValue(
-        error.response?.data?.message || 'Failed to fetch instant notifications'
+        error.response?.data?.message || 'Failed to fetch all notifications'
       );
     }
   }
@@ -104,6 +110,19 @@ const notificationSlice = createSlice({
       })
       .addCase(composeEmail.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetch.pending, (state) => {
+        state.notificationLoading = true;
+        state.error = null;
+      })
+      .addCase(fetch.fulfilled, (state, action) => {
+        state.notificationLoading = false;
+        state.notifications = action.payload.notifications;
+        state.countNotifications = action.payload.count;
+      })
+      .addCase(fetch.rejected, (state, action) => {
+        state.notificationLoading = false;
         state.error = action.payload as string;
       });
   },
