@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const EmailNotification = () => {
   return (
-    <main>
+    <main className='h-[100vh]'>
       <header className='section-container'>
         {/* Page Heading */}
         <PageHeading
@@ -19,7 +19,7 @@ const EmailNotification = () => {
       </header>
 
       {/* Pre-header Section */}
-      <section className='section-container-reduced-padding text-left md:text-center'>
+      <section className='section-container-reduced-padding text-left md:text-center text-gray-900 dark:text-white'>
         <h2 className='text-2xl font-bold tracking-tight'>
           Manage Your Email Notifications
         </h2>
@@ -30,7 +30,7 @@ const EmailNotification = () => {
       </section>
 
       {/* Notification Options */}
-      <section className='section-container-reduced-padding grid grid-cols-1 md:grid-cols-2 gap-6'>
+      <section className='section-container-reduced-padding grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-900 dark:text-white'>
         {/* Instant Notification Card */}
         <Card className='hover:shadow-lg transition-shadow duration-300'>
           <CardContent className='p-6 flex flex-col justify-between h-full'>
