@@ -1,12 +1,12 @@
 'use client';
 
-import { fetch, fetchInstant } from '@/redux/slices/notificationSlice';
+import { fetchInstant } from '@/redux/slices/notificationSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const useNotification = () => {
+const useInstantNotification = () => {
   const searchParams = useSearchParams();
   const params = useParams();
   const router = useRouter();
@@ -20,13 +20,15 @@ const useNotification = () => {
   const [startDate, setStartDate] = useState(searchParams.get('startDate'));
   const [endDate, setEndDate] = useState(searchParams.get('endDate'));
 
-  let { notificationLoading, notifications, countNotifications } = useSelector(
-    (state: RootState) => state.notification
-  );
+  let {
+    instantNotificationLoading,
+    instantNotifications,
+    countInstantNotifications,
+  } = useSelector((state: RootState) => state.notification);
 
   useEffect(() => {
     dispatch(
-      fetch({
+      fetchInstant({
         page: currentPage,
         limit: perPage,
         ...(q && { q }),
@@ -37,7 +39,7 @@ const useNotification = () => {
   }, [dispatch, currentPage, perPage, q, startDate, endDate]);
 
   const onClickNext = async () => {
-    if (notifications.length > 0) {
+    if (instantNotifications.length > 0) {
       queryParams.set('page', encodeURIComponent(currentPage + 1));
       router.push(`?${queryParams}`);
     }
@@ -86,9 +88,9 @@ const useNotification = () => {
   };
 
   return {
-    notifications,
-    notificationLoading,
-    totalNotifications: countNotifications, // according to naming convention
+    instantNotifications,
+    instantNotificationLoading,
+    totalInstantNotifications: countInstantNotifications, // according to naming convention
     currentPage,
     q,
     startDate,
@@ -101,4 +103,4 @@ const useNotification = () => {
   };
 };
 
-export default useNotification;
+export default useInstantNotification;

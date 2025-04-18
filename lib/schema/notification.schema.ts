@@ -16,4 +16,30 @@ export const ComposeEmailSchema = Joi.object({
     .required(),
 });
 
+export const ScheduleEmailSchema = Joi.object({
+  title: Joi.string().required(),
+  message: Joi.string().required(),
+  type: Joi.string()
+    .valid(...Object.values(NotificationType))
+    .required(), // adjust enum values as needed
+  scheduled_time: Joi.string()
+    // .pattern(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/)
+    .required(),
+  // .messages({
+  //   'string.pattern.base': `"scheduled_time" must be in the format YYYY-MM-DD HH:MM`,
+  // }),
+  recipients: Joi.array()
+    .items(Joi.string().uuid({ version: 'uuidv4' }).required())
+    .min(1)
+    .required(),
+});
+export interface ScheduleEmailProps {
+  title: string;
+  message: string;
+  type: NotificationType;
+  scheduled_time: string;
+  recipients: string[];
+}
+
 export type ComposeEmailFormProps = InferType<typeof ComposeEmailSchema>;
+export type ScheduleEmailFormProps = InferType<typeof ScheduleEmailSchema>;

@@ -19,6 +19,41 @@ const SidebarMenu = ({ handleClose }: { handleClose?: () => void }) => {
     (sidebarLink) => sidebarLink.group === groups.TWO
   );
 
+  const html = groupTwoSidebarLinks.map((sidebarLink) =>
+    sidebarLink.items ? (
+      <Sidebar.Collapse
+        key={sidebarLink.route}
+        icon={sidebarLink.icon}
+        label={sidebarLink.label}
+      >
+        {sidebarLink.items.map((item) => (
+          <Sidebar.Item
+            key={item.route}
+            onClick={() => handleNavigation(item.route)}
+            className={cn(
+              'cursor-pointer',
+              pathname === item.route && 'bg-gray-200 dark:bg-gray-700' // Active class
+            )}
+          >
+            {item.label}
+          </Sidebar.Item>
+        ))}
+      </Sidebar.Collapse>
+    ) : (
+      <Sidebar.Item
+        key={sidebarLink.route}
+        onClick={() => handleNavigation(sidebarLink.route)}
+        icon={sidebarLink.icon}
+        className={cn(
+          'cursor-pointer',
+          pathname === sidebarLink.route && 'bg-gray-200 dark:bg-gray-700' // Active class
+        )}
+      >
+        {sidebarLink.label}
+      </Sidebar.Item>
+    )
+  );
+
   const handleNavigation = (route: string) => {
     router.push(route);
     if (typeof handleClose === 'function') handleClose();

@@ -1,37 +1,11 @@
-'use client';
-
-import React, { useState } from 'react';
 import PageHeading from '@/components/PageHeading';
-import Filter from '@/components/Filter';
-import NotificationStatus from '@/components/notifications/Status';
+import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/Button';
+import { Clock, Send } from 'lucide-react';
 import Link from 'next/link';
-import { HiPlus } from 'react-icons/hi';
-import { NotificationKind } from '@/lib/utils';
-import NotificationsList from '@/components/notifications/email/NotificationsList';
-import useNotification from '@/hooks/page/useNotification';
-import { useSearchParams } from 'next/navigation';
-import LoadingSkeleton from '@/components/ui/LoadingSkeleton';
 
 const EmailNotification = () => {
-  const [notificationType, setNotificationType] = useState(
-    NotificationKind.IMMEDIATE
-  );
-
-  const {
-    notifications,
-    notificationLoading,
-    totalNotifications,
-    onClickNext,
-    onClickPrev,
-    currentPage,
-    q,
-    startDate,
-    endDate,
-    handleSearchSubmit,
-    handleFilterByDateSubmit,
-    handleRefresh,
-  } = useNotification();
-
   return (
     <main>
       <header className='section-container'>
@@ -42,40 +16,58 @@ const EmailNotification = () => {
           layer2='Notifications'
           layer3='Email'
         />
-
-        {/* Filter */}
-        <Filter
-          showPeriod={false}
-          handleSearchSubmit={handleSearchSubmit}
-          handleFilterByDateSubmit={handleFilterByDateSubmit}
-          handleRefresh={handleRefresh}
-          extra={
-            <>
-              <NotificationStatus
-                setNotificationType={setNotificationType}
-                notificationType={notificationType}
-              />
-              <Link
-                href={`/notifications/email/compose?type=${notificationType}`}
-                className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex items-center gap-1'
-              >
-                {' '}
-                <HiPlus />
-                Compose
-              </Link>
-            </>
-          }
-        />
       </header>
-      <section className='section-container-padding-0'>
-        <NotificationsList
-          notifications={notifications}
-          count={totalNotifications}
-          onClickNext={onClickNext}
-          onClickPrev={onClickPrev}
-          currentPage={currentPage}
-          loading={notificationLoading}
-        />
+
+      {/* Pre-header Section */}
+      <section className='section-container-reduced-padding text-left md:text-center'>
+        <h2 className='text-2xl font-bold tracking-tight'>
+          Manage Your Email Notifications
+        </h2>
+        <p className='text-muted-foreground mt-2 max-w-2xl mx-auto'>
+          Choose to send email notifications immediately or schedule them for a
+          later time. Stay in control of your communication.
+        </p>
+      </section>
+
+      {/* Notification Options */}
+      <section className='section-container-reduced-padding grid grid-cols-1 md:grid-cols-2 gap-6'>
+        {/* Instant Notification Card */}
+        <Card className='hover:shadow-lg transition-shadow duration-300'>
+          <CardContent className='p-6 flex flex-col justify-between h-full'>
+            <div className='flex items-center gap-4 mb-4'>
+              <Send className='text-blue-600' size={28} />
+              <h3 className='text-xl font-semibold'>
+                Send Instant Notification
+              </h3>
+            </div>
+            <p className='text-muted-foreground mb-6'>
+              Trigger an immediate email to selected recipients. Ideal for
+              urgent updates or real-time communication.
+            </p>
+            <Link href='/notifications/email/instant'>
+              <Button className='w-full'>Send Now</Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        {/* Scheduled Notification Card */}
+        <Card className='hover:shadow-lg transition-shadow duration-300'>
+          <CardContent className='p-6 flex flex-col justify-between h-full'>
+            <div className='flex items-center gap-4 mb-4'>
+              <Clock className='text-green-600' size={28} />
+              <h3 className='text-xl font-semibold'>Schedule a Notification</h3>
+            </div>
+            <p className='text-muted-foreground mb-6'>
+              Plan and automate your email notifications by selecting a future
+              date and time to notify your audience.
+            </p>
+            <Link href='/notifications/email/scheduled'>
+              <Button variant='outline' className='w-full'>
+                Schedule
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
       </section>
     </main>
   );

@@ -64,7 +64,7 @@ const CkEditor = ({ editorData, setEditorData }: CkEditorProps) => {
         }}
         onChange={(event, editor) => {
           const data = editor.getData(); // ✅ Correct way to get content
-          console.log(data);
+          // console.log(data);
 
           setEditorData(data); // ✅ Store in state
         }}

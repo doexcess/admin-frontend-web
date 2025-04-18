@@ -1,28 +1,27 @@
 import Pagination from '@/components/Pagination';
 import LoadingSkeleton from '@/components/ui/LoadingSkeleton';
 import TableEndRecord from '@/components/ui/TableEndRecord';
-import useNotification from '@/hooks/page/useNotification';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
-import NotificationItem from './NotificationItem';
-import { Notification } from '@/types/notification';
+import { ScheduledNotification } from '@/types/notification';
+import ScheduledNotificationItem from './ScheduledNotificationItem';
 
-interface NotificationListProps {
-  notifications: Notification[];
+interface ScheduledNotificationListProps {
+  notifications: ScheduledNotification[];
   count: number;
   onClickNext: () => Promise<void>;
   onClickPrev: () => Promise<void>;
   currentPage: number;
   loading: boolean;
 }
-const NotificationsList = ({
+const ScheduledNotificationsList = ({
   notifications,
   count,
   onClickNext,
   onClickPrev,
   currentPage,
   loading,
-}: NotificationListProps) => {
+}: ScheduledNotificationListProps) => {
   const searchParams = useSearchParams();
   if (loading) return <LoadingSkeleton />;
 
@@ -44,10 +43,10 @@ const NotificationsList = ({
                 Sender
               </th>
               <th scope='col' className='px-6 py-3'>
-                Status
+                Schedule Date
               </th>
               <th scope='col' className='px-6 py-3'>
-                Immediate/Scheduled
+                Status
               </th>
               <th scope='col' className='px-6 py-3'>
                 Date Created
@@ -57,7 +56,7 @@ const NotificationsList = ({
           </thead>
           <tbody>
             {notifications.map((notification) => (
-              <NotificationItem notification={notification} />
+              <ScheduledNotificationItem notification={notification} />
             ))}
 
             {!notifications.length && (
@@ -78,4 +77,4 @@ const NotificationsList = ({
   );
 };
 
-export default NotificationsList;
+export default ScheduledNotificationsList;

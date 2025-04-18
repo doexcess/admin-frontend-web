@@ -549,9 +549,12 @@ export const emailSplit = (email: string) => {
 };
 
 export const getColor = (status: string) => {
-  return badgeColors?.find((badge: { color: string; for: Array<string> }) =>
-    badge.for.includes(status)
-  )?.color;
+  const details = badgeColors?.find(
+    (badge: { color: string; for: Array<string> }) =>
+      badge.for.includes(status.toLowerCase())
+  );
+
+  return details?.color;
 };
 
 export const replaceAsterisk = (network: string) => {

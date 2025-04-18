@@ -100,24 +100,24 @@ export const sidebarLinks = [
     group: groups.ONE,
   },
   // {
-  //   icon: HiViewBoards,
-  //   route: '/general',
-  //   label: 'General',
-  //   group: groups.ONE,
-  //   items: [
-  //     {
-  //       route: '/general/ratings',
-  //       label: 'Ratings',
-  //     },
-  //     {
-  //       route: '/general/suggestions',
-  //       label: 'Suggestions',
-  //     },
-  //     {
-  //       route: '/general/feedbacks',
-  //       label: 'Feedbacks',
-  //     },
-  //   ],
+  // icon: HiViewBoards,
+  // route: '/general',
+  // label: 'General',
+  // group: groups.ONE,
+  // items: [
+  // {
+  // route: '/general/ratings',
+  // label: 'Ratings',
+  // },
+  // {
+  // route: '/general/suggestions',
+  // label: 'Suggestions',
+  // },
+  // {
+  // route: '/general/feedbacks',
+  // label: 'Feedbacks',
+  // },
+  // ],
   // },
   {
     icon: HiBell,

@@ -114,6 +114,10 @@ body {
     @apply p-4 md:ml-64 h-auto pt-20;
   }
 
+  .section-container-reduced-padding {
+    @apply p-4 md:ml-64 h-auto pt-5;
+  }
+
   .section-container-pt-0 {
     @apply p-4 md:ml-64 h-auto;
   }
