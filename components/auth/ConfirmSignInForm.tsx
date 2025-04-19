@@ -2,25 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 
-import {
-  decryptInput,
-  environments,
-  isEncrypted,
-  timezones,
-} from '@/lib/utils';
-import Checkbox from '../ui/Checkbox';
-import Input from '../ui/Input';
-import Select from '../ui/Select';
-import Joi from 'joi';
+import { decryptInput, isEncrypted } from '@/lib/utils';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { signIn } from '@/lib/actions/auth.action';
 import { useRouter, useSearchParams } from 'next/navigation';
-import {
-  LoginFormSchema,
-  VerifyLoginFormSchema,
-} from '@/lib/schema/auth.schema';
+import { VerifyLoginFormSchema } from '@/lib/schema/auth.schema';
 import { Loader2 } from 'lucide-react';
-import { login, logout, verifyLogin } from '@/redux/slices/authSlice';
+import { verifyLogin } from '@/redux/slices/authSlice';
 import { AppDispatch } from '@/redux/store';
 import toast from 'react-hot-toast';
 import OTPInput from '../ui/OtpInput';
@@ -36,7 +24,6 @@ const ConfirmSignInForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get('token')!;
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector((state: any) => state.auth);
 
   const [isLoading, setIsLoading] = useState(false);
 

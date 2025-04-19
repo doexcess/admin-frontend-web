@@ -1,12 +1,16 @@
-'use client';
-
 import ConfirmSignInForm from '@/components/auth/ConfirmSignInForm';
-import { isEncrypted } from '@/lib/utils';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense } from 'react';
 
-const ConfirmSignIn = () => {
+function ConfirmSignIn() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ConfirmSignInContent />
+    </Suspense>
+  );
+}
+
+const ConfirmSignInContent = () => {
   return (
     <section className='flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900'>
       <a

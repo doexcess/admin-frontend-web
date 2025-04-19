@@ -32,3 +32,13 @@ export interface RevenueResponse {
   statusCode: number;
   data: RevenueReport;
 }
+
+export interface ProductCount {
+  course: number;
+  ticket: number;
+}
+
+export interface ProductCountResponse {
+  statusCode: number;
+  data: ProductCount;
+}

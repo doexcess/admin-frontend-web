@@ -3,7 +3,6 @@
 import ActionConfirmationModal from '@/components/ActionConfirmationModal';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
-import { networks, notificationTemplates } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { HiMinus, HiPlus, HiPlusCircle } from 'react-icons/hi';
@@ -69,7 +68,7 @@ const EditPushForm = () => {
           >
             Network
           </label>
-          <Select name='network' required={true} data={networks} />
+          <Select name='network' required={true} data={[]} />
         </div>
 
         {searchParams.get('type') === 'scheduled' && (

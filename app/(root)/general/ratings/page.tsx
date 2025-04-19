@@ -1,11 +1,9 @@
-import ActionConfirmation from '@/components/ActionConfirmation';
 import DoughnutChart from '@/components/DoughnutChart';
 import PageHeading from '@/components/PageHeading';
 import Pagination from '@/components/Pagination';
 import Filter from '@/components/Filter';
-import { allTimeRatings, ratingTypes } from '@/lib/utils';
+import { ratingTypes } from '@/lib/utils';
 import React from 'react';
-import { HiTrash } from 'react-icons/hi';
 
 const Ratings = () => {
   return (
@@ -35,30 +33,32 @@ const Ratings = () => {
                 role='list'
                 className='divide-y divide-gray-200 dark:divide-gray-700'
               >
-                {allTimeRatings.map((rating) => (
-                  <li key={rating.id} className='py-3 sm:py-4'>
-                    <div className='flex gap-2 items-center'>
-                      <div className='flex-1 min-w-0'>
-                        <p className='text-base font-medium text-gray-900 truncate dark:text-white'>
-                          {rating.rating}
-                        </p>
-                      </div>
-                      <div className='flex-1 text-gray-900 dark:text-white'>
-                        {rating.date}
-                      </div>
-                      <div className='text-sm text-gray-900 dark:text-white'>
-                        <ActionConfirmation
-                          action={<HiTrash />}
-                          body='Are you sure you want to delete'
-                          className='danger-btn mt-2'
-                        />
-                      </div>
-                    </div>
-                  </li>
-                ))}
+                {
+                  // allTmeRatings.map((rating) => (
+                  //   <li key={rating.id} className='py-3 sm:py-4'>
+                  //     <div className='flex gap-2 items-center'>
+                  //       <div className='flex-1 min-w-0'>
+                  //         <p className='text-base font-medium text-gray-900 truncate dark:text-white'>
+                  //           {rating.rating}
+                  //         </p>
+                  //       </div>
+                  //       <div className='flex-1 text-gray-900 dark:text-white'>
+                  //         {rating.date}
+                  //       </div>
+                  //       <div className='text-sm text-gray-900 dark:text-white'>
+                  //         <ActionConfirmation
+                  //           action={<HiTrash />}
+                  //           body='Are you sure you want to delete'
+                  //           className='danger-btn mt-2'
+                  //         />
+                  //       </div>
+                  //     </div>
+                  //   </li>
+                  // ))
+                }
               </ul>
             </div>
-            <Pagination paddingRequired={false} total={allTimeRatings.length} />
+            <Pagination paddingRequired={false} total={[].length} />
           </div>
           <div className='flex flex-1 items-stretch flex-col'>
             <div className='flex-1 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700'>

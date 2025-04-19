@@ -10,6 +10,7 @@ import {
   NOTIFICATION_STATUS,
   pushNotificationData,
   replaceAsterisk,
+  NotificationKind,
 } from '@/lib/utils';
 import { capitalize } from 'lodash';
 import Link from 'next/link';
@@ -20,7 +21,7 @@ import NotificationStatus from '../../Status';
 
 const JobsNotificationSection = () => {
   const [notificationType, setNotificationType] = useState(
-    NotificationType.IMMEDIATE
+    NotificationKind.IMMEDIATE
   );
 
   return (
@@ -95,12 +96,12 @@ const JobsNotificationSection = () => {
                     </td>
 
                     <td className='flex px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-                      <ActionDropdown
+                      {/* <ActionDropdown
                         id={notificationItem.id}
                         status={notificationItem.status as NOTIFICATION_STATUS}
                         notificationType={notificationType}
                         table='push'
-                      />
+                      /> */}
                     </td>
                   </tr>
                 ))}

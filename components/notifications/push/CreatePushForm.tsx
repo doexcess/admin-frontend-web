@@ -3,7 +3,6 @@
 import ActionConfirmationModal from '@/components/ActionConfirmationModal';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
-import { networks, notificationTemplates } from '@/lib/utils';
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { HiMinus, HiPlus } from 'react-icons/hi';
@@ -96,7 +95,7 @@ const CreatePushFormContent = ({
           >
             Network
           </label>
-          <Select name='network' required={true} data={networks} />
+          <Select name='network' required={true} data={[]} />
         </div>
 
         {searchParams.get('type') === 'scheduled' && (

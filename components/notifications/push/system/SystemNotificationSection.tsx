@@ -9,13 +9,14 @@ import {
   pushNotificationData,
   replaceAsterisk,
   systemPushData,
+  NotificationKind,
 } from '@/lib/utils';
 import React, { useState } from 'react';
 import ActionDropdown from '../../ActionDropdown';
 
 const SystemNotificationSection = () => {
   const [notificationType, setNotificationType] = useState(
-    NotificationType.IMMEDIATE
+    NotificationKind.IMMEDIATE
   );
 
   return (
@@ -63,12 +64,12 @@ const SystemNotificationSection = () => {
                     </td>
 
                     <td className='flex px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white font-bold'>
-                      <ActionDropdown
+                      {/* <ActionDropdown
                         id={notificationItem.id}
                         status={NOTIFICATION_STATUS.NONE}
                         notificationType={notificationType}
                         table='push'
-                      />
+                      /> */}
                     </td>
                   </tr>
                 ))}

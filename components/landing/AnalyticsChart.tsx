@@ -1,6 +1,8 @@
 // components/AnalyticsChart.tsx
 'use client';
 
+import { formatMoney } from '@/lib/utils';
+import { RevenueReport } from '@/types/analytics';
 import React from 'react';
 import {
   BarChart,
@@ -27,18 +29,42 @@ const data = [
   { month: 'Dec', profit: 1300, expenses: 900 },
 ];
 
-const AnalyticsChart = () => {
+interface AnalyticsChartProps {
+  revenue: RevenueReport;
+}
+const AnalyticsChart = ({ revenue }: AnalyticsChartProps) => {
+  const data = revenue?.monthly_breakdown?.map((revenue_data) => ({
+    month: revenue_data.month,
+    products: parseFloat(
+      revenue_data.product_revenue.replace(/[^0-9.-]+/g, '')
+    ),
+    subscriptions: parseFloat(
+      revenue_data.subscription_revenue.replace(/[^0-9.-]+/g, '')
+    ),
+    withdrawals: parseFloat(revenue_data.withdrawals.replace(/[^0-9.-]+/g, '')),
+  }));
+
+  // Currency formatter function
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'NGN', // Change to your preferred currency
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
   return (
     <div className='rounded-xl'>
       <div className='flex justify-between items-center gap-4'>
-        <h3 className='text-lg font-semibold'>Profit / Expenses Analytics</h3>
+        <h3 className='text-lg font-semibold'>Revenue Analytics</h3>
 
         <form>
           <select
             id='countries'
             className='w-40 bg-gray-50 border border-gray-300 dark:text-white text-sm rounded-lg 
       focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 
-      dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+      dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
             defaultValue='today'
           >
             {['Yearly'].map((value) => (
@@ -57,12 +83,19 @@ const AnalyticsChart = () => {
             margin={{ top: 10, right: 30, left: 0, bottom: 10 }}
             className='text-gray-800'
           >
-            <XAxis dataKey='month' className='text-gr' />
-            <YAxis />
-            <Tooltip />
+            <XAxis dataKey='month' />
+            <YAxis
+              tickFormatter={formatCurrency}
+              width={80} // Adjust width to accommodate currency symbols
+            />
+            <Tooltip
+              formatter={(value) => formatMoney(Number(value))}
+              labelFormatter={(label) => `Month: ${label}`}
+            />
             <Legend />
-            <Bar dataKey='profit' fill='#4F46E5' name='Profit' />
-            <Bar dataKey='expenses' fill='#10B981' name='Expenses' />
+            <Bar dataKey='products' fill='#FF6B6B' name='Products' />
+            <Bar dataKey='subscriptions' fill='#4DD0E1' name='Subscriptions' />
+            <Bar dataKey='withdrawals' fill='#FBC02D' name='Withdrawals' />
           </BarChart>
         </ResponsiveContainer>
       </div>

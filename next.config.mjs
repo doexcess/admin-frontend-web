@@ -2,11 +2,20 @@
 
 const nextConfig = {
   images: {
-    domains: [
-      'res.cloudinary.com',
-      'www.mxtechsolutions.com',
-      'lh3.googleusercontent.com',
-    ], // Allow images from Cloudinary
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.mxtechsolutions.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+    ],
   },
 };
 

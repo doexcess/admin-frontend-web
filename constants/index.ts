@@ -33,7 +33,7 @@ export const sidebarLinks = [
   },
   {
     icon: HiUsers,
-    route: '/organizations',
+    route: '/organizations/registered',
     label: 'Organizations',
     group: groups.ONE,
     items: [
@@ -49,7 +49,7 @@ export const sidebarLinks = [
   },
   {
     icon: HiUsers,
-    route: '/subscription',
+    route: '/subscription/plans',
     label: 'Subscription',
     group: groups.ONE,
     items: [
@@ -121,7 +121,7 @@ export const sidebarLinks = [
   // },
   {
     icon: HiBell,
-    route: '/notifications',
+    route: '/notifications/email',
     label: 'Notifications',
     group: groups.TWO,
     items: [
