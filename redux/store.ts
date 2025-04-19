@@ -9,6 +9,7 @@ import cartReducer from './slices/cartSlice';
 import subscriptionPlanReducer from './slices/subscriptionPlanSlice';
 import multimediaReducer from './slices/multimediaSlice';
 import notificationReducer from './slices/notificationSlice';
+import analyticsReducer from './slices/analyticsSlice';
 import storage from 'redux-persist/lib/storage'; // Uses localStorage
 import { persistReducer } from 'redux-persist';
 
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   subscriptionPlan: subscriptionPlanReducer, // Not persisted
   multimedia: multimediaReducer, // Not persisted
   notification: notificationReducer, // Not persisted
+  analytics: analyticsReducer, // Not persisted
 });
 
 export const store = configureStore({

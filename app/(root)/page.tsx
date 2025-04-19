@@ -1,11 +1,16 @@
 'use client';
+
 import DoughnutChart from '@/components/DoughnutChart';
 import AnalyticsChart from '@/components/landing/AnalyticsChart';
+import useMetrics from '@/hooks/page/useMetrics';
+import useRevenue from '@/hooks/page/useRevenue';
 // import MapChart from '@/components/landing/MapChart';
 import { productTypes } from '@/lib/utils';
 import React from 'react';
 
 const Home = () => {
+  const { metrics, metricsLoading } = useMetrics();
+  const { revenue, revenuesLoading } = useRevenue();
   return (
     <main className='section-container'>
       <div className='flex h-screen'>
@@ -23,12 +28,20 @@ const Home = () => {
             {[
               {
                 label: 'Registered Organizations',
-                value: '45,890',
-                change: '-0.5%',
+                value: metrics?.total_organizations,
+                change: '',
               },
-              { label: 'Revenue', value: 'NGN 48,575', change: '+3.84%' },
-              { label: 'Orders', value: '4,800+', change: '+1.46%' },
-              { label: 'Payouts', value: 'NGN 24,351', change: '1.6%' },
+              { label: 'Revenue', value: metrics?.total_revenue, change: '' },
+              {
+                label: 'Orders',
+                value: metrics?.total_product_orders,
+                change: '',
+              },
+              {
+                label: 'Withdrawals',
+                value: metrics?.total_withdrawals,
+                change: '',
+              },
             ].map((stat, index) => (
               <div
                 key={index}

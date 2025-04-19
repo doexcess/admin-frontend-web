@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import api from '@/lib/api';
-import Cookies from 'js-cookie';
 import { PaymentResponse, Transaction } from '@/types/payment';
 import { PurchaseItemType } from '@/lib/utils';
 
