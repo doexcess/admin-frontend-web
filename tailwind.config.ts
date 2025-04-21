@@ -13,7 +13,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        custom: ['Gilroy', 'sans-serif'],
+        gilroy: ['Gilroy', 'sans-serif'],
       },
 
       backgroundImage: {

@@ -1,4 +1,5 @@
 'use client';
+
 import Bar from '@/components/bar/Index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@/redux/store';
@@ -18,6 +19,7 @@ export default function RootLayout({
 
   if (!token) {
     return router.push('/sign-in');
+    
   }
 
   return (
