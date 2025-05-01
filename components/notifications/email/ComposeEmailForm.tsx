@@ -94,7 +94,7 @@ const ComposeEmailFormContent = ({
             : `${organization?.business_name!} - (${organization?.user.email})`,
         },
       ]
-    : organizationOwners.map((orgOwner) => ({
+    : organizationOwners.map((orgOwner: any) => ({
         value: orgOwnersLoading ? '' : orgOwner?.id!,
         label: orgOwnersLoading
           ? ''
