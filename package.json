@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prod": "pm2 start ecosystem.config.cjs --name web-main"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^9.1.0",
