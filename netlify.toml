@@ -1,0 +1,3 @@
+[build]
+  command = "npm i --force && npm run build"
+  publish = "out"  # or ".next", "dist", etc. depending on your app
