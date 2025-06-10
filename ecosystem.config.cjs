@@ -3,7 +3,7 @@ module.exports = {
     {
       name: `hq-main`,
       script: 'npm',
-      args: 'run prod',
+      args: 'run start',
       env: {
         PM2_SERVE_PATH: './dist',
         PM2_SERVE_PORT: 3000,
