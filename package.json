@@ -1,5 +1,5 @@
 {
-  "name": "admin-web",
+  "name": "hq-main",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prod": "pm2 start ecosystem.config.cjs --name web-main"
+    "prod": "pm2 start ecosystem.config.cjs --name hq-main"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^9.1.0",
