@@ -20,7 +20,7 @@ jobs:
           cache: 'npm' # Cache dependencies for faster installs
 
       - name: 📦 Install Dependencies
-        run: npm install --omit=dev
+        run: npm install --force
 
       # - name: 🔨 Build Project (TypeScript)
       #   run: npm run build # Ensure your package.json has "build": "tsc"
