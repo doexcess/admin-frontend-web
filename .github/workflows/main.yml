@@ -41,7 +41,7 @@ jobs:
             cd /var/www/hq
             cp /var/www/.env.hq /var/www/hq
             git pull
-            npm install --omit=dev # Install only necessary dependencies
+            npm install --force # Install only necessary dependencies
             npm run build
             npm run prod
           EOF
