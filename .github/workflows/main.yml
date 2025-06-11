@@ -34,6 +34,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $AWS_USER@$AWS_HOST << 'EOF'
             cd /var/www/api
             cp /var/www/.env /var/www/api
+            npm install --force
+            npm run build
             git pull
             npm run prod
           EOF
