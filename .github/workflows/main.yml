@@ -35,9 +35,6 @@ jobs:
             cd /var/www/api
             cp /var/www/.env /var/www/api
             git pull
-            npm install  # Install only necessary dependencies
-            rm -r tsconfig.build.tsbuildinfo
-            npm run build
             npm run prod
           EOF
 
