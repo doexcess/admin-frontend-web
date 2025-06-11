@@ -56,7 +56,7 @@ const LogsList = ({
         </thead>
         <tbody>
           {logs.map((log) => (
-            <LogItem log={log} />
+            <LogItem key={log.id} log={log} />
           ))}
 
           {!logs.length && <TableEndRecord colspan={6} text={noFoundText} />}

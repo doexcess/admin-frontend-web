@@ -29,7 +29,7 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
   let items = (in_table: boolean) => {
     let details = payment.purchase
       ? payment.purchase?.items.map((item) => (
-          <li title={item.purchase_type}>
+          <li key={item.id} title={item.purchase_type}>
             {item.name} x {item.quantity}
             {!in_table && (
               <div className='ml-5 mt-2'>

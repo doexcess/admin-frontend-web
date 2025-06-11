@@ -64,7 +64,7 @@ const PaymentsList = ({
           </thead>
           <tbody>
             {payments.map((payment) => (
-              <PaymentItem payment={payment} />
+              <PaymentItem key={payment.id} payment={payment} />
             ))}
 
             {!payments.length && (

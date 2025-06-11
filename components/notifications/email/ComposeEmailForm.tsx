@@ -153,7 +153,7 @@ const ComposeEmailFormContent = ({
     if (allowAction) {
       handleComposeEmail();
     }
-  }, [allowAction]);
+  }, [allowAction, handleComposeEmail]);
 
   return (
     <>

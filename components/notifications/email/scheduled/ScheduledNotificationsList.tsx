@@ -56,7 +56,10 @@ const ScheduledNotificationsList = ({
           </thead>
           <tbody>
             {notifications.map((notification) => (
-              <ScheduledNotificationItem notification={notification} />
+              <ScheduledNotificationItem
+                key={notification.id}
+                notification={notification}
+              />
             ))}
 
             {!notifications.length && (

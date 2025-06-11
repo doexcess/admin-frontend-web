@@ -20,7 +20,7 @@ const SubscriptionPlanItem = ({
 
   let pricing = subscription_plan.subscription_plan_prices.length
     ? subscription_plan.subscription_plan_prices.map((plan_price) => (
-        <li>
+        <li key={plan_price.id}>
           {capitalize(plan_price.period)} -{' '}
           {formatMoney(+plan_price.price, plan_price.currency)}
         </li>
@@ -29,7 +29,7 @@ const SubscriptionPlanItem = ({
 
   let roles = subscription_plan.subscription_plan_roles.length
     ? subscription_plan.subscription_plan_roles.map((plan_role) => (
-        <li>
+        <li key={plan_role.id}>
           {capitalize(plan_role.title)} {plan_role.selected && '✅'}
         </li>
       ))

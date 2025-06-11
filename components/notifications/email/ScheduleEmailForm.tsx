@@ -149,7 +149,7 @@ const ScheduleEmailFormContent = ({
     if (allowAction) {
       handleScheduleEmail();
     }
-  }, [allowAction]);
+  }, [allowAction, handleScheduleEmail]);
 
   return (
     <>

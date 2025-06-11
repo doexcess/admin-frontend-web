@@ -69,7 +69,10 @@ const SubscriptionPlansList = ({
           </thead>
           <tbody>
             {subscription_plans.map((subscription_plan) => (
-              <SubscriptionPlanItem subscription_plan={subscription_plan} />
+              <SubscriptionPlanItem
+                key={subscription_plan.id}
+                subscription_plan={subscription_plan}
+              />
             ))}
 
             {!subscription_plans.length && (

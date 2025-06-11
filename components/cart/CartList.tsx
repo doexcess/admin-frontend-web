@@ -61,7 +61,7 @@ const CartList = ({
           </thead>
           <tbody>
             {carts.map((cart) => (
-              <CartItem cart_item={cart} />
+              <CartItem key={cart.id} cart_item={cart} />
             ))}
 
             {!carts.length && <TableEndRecord colspan={8} text={noFoundText} />}

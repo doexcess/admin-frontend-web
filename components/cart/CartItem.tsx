@@ -40,13 +40,13 @@ const CartItem = ({ cart_item }: CartItemProps) => {
   let items = cart_item.items.length
     ? cart_item.items.map((item) =>
         item.product_type === ProductType.COURSE ? (
-          <li>
+          <li key={item.id}>
             {item.course?.title} -{' '}
             {formatMoney(+item.price_at_time, item.course?.currency)} (
             {item.quantity})
           </li>
         ) : (
-          <li>
+          <li key={item.id}>
             {item.ticket_tier?.name} -{' '}
             {formatMoney(+item.price_at_time, item.ticket_tier?.currency)} (
             {item.quantity})

@@ -20,7 +20,7 @@ const CustomerItem = ({ customer }: CustomerItemProps) => {
 
   let purchases = customer.payments.length
     ? customer.payments.map((payment) => (
-        <div className='my-6 space-y-2'>
+        <div key={payment.id} className='my-6 space-y-2'>
           <p className='font-bold'>Purchase ID: {shortenId(payment.id)}</p>
           {payment.purchase?.items.map((item, index) => (
             <ul key={index} className='mb-1'>

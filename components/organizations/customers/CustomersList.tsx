@@ -61,7 +61,7 @@ const CustomersList = ({
           </thead>
           <tbody>
             {customers.map((customer) => (
-              <CustomerItem customer={customer} />
+              <CustomerItem key={customer.id} customer={customer} />
             ))}
 
             {!customers.length && (

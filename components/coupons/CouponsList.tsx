@@ -72,7 +72,7 @@ const CouponsList = ({
           </thead>
           <tbody>
             {coupons.map((coupon) => (
-              <CouponItem coupon={coupon} />
+              <CouponItem key={coupon.id} coupon={coupon} />
             ))}
 
             {!coupons.length && (

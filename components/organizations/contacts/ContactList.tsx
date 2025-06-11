@@ -55,7 +55,7 @@ const ContactList = ({
           </thead>
           <tbody>
             {contacts.map((contact) => (
-              <ContactItem contact={contact} />
+              <ContactItem key={contact.id} contact={contact} />
             ))}
 
             {!contacts.length && (

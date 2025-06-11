@@ -65,6 +65,7 @@ const OrgsList = ({
         <tbody>
           {organizations.map((organization) => (
             <OrgItem
+              key={organization.id}
               type={type}
               organization={organization}
               isDeleted={isDeleted}

@@ -40,18 +40,6 @@ const SuspendUnsuspendOrgAccount = ({
       : ActionKind.CRITICAL
   );
 
-  useEffect(() => {
-    if (allowAction) {
-      if (action === ActionKind.CRITICAL) {
-        handleSuspend();
-      } else {
-        handleUnsuspend();
-      }
-
-      setAllowAction(false);
-    }
-  }, [allowAction]);
-
   const handleSuspend = async () => {
     try {
       setIsLoading(true);
@@ -115,6 +103,18 @@ const SuspendUnsuspendOrgAccount = ({
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (allowAction) {
+      if (action === ActionKind.CRITICAL) {
+        handleSuspend();
+      } else {
+        handleUnsuspend();
+      }
+
+      setAllowAction(false);
+    }
+  }, [allowAction, action, handleSuspend, handleUnsuspend]);
 
   return (
     <>

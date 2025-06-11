@@ -53,7 +53,10 @@ const InstantNotificationsList = ({
           </thead>
           <tbody>
             {notifications.map((notification) => (
-              <InstantNotificationItem notification={notification} />
+              <InstantNotificationItem
+                key={notification.id}
+                notification={notification}
+              />
             ))}
 
             {!notifications.length && (
