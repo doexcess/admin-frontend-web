@@ -65,7 +65,7 @@ const MultimediaList = ({
           </thead>
           <tbody>
             {multimedia.map((media_item) => (
-              <MultimediaItem multimedia={media_item} />
+              <MultimediaItem key={media_item.id} multimedia={media_item} />
             ))}
 
             {!multimedia.length && (

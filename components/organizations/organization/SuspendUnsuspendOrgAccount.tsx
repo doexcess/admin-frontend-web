@@ -11,8 +11,7 @@ import {
 import { AppDispatch } from '@/redux/store';
 import { BusinessDetails } from '@/types/organization';
 import { Loader2 } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaBan, FaCheckCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -23,31 +22,34 @@ interface SuspendUnsuspendOrgAccountProps {
   organization: BusinessDetails;
 }
 
-const SuspendUnsuspendOrgAccount = ({
-  userId,
-  isSuspended,
-  organization,
-}: SuspendUnsuspendOrgAccountProps) => {
+interface ActionButtonProps {
+  isLoading: boolean;
+  onClick: () => void;
+  variant: 'green' | 'red';
+  icon: React.ReactNode;
+  label: string;
+}
+
+// Custom hook for suspend/unsuspend logic
+const useSuspendUnsuspend = (userId: string, organization: BusinessDetails) => {
   const dispatch = useDispatch<AppDispatch>();
   const [openModal, setOpenModal] = useState(false);
   const [allowAction, setAllowAction] = useState(false);
   const [reason, setReason] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [action, setAction] = useState(
-    // Action should be opposite of what the isSupended status is
     organization?.user?.is_suspended
       ? ActionKind.FAVORABLE
       : ActionKind.CRITICAL
   );
 
-  const handleSuspend = async () => {
+  const handleSuspend = useCallback(async () => {
     try {
       setIsLoading(true);
-
       const response: any = await dispatch(
         suspendOrgAccount({
           user_id: userId,
-          suspension_reason: reason!,
+          suspension_reason: reason,
         })
       );
 
@@ -71,12 +73,11 @@ const SuspendUnsuspendOrgAccount = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [dispatch, userId, reason, organization]);
 
-  const handleUnsuspend = async () => {
+  const handleUnsuspend = useCallback(async () => {
     try {
       setIsLoading(true);
-
       const response: any = await dispatch(
         unsuspendOrgAccount({
           user_id: userId,
@@ -102,7 +103,7 @@ const SuspendUnsuspendOrgAccount = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [dispatch, userId, organization]);
 
   useEffect(() => {
     if (allowAction) {
@@ -111,31 +112,75 @@ const SuspendUnsuspendOrgAccount = ({
       } else {
         handleUnsuspend();
       }
-
       setAllowAction(false);
     }
   }, [allowAction, action, handleSuspend, handleUnsuspend]);
+
+  return {
+    openModal,
+    setOpenModal,
+    allowAction,
+    setAllowAction,
+    reason,
+    setReason,
+    isLoading,
+    action,
+  };
+};
+
+// Action Button Component
+const ActionButton: React.FC<ActionButtonProps> = ({
+  isLoading,
+  onClick,
+  variant,
+  icon,
+  label,
+}) => (
+  <Button
+    className='p-2 px-3 space-x-1'
+    onClick={onClick}
+    variant={variant}
+    disabled={isLoading}
+  >
+    {isLoading ? (
+      <>
+        <Loader2 size={20} className='animate-spin' /> &nbsp; Loading...
+      </>
+    ) : (
+      <>
+        {icon} <span>{label}</span>
+      </>
+    )}
+  </Button>
+);
+
+const SuspendUnsuspendOrgAccount: React.FC<SuspendUnsuspendOrgAccountProps> = ({
+  userId,
+  isSuspended,
+  organization,
+}) => {
+  const {
+    openModal,
+    setOpenModal,
+    allowAction,
+    setAllowAction,
+    reason,
+    setReason,
+    isLoading,
+    action,
+  } = useSuspendUnsuspend(userId, organization);
 
   return (
     <>
       {organization?.user?.is_suspended ? (
         <>
-          <Button
-            className='p-2 px-3 space-x-1'
+          <ActionButton
+            isLoading={isLoading}
             onClick={() => setOpenModal(true)}
             variant='green'
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <Loader2 size={20} className='animate-spin' /> &nbsp; Loading...
-              </>
-            ) : (
-              <>
-                <FaCheckCircle /> <span>Reactivate</span>
-              </>
-            )}
-          </Button>
+            icon={<FaCheckCircle />}
+            label='Reactivate'
+          />
           <ActionConfirmationModal
             openModal={openModal}
             setOpenModal={setOpenModal}
@@ -146,22 +191,13 @@ const SuspendUnsuspendOrgAccount = ({
         </>
       ) : (
         <>
-          <Button
-            className='p-2 px-3 space-x-1'
-            variant='red'
+          <ActionButton
+            isLoading={isLoading}
             onClick={() => setOpenModal(true)}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <Loader2 size={20} className='animate-spin' /> &nbsp; Loading...
-              </>
-            ) : (
-              <>
-                <FaBan /> <span>Suspend</span>
-              </>
-            )}
-          </Button>
+            variant='red'
+            icon={<FaBan />}
+            label='Suspend'
+          />
           <ActionConfirmationModal
             openModal={openModal}
             setOpenModal={setOpenModal}
