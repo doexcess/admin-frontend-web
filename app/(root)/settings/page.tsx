@@ -1,11 +1,5 @@
 import PageHeading from '@/components/PageHeading';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Input from '@/components/ui/Input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Button } from '@/components/ui/Button';
-import { Separator } from '@/components/ui/separator';
 import { FiShield, FiSettings } from 'react-icons/fi';
 import GeneralSettings from '@/components/settings/GeneralSettings';
 import SecuritySettings from '@/components/settings/SecuritySettings';
