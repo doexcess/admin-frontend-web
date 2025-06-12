@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Dropdown, Avatar } from 'flowbite-react';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 const Profile = ({
   isOpen,
@@ -18,6 +21,9 @@ const Profile = ({
 }) => {
   const handleToggle = () =>
     setIsOpen({ profileDialog: !isOpen.profileDialog, appsDialog: false });
+
+  const { profile } = useSelector((state: RootState) => state.auth);
+
   return (
     <div>
       <button
@@ -40,10 +46,10 @@ const Profile = ({
         >
           <div className='py-3 px-4'>
             <span className='block text-sm font-semibold text-gray-900 dark:text-white'>
-              Neil Sims
+              {profile?.name}
             </span>
             <span className='block text-sm text-gray-900 truncate dark:text-white'>
-              name@flowbite.com
+              {profile?.email}
             </span>
           </div>
           {/* <ul
@@ -73,12 +79,12 @@ const Profile = ({
             aria-labelledby='dropdown'
           >
             <li>
-              <a
-                href='#'
+              <Link
+                href='/logout'
                 className='block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
               >
                 Sign out
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
