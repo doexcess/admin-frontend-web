@@ -112,7 +112,7 @@ const ConfirmSignInForm = () => {
         </div>
         <button
           type='submit'
-          className='w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-main rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-main dark:hover:bg-primary-700 dark:focus:ring-primary-800 flex items-center'
+          className='w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-main rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-main dark:hover:bg-primary-700 dark:focus:ring-primary-800 flex justify-center items-center'
           disabled={isLoading}
         >
           {isLoading ? (

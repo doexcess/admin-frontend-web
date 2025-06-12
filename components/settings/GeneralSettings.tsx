@@ -24,11 +24,11 @@ const GeneralSettings = () => {
 
   const [formData, setFormData] = useState<UserProfileProps>({
     name: profile?.name || '',
-    profile_picture: profile?.profile.profile_picture || '',
-    address: profile?.profile.address || '',
-    bio: profile?.profile.bio || '',
-    date_of_birth: profile?.profile.date_of_birth || null,
-    gender: profile?.profile.gender || null,
+    profile_picture: profile?.profile?.profile_picture || '',
+    address: profile?.profile?.address || '',
+    bio: profile?.profile?.bio || '',
+    date_of_birth: profile?.profile?.date_of_birth || null,
+    gender: profile?.profile?.gender || null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +100,7 @@ const GeneralSettings = () => {
                 name='bio'
                 id='bio'
                 placeholder='Tell us about yourself'
-                value={formData.bio || profile?.profile.bio}
+                value={formData.bio || profile?.profile?.bio}
                 onChange={handleChange}
               />
             </div>

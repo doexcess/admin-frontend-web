@@ -4,7 +4,7 @@ import React from 'react';
 
 const SignIn = () => {
   return (
-    <section className='flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900'>
+    <section className='flex flex-col items-center justify-center px-6 pt-8 mx-auto h-screen pt:mt-0 dark:bg-gray-900'>
       <a
         href='#'
         className='flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white'
